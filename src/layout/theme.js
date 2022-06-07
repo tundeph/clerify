@@ -1,11 +1,32 @@
 const theme = {
   lightTheme: {
-    backgroundColor: "#FFFFFF",
+    colors: {
+      primary: "#000000",
+      secondary: "#6B6A6A",
+      reverse: "#FFFFFF",
+      lightGray: "#EBEBEB",
+      red: "#B60101",
+      foreground: "#000000",
+      background: "#F6F6F6",
+    },
   },
 
   darkTheme: {
-    backgroundColor: "#000000",
+    colors: {
+      foreground: "#F6F6F6",
+      background: "#000000",
+    },
   },
+}
+
+export const size = {
+  xxs: 1.0,
+  xs: 1.4,
+  s: 1.6,
+  m: 2.0,
+  l: 2.4,
+  xl: 3.2,
+  xxl: 3.6,
 }
 
 export default theme
