@@ -1,19 +1,95 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { size } from "../layout/theme"
 
+import { Dashboard } from "@styled-icons/material/Dashboard"
+import { EditOff } from "@styled-icons/material-sharp/EditOff"
+import { SlackHash } from "@styled-icons/fa-brands/SlackHash"
+import { ImportExport } from "@styled-icons/material-outlined/ImportExport"
+import { BarChartFill } from "@styled-icons/bootstrap/BarChartFill"
+import { Settings } from "@styled-icons/ionicons-sharp/Settings"
+import { SignOut } from "@styled-icons/octicons/SignOut"
+import { CloseOutline } from "@styled-icons/evaicons-outline/CloseOutline"
+import { Calendar } from "@styled-icons/entypo/Calendar"
+import { AccountTree } from "@styled-icons/material/AccountTree"
+import { DiagonalArrowRightUpOutline } from "styled-icons/evaicons-outline"
+import { DiagonalArrowLeftDownOutline } from "styled-icons/evaicons-outline"
+
+const SideBarIconProps = css`
+  height: 1.2em;
+  margin-right: 1.2em;
+`
+
+export const DashboardIcon = styled(Dashboard)`
+  ${SideBarIconProps}
+`
+export const CategoriseIcon = styled(EditOff)`
+  ${SideBarIconProps}
+`
+
+export const KeywordsIcon = styled(SlackHash)`
+  ${SideBarIconProps}
+`
+
+export const ImportAccountsIcon = styled(ImportExport)`
+  ${SideBarIconProps}
+`
+
+export const ReportsIcon = styled(BarChartFill)`
+  ${SideBarIconProps}
+`
+
+export const SettingsIcon = styled(Settings)`
+  ${SideBarIconProps}
+`
+
+export const SignOutIcon = styled(SignOut)`
+  ${SideBarIconProps}
+`
+
+export const ReconcileIcon = styled(AccountTree)`
+  ${SideBarIconProps}
+`
+
+export const CalendarIcon = styled(Calendar)`
+  ${SideBarIconProps}
+`
+export const DebitIcon = styled(DiagonalArrowRightUpOutline)`
+  ${SideBarIconProps}
+`
+export const CreditIcon = styled(DiagonalArrowLeftDownOutline)`
+  ${SideBarIconProps}
+`
+
+export const CloseIcon = styled(CloseOutline)`
+  height: 1.2em;
+  margin-left: 1em;
+`
+
 export const PageWrapper = styled.div`
+  flex-grow: 1;
   display: flex;
   min-height: 100vh;
+  padding: 1rem 2rem;
 `
 
 export const MidWrapper = styled.div`
-  width: 60vw;
+  width: 80%;
   margin: 0 auto;
   padding: 5rem 2rem;
   box-sizing: border-box;
   text-align: center;
   display: flex;
   flex-direction: column;
+`
+
+export const UserWrapper = styled.div`
+  width: 90%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 3rem 2rem;
+  box-sizing: border-box;
 `
 
 export const Title = styled.span`
@@ -27,15 +103,16 @@ export const SubTitle = styled.span`
 `
 
 export const FormInput = styled.input`
-  height: 3.5rem;
+  height: ${(props) => (props.height ? props.height : size.xxl)}rem;
   width: 100%;
   border: 1.5px solid ${({ theme }) => theme.colors.secondary};
   border-radius: 50px;
   padding: 0.5rem 2rem;
-  font: ${size.xxs}em "Beatrice", sans-serif;
+  font-size: ${(props) => props.fontSize || size.xxs}em;
+  font-family: "Beatrice", sans-serif;
   color: ${({ theme }) => theme.colors.secondary};
   box-sizing: border-box;
-  background-color: ${({ theme }) => theme.colors.lightGray};
+  background-color: ${({ theme }) => theme.colors.gray100};
 
   &:focus {
     border-color: ${({ theme }) => theme.colors.primary};
@@ -43,6 +120,28 @@ export const FormInput = styled.input`
     outline: none;
   }
 `
+
+export const SelectInput = styled.select`
+  height: ${(props) => (props.height ? props.height : size.xxl)}rem;
+  width: 100%;
+  border: 1.5px solid ${({ theme }) => theme.colors.secondary};
+  border-radius: 50px;
+  padding: 0rem 20px;
+  font-size: ${(props) => (props.fontSize ? props.fontSize : size.xxs)}em;
+  font-family: "Beatrice", sans-serif;
+  color: ${({ theme }) => theme.colors.secondary};
+  box-sizing: border-box;
+  background-color: ${(props) =>
+    props.bgColor ? props.bgColor : ({ theme }) => theme.colors.gray100};
+
+  &:focus {
+    border-color: ${({ theme }) => theme.colors.primary};
+    background-color: ${(props) =>
+      props.bgColor ? props.bgColor : ({ theme }) => theme.colors.reverse};
+    outline: none;
+  }
+`
+
 export const Button = styled.button`
   height: 3.5rem;
   font: ${size.xxs}em "Beatrice-Bold", sans-serif;
@@ -50,6 +149,7 @@ export const Button = styled.button`
   background-color: ${({ theme }) => theme.colors.primary};
   border-radius: 50px;
   padding: 0.5rem 1rem;
+  border: 0px;
 
   &:hover {
     transform: scale(1.02);
@@ -62,10 +162,86 @@ export const DivWrapper = styled.div`
   flex-direction: ${(props) => props.direction || "column"};
   margin-bottom: ${null || ((props) => props.bottom)}rem;
   margin-top: ${null || ((props) => props.top)}rem;
+  margin-left: ${null || ((props) => props.left)}rem;
+  margin-right: ${null || ((props) => props.right)}rem;
+  gap: ${null || ((props) => props.gap)}rem;
+  justify-content: ${(props) => props.justify || "left"};
+  align-items: ${(props) => props.align || "left"};
 `
 
 export const Text = styled.span`
   display: inline;
   margin-bottom: ${null || ((props) => props.bottom)}rem;
   margin-top: ${null || ((props) => props.top)}rem;
+  margin-right: ${null || ((props) => props.right)}rem;
+  margin-left: ${null || ((props) => props.left)}rem;
+  font-size: ${null || ((props) => props.size)}rem;
+  text-align: ${null || ((props) => props.align)};
+  color: ${null || ((props) => props.color)};
+`
+
+export const Divider = styled.div`
+  display: inline-block;
+  border-top: 1px solid ${({ theme }) => theme.colors.secondary};
+  margin: ${null || ((props) => props.gap)}rem 0;
+`
+
+export const KeywordsWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  gap: ${size.xxxs}rem;
+  height: 300px;
+  background-color: ${({ theme }) => theme.colors.gray100};
+  border-radius: 15px;
+  padding: ${size.xs}rem ${size.xxs}rem;
+  box-sizing: border-box;
+  overflow-y: scroll;
+`
+
+export const UploadInput = styled.input`
+  height: ${(props) => (props.height ? props.height : size.xxl)}rem;
+  background-color: ${({ theme }) => theme.colors.gray100};
+  border-radius: 100px;
+  border: 1.5px solid ${({ theme }) => theme.colors.secondary};
+  padding: ${size.xxs}rem ${size.xs}rem;
+  box-sizing: border-box;
+  font-family: "Beatrice", sans-serif;
+  color: ${({ theme }) => theme.colors.gray600};
+
+  &::-webkit-file-upload-button {
+    display: none;
+  }
+
+  &::before {
+    content: "Click to Upload: ";
+    font-family: "Beatrice Bold", sans-serif;
+  }
+
+  &:focus {
+    border-color: ${({ theme }) => theme.colors.primary};
+    background-color: ${({ theme }) => theme.colors.reverse};
+  }
+`
+
+export const HalfDiv = styled(DivWrapper)`
+  width: 50%;
+`
+
+export const DateInput = styled.input`
+  height: ${(props) => (props.height ? props.height : size.xxl)}rem;
+  background-color: ${({ theme }) => theme.colors.gray100};
+  border-radius: 100px;
+  border: 1.5px solid ${({ theme }) => theme.colors.secondary};
+  padding: ${size.xxs}rem ${size.xs}rem;
+  box-sizing: border-box;
+  font-family: "Beatrice", sans-serif;
+  color: ${({ theme }) => theme.colors.gray600};
+
+  &:focus {
+    border-color: ${({ theme }) => theme.colors.primary};
+    background-color: ${({ theme }) => theme.colors.reverse};
+  }
 `
