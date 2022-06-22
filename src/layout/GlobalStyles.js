@@ -17,6 +17,7 @@ export const GlobalStyles = createGlobalStyle`
 body{
         font-family: "Beatrice", Poppins, sans-serif;
         background-color: ${({ theme }) => theme.colors.background};
+        
     }
 
     `
