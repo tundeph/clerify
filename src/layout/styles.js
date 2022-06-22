@@ -13,6 +13,7 @@ import { Calendar } from "@styled-icons/entypo/Calendar"
 import { AccountTree } from "@styled-icons/material/AccountTree"
 import { DiagonalArrowRightUpOutline } from "styled-icons/evaicons-outline"
 import { DiagonalArrowLeftDownOutline } from "styled-icons/evaicons-outline"
+import { ArrowForwardOutline } from "@styled-icons/evaicons-outline/ArrowForwardOutline"
 
 const SideBarIconProps = css`
   height: 1.2em;
@@ -54,10 +55,14 @@ export const CalendarIcon = styled(Calendar)`
   ${SideBarIconProps}
 `
 export const DebitIcon = styled(DiagonalArrowRightUpOutline)`
-  ${SideBarIconProps}
+  height: 1.2em;
+  margin-left: 1em;
 `
 export const CreditIcon = styled(DiagonalArrowLeftDownOutline)`
-  ${SideBarIconProps}
+  height: 1.2em;
+`
+export const ArrowForwardIcon = styled(ArrowForwardOutline)`
+  height: 1.2em;
 `
 
 export const CloseIcon = styled(CloseOutline)`
@@ -143,6 +148,11 @@ export const SelectInput = styled.select`
 `
 
 export const Button = styled.button`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   height: 3.5rem;
   font: ${size.xxs}em "Beatrice-Bold", sans-serif;
   color: ${({ theme }) => theme.colors.reverse};
@@ -159,6 +169,7 @@ export const Button = styled.button`
 
 export const DivWrapper = styled.div`
   display: flex;
+  min-width: ${null || ((props) => props.width)}rem;
   flex-direction: ${(props) => props.direction || "column"};
   margin-bottom: ${null || ((props) => props.bottom)}rem;
   margin-top: ${null || ((props) => props.top)}rem;
@@ -182,7 +193,7 @@ export const Text = styled.span`
 
 export const Divider = styled.div`
   display: inline-block;
-  border-top: 1px solid ${({ theme }) => theme.colors.secondary};
+  border-top: 1px solid ${({ theme }) => theme.colors.gray300};
   margin: ${null || ((props) => props.gap)}rem 0;
 `
 
