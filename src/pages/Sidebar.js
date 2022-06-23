@@ -84,7 +84,7 @@ const Sidebar = () => {
           <ReconcileIcon /> Reconcile
         </Nav>
 
-        <Nav to="/dashboard">
+        <Nav to="/reports">
           <ReportsIcon /> Reports
         </Nav>
 
