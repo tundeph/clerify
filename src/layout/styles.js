@@ -14,10 +14,24 @@ import { AccountTree } from "@styled-icons/material/AccountTree"
 import { DiagonalArrowRightUpOutline } from "styled-icons/evaicons-outline"
 import { DiagonalArrowLeftDownOutline } from "styled-icons/evaicons-outline"
 import { ArrowForwardOutline } from "@styled-icons/evaicons-outline/ArrowForwardOutline"
+import { LoaderAlt } from "styled-icons/boxicons-regular"
 
 const SideBarIconProps = css`
   height: 1.2em;
   margin-right: 1.2em;
+`
+
+const buttonProps = css`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 3.5rem;
+  font: ${size.xxs}em "Beatrice-Bold", sans-serif;
+  border-radius: 50px;
+  padding: 0.5rem 1rem;
+  border: 0px;
 `
 
 export const DashboardIcon = styled(Dashboard)`
@@ -53,6 +67,20 @@ export const ReconcileIcon = styled(AccountTree)`
 
 export const CalendarIcon = styled(Calendar)`
   ${SideBarIconProps}
+`
+export const LoadingIcon = styled(LoaderAlt)`
+  height: 1.5em;
+  /* transform: rotate (40deg); */
+  @keyframes spin {
+    from {
+      transform: rotate(10deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  animation: spin 0.5s linear 1s infinite running;
 `
 export const DebitIcon = styled(DiagonalArrowRightUpOutline)`
   height: 1.2em;
@@ -136,35 +164,32 @@ export const SelectInput = styled.select`
   font-family: "Beatrice", sans-serif;
   color: ${({ theme }) => theme.colors.secondary};
   box-sizing: border-box;
-  background-color: ${(props) =>
-    props.bgColor ? props.bgColor : ({ theme }) => theme.colors.gray100};
+  background-color: ${(props) => (props.bgColor ? props.bgColor : ({ theme }) => theme.colors.gray100)};
 
   &:focus {
     border-color: ${({ theme }) => theme.colors.primary};
-    background-color: ${(props) =>
-      props.bgColor ? props.bgColor : ({ theme }) => theme.colors.reverse};
+    background-color: ${(props) => (props.bgColor ? props.bgColor : ({ theme }) => theme.colors.reverse)};
     outline: none;
   }
 `
 
 export const Button = styled.button`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  height: 3.5rem;
-  font: ${size.xxs}em "Beatrice-Bold", sans-serif;
+  ${buttonProps}
   color: ${({ theme }) => theme.colors.reverse};
   background-color: ${({ theme }) => theme.colors.primary};
-  border-radius: 50px;
-  padding: 0.5rem 1rem;
-  border: 0px;
 
   &:hover {
     transform: scale(1.02);
     cursor: pointer;
   }
+`
+
+export const DisabledButton = styled.button.attrs((props) => ({
+  disabled: true,
+}))`
+  ${buttonProps}
+  color: ${({ theme }) => theme.colors.reverse};
+  background-color: ${(props) => props.color || (({ theme }) => theme.colors.primary)};
 `
 
 export const DivWrapper = styled.div`
