@@ -21,4 +21,4 @@ const authService = firebase.auth()
 //timestamp
 const timestamp = firebase.firestore.Timestamp
 
-export { db, authService }
+export { db, authService, timestamp }
