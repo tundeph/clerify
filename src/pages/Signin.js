@@ -1,27 +1,15 @@
-import React from "react"
+import React, { useState, useContext } from "react"
+import { useLogin } from "../hooks/useLogin"
+import { handleButtonState } from "../helper"
+
+//styles
 import Logo from "../components/Logo"
-import styled from "styled-components"
-import { size } from "../layout/theme"
+import styled, { ThemeContext } from "styled-components"
 import { Link } from "react-router-dom"
-import {
-  PageWrapper,
-  MidWrapper,
-  DivWrapper,
-  Title,
-  SubTitle,
-  FormInput,
-  Button,
-  Text,
-} from "../layout/styles"
+import { PageWrapper, MidWrapper, DivWrapper, Title, SubTitle, FormInput, Text, PasswordInput } from "../layout/styles"
 
 const CustomMidWrapper = styled(MidWrapper)`
   gap: 1.5rem;
-`
-const PasswordInput = styled(FormInput)`
-  &::placeholder {
-    letter-spacing: 0px;
-  }
-  letter-spacing: ${size.xxs}rem;
 `
 
 const CustomText = styled(Text)`
@@ -33,27 +21,51 @@ const CustomText = styled(Text)`
 `
 
 const Signin = () => {
+  const { colors } = useContext(ThemeContext)
+  const { error, isPending, login } = useLogin()
+
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+
+  const buttonCondition = email.length > 5 && password.length > 5
+
+  const handleLogin = (e) => {
+    e.preventDefault()
+    login(email, password)
+  }
+
   return (
     <PageWrapper>
       <CustomMidWrapper>
-        <DivWrapper bottom={3}>
-          <Logo />
-        </DivWrapper>
-        <DivWrapper bottom={1}>
-          <Title> Welcome back! </Title>
-          <SubTitle> Login with your email and password </SubTitle>
-        </DivWrapper>
-        <FormInput type="text" placeholder="Email address" />
-        <DivWrapper>
-          <PasswordInput type="password" placeholder="Password" />
-          <CustomText>Forgot password? Reset </CustomText>
-        </DivWrapper>
-        <DivWrapper top={0.2}>
-          <Button> Login </Button>
-          <CustomText>
-            Don’t have an account? <Link to="/signup"> Sign Up </Link>
-          </CustomText>
-        </DivWrapper>
+        <form onSubmit={handleLogin}>
+          <DivWrapper bottom={3}>
+            <Logo />
+          </DivWrapper>
+          <DivWrapper bottom={1}>
+            <Title> Welcome back! </Title>
+            <SubTitle> Login with your email and password </SubTitle>
+          </DivWrapper>
+          <DivWrapper gap={1}>
+            <FormInput type="text" placeholder="Email address" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <DivWrapper>
+              <PasswordInput
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <CustomText>Forgot password? Reset </CustomText>
+            </DivWrapper>
+          </DivWrapper>
+          <DivWrapper top={0.2}>
+            {handleButtonState(isPending, "Loading", "Login", buttonCondition)}
+            {/* <Button> Login </Button> */}
+            <CustomText>
+              Don’t have an account? <Link to="/signup"> Sign Up </Link>
+            </CustomText>
+          </DivWrapper>
+          {error && <Text color={colors.red}>{error}</Text>}
+        </form>
       </CustomMidWrapper>
     </PageWrapper>
   )
