@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { authService } from "../firebase/config"
 import { useDispatch } from "react-redux"
 import { isLoggedIn } from "../redux/profileSlice"
+import { db } from "../firebase/config"
 
 export const useLogin = () => {
   const [error, setError] = useState(null)
@@ -16,7 +17,18 @@ export const useLogin = () => {
     try {
       const res = await authService.signInWithEmailAndPassword(userEmail, userPassword)
       const { uid, displayName, photoURL, email } = res.user
-      dispatch(isLoggedIn({ uid, displayName, photoURL, email }))
+      let business = []
+      db.collection("business")
+        .where("uid", "==", uid)
+        .onSnapshot((snapshot) => {
+          snapshot.docs.forEach((doc, i) => {
+            business.push(doc.data())
+          })
+          dispatch(isLoggedIn({ uid, displayName, photoURL, email, business }))
+        })
+
+      // const { documents } = useCollection("business", ["uid", "==", uid])
+      //   dispatch(isLoggedIn({ uid, displayName, photoURL, email, r }))
 
       //update state
       if (!isCancelled) {
