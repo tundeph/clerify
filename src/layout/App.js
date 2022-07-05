@@ -1,12 +1,16 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
-import { useSelector } from "react-redux"
-import { selectUserProfile } from "../redux/profileSlice"
+
+import { useSelector, useDispatch } from "react-redux"
+import { selectUserProfile, authReady } from "../redux/profileSlice"
+import { db, authService } from "../firebase/config"
+
 import styled, { ThemeProvider } from "styled-components"
 import { GlobalStyles } from "../layout/GlobalStyles"
 import theme from "../layout/theme"
 
 //pages
+import Landing from "../pages/Landing"
 import Signup from "../pages/Signup"
 import Signin from "../pages/Signin"
 import Dashboard from "../pages/Dashboard"
@@ -24,85 +28,62 @@ const AppWrapper = styled.div`
 `
 
 const App = () => {
-  // const dispatch = useDispatch()
-  const { userid } = useSelector(selectUserProfile)
-  const { profileTheme } = useSelector(selectUserProfile)
+  const dispatch = useDispatch()
 
-  // const [userIdValue, setUserIdValue] = useState(0)
+  useEffect(() => {
+    const unsub = authService.onAuthStateChanged((user) => {
+      const { uid, displayName, photoURL, email } = user
+      let business = []
+      db.collection("business")
+        .where("uid", "==", uid)
+        .onSnapshot((snapshot) => {
+          snapshot.docs.forEach((doc, i) => {
+            const { accts, name, type } = doc.data()
+            business.push({ accts, name, type })
+          })
+          dispatch(authReady({ uid, displayName, photoURL, email, business }))
+        })
+      // dispatch(authReady({ uid, displayName, photoURL, email }))
+      unsub()
+    })
+  }, [])
 
-  // const handleChangeUser = () => {
-  //   dispatch(isLoggedIn(userIdValue))
-  //   console.log(userid, userIdValue)
-  // }
+  const { user, authIsReady = true, profileTheme } = useSelector(selectUserProfile)
 
   return (
     <ThemeProvider theme={theme[profileTheme]}>
       <GlobalStyles />
-      <AppWrapper>
-        <BrowserRouter>
-          {!userid && <Sidebar />}
-          <Routes>
-            <Route path="/" element={<Signup />} />
-            <Route
-              path="/signup"
-              element={
-                !userid ? <Signup /> : <Navigate replace to="/dashboard" />
-              }
-            />
-            <Route
-              path="/dashboard"
-              element={
-                userid ? <Dashboard /> : <Navigate replace to="/signin" />
-              }
-            />
-            <Route
-              path="/signin"
-              element={
-                !userid ? <Signin /> : <Navigate replace to="/dashboard" />
-              }
-            />
-            <Route
-              path="/add-business"
-              element={
-                !userid ? <AddBusiness /> : <Navigate replace to="/signin" />
-              }
-            />
-            <Route
-              path="/categorise"
-              element={
-                !userid ? <Categorise /> : <Navigate replace to="/signin" />
-              }
-            />
-            <Route
-              path="/keywords"
-              element={
-                !userid ? <KeywordsEdit /> : <Navigate replace to="/signin" />
-              }
-            />
+      {authIsReady && (
+        <AppWrapper>
+          <BrowserRouter>
+            {user && user.business.length > 0 && <Sidebar business={user.business} />}
+            <Routes>
+              <Route path="/" element={<Landing />} />
+              <Route path="/signup" element={!user ? <Signup /> : <Navigate replace to="/dashboard" />} />
+              <Route path="/dashboard" element={user ? <Dashboard /> : <Navigate replace to="/signin" />} />
+              <Route
+                path="/signin"
+                element={
+                  user && user.business.length < 1 ? (
+                    <Navigate replace to="/add-business" />
+                  ) : user && user.business.length > 0 ? (
+                    <Navigate replace to="/dashboard" />
+                  ) : (
+                    <Signin />
+                  )
+                }
+              />
+              <Route path="/add-business" element={user ? <AddBusiness /> : <Navigate replace to="/signin" />} />
+              <Route path="/categorise" element={user ? <Categorise /> : <Navigate replace to="/signin" />} />
+              <Route path="/keywords" element={user ? <KeywordsEdit /> : <Navigate replace to="/signin" />} />
 
-            <Route
-              path="/imports"
-              element={
-                !userid ? <ImportAccounts /> : <Navigate replace to="/signin" />
-              }
-            />
-            <Route
-              path="/reconcile"
-              element={
-                !userid ? <Reconcile /> : <Navigate replace to="/signin" />
-              }
-            />
-            <Route
-              path="/reports"
-              element={
-                !userid ? <Reports /> : <Navigate replace to="/signin" />
-              }
-            />
-          </Routes>
-        </BrowserRouter>
-        {/* <input type="text" onChange={(e) => setUserIdValue(e.target.value)} />
-      <button onClick={handleChangeUser}>Change User </button> */}
-      </AppWrapper>
+              <Route path="/imports" element={user ? <ImportAccounts /> : <Navigate replace to="/signin" />} />
+              <Route path="/reconcile" element={user ? <Reconcile /> : <Navigate replace to="/signin" />} />
+              <Route path="/reports" element={user ? <Reports /> : <Navigate replace to="/signin" />} />
+            </Routes>
+          </BrowserRouter>
+        </AppWrapper>
+      )}
     </ThemeProvider>
   )
 }
