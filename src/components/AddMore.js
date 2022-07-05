@@ -6,8 +6,7 @@ import { ReactComponent as plusIcon } from "../assets/images/plus.svg"
 const StyledIcon = styled(plusIcon)`
   width: calc(${(props) => props.size * 1.3}rem);
   height: calc(${(props) => props.size * 1.3}rem);
-  padding: calc(${(props) => props.size * 18}px)
-    calc(${(props) => props.size * 18}px);
+  padding: calc(${(props) => props.size * 18}px) calc(${(props) => props.size * 18}px);
   background-color: ${({ theme }) => theme.colors.gray100};
   border-radius: 50%;
   fill: ${({ theme }) => theme.colors.secondary};
@@ -27,9 +26,9 @@ const CustomDiv = styled(DivWrapper)`
   }
 `
 
-const AddMore = ({ size }) => {
+const AddMore = ({ size, onClick }) => {
   return (
-    <CustomDiv size={size} align="center">
+    <CustomDiv size={size} onClick={onClick} align="center">
       <StyledIcon size={size} />
       <Text size={size}> Add More</Text>
     </CustomDiv>
