@@ -106,7 +106,7 @@ export const PageWrapper = styled.div`
 `
 
 export const MidWrapper = styled.div`
-  width: 80%;
+  width: ${(props) => props.width || 80}%;
   margin: 0 auto;
   padding: 5rem 2rem;
   box-sizing: border-box;
@@ -190,6 +190,13 @@ export const DisabledButton = styled.button.attrs((props) => ({
   ${buttonProps}
   color: ${({ theme }) => theme.colors.reverse};
   background-color: ${(props) => props.color || (({ theme }) => theme.colors.primary)};
+`
+
+export const PasswordInput = styled(FormInput)`
+  &::placeholder {
+    letter-spacing: 0px;
+  }
+  letter-spacing: ${size.xxs}rem;
 `
 
 export const DivWrapper = styled.div`
