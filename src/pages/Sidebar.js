@@ -1,6 +1,7 @@
 import React, { useContext } from "react"
 import { NavLink } from "react-router-dom"
 import styled, { ThemeContext } from "styled-components"
+import { useLogout } from "../hooks/useLogout"
 
 import {
   PageWrapper,
@@ -49,12 +50,12 @@ const Nav = styled(NavLink)`
   }
 `
 
-const Sidebar = () => {
+const Sidebar = ({ business }) => {
+  const { logout } = useLogout()
   const { colors } = useContext(ThemeContext)
-  const data = [
-    { value: "one", text: "Organization 1" },
-    { value: "two", text: "Organization 2" },
-  ]
+
+  const data = business.map((bus) => ({ value: bus.name, text: bus.name }))
+
   return (
     <SideBar>
       <SidebarContent>
@@ -88,11 +89,11 @@ const Sidebar = () => {
           <ReportsIcon /> Reports
         </Nav>
 
-        <Nav to="/dashboard">
+        <Nav to="/settings">
           <SettingsIcon /> Settings
         </Nav>
 
-        <Nav to="/dashboard">
+        <Nav to="/signin" onClick={logout}>
           <SignOutIcon /> Sign out
         </Nav>
       </SidebarContent>
