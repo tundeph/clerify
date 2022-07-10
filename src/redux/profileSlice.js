@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
   user: null,
-  authIsReady: true,
+  authIsReady: false,
   profileTheme: "lightTheme",
 }
 
@@ -14,7 +14,8 @@ export const profileSlice = createSlice({
       state.user = payload
     },
     authReady: (state, { payload }) => {
-      state.user = payload
+      state.user = payload.data
+      state.selectedBusinessId = payload.selectedBusinessId
       state.authIsReady = true
     },
     logOut: () => {
@@ -24,6 +25,7 @@ export const profileSlice = createSlice({
 })
 
 export const selectUserProfile = (state) => state.userProfile
+export const selectUserBusiness = (state) => state.userProfile.user.business
 
 export const { isLoggedIn, authReady, logOut } = profileSlice.actions
 
