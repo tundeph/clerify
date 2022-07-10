@@ -17,6 +17,7 @@ import {
 } from "../layout/styles"
 import Logo from "../components/Logo"
 import Select from "../components/Select"
+import { selectUserBusiness } from "../redux/profileSlice"
 
 const SideBar = styled(PageWrapper)`
   display: flex;
@@ -50,11 +51,11 @@ const Nav = styled(NavLink)`
   }
 `
 
-const Sidebar = ({ business }) => {
+const Sidebar = ({ business, onChange }) => {
   const { logout } = useLogout()
   const { colors } = useContext(ThemeContext)
 
-  const data = business.map((bus) => ({ value: bus.name, text: bus.name }))
+  const data = Object.entries(business).map((bus) => ({ value: bus[0], text: bus[1].name, selected: bus[1].selected }))
 
   return (
     <SideBar>
@@ -63,9 +64,9 @@ const Sidebar = ({ business }) => {
           <Logo reverse />
         </DivWrapper>
         <DivWrapper bottom={4}>
-          <Select height={2.5} bgColor={colors.foreground} data={data} />
+          <Select height={2.5} bgColor={colors.foreground} data={data} onChange={onChange} />
         </DivWrapper>
-        <Nav to="/dashboard">
+        <Nav to="/">
           <DashboardIcon /> Dashboard
         </Nav>
 
