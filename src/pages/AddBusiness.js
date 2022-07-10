@@ -11,6 +11,7 @@ import { ThemeContext } from "styled-components"
 import { PageWrapper, MidWrapper, DivWrapper, Title, SubTitle, FormInput, Button, Text, Divider } from "../layout/styles"
 import AddMore from "../components/AddMore"
 import { handleButtonState } from "../helper"
+import { businessType, businessCategories } from "../helper/defaultData"
 
 const CustomMidWrapper = styled(MidWrapper)`
   gap: ${size.s}rem;
@@ -21,6 +22,15 @@ const AddBusiness = () => {
   const { user } = useSelector(selectUserProfile)
   const navigate = useNavigate()
   const { addDocument, response } = useFirestore("business")
+  const defaultBusinessCategories = businessCategories.reduce((acc, item) => {
+    if (item.value !== "") {
+      acc = {
+        ...acc,
+        [item.value]: [],
+      }
+    }
+    return acc
+  }, {})
 
   const [name, setName] = useState("")
   const [type, setType] = useState("")
@@ -28,15 +38,6 @@ const AddBusiness = () => {
     { id: 1, acctName: "" },
     { id: 2, acctName: "" },
   ])
-
-  const businessType = [
-    { value: "", text: "Select type of business" },
-    { value: "enterprise", text: "Sole Proprietorship" },
-    { value: "partnership", text: "Partnership" },
-    { value: "limited", text: "Limited Liability Company" },
-    { value: "plc", text: "Public Liability Company" },
-    { value: "ngo", text: "Non-Profit Organization" },
-  ]
 
   const buttonCondition = name.length > 0 && type.length > 0
 
@@ -50,12 +51,12 @@ const AddBusiness = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const business = { uid: user.uid, name, type, accts }
+    const business = { uid: user.uid, name, type, accts, categories: defaultBusinessCategories }
     await addDocument(business)
     if (!response.error) {
       navigate("/dashboard")
     }
-    console.log(business)
+    // console.log(business)
   }
 
   return (
