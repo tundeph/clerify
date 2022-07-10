@@ -4,13 +4,13 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { selectUserProfile, authReady } from "../redux/profileSlice"
 import { db, authService } from "../firebase/config"
+import { useFirestore } from "../hooks/useFirestore"
 
 import styled, { ThemeProvider } from "styled-components"
 import { GlobalStyles } from "../layout/GlobalStyles"
 import theme from "../layout/theme"
 
 //pages
-import Landing from "../pages/Landing"
 import Signup from "../pages/Signup"
 import Signin from "../pages/Signin"
 import Dashboard from "../pages/Dashboard"
@@ -29,26 +29,38 @@ const AppWrapper = styled.div`
 
 const App = () => {
   const dispatch = useDispatch()
+  const { updateDocument } = useFirestore("business")
+  const { user, authIsReady = true, profileTheme } = useSelector(selectUserProfile)
 
   useEffect(() => {
     const unsub = authService.onAuthStateChanged((user) => {
       const { uid, displayName, photoURL, email } = user
-      let business = []
       db.collection("business")
         .where("uid", "==", uid)
         .onSnapshot((snapshot) => {
-          snapshot.docs.forEach((doc, i) => {
-            const { accts, name, type } = doc.data()
-            business.push({ accts, name, type })
+          let business = {}
+          let selectedBusinessId = null
+          snapshot.docs.forEach((doc) => {
+            let id = doc.id
+            const { accts, name, type, selected, categories } = doc.data()
+            if (selected) {
+              selectedBusinessId = id
+            }
+            business[id] = { id, accts, name, type, selected, categories }
           })
-          dispatch(authReady({ uid, displayName, photoURL, email, business }))
+          dispatch(authReady({ data: { uid, displayName, photoURL, email, business }, selectedBusinessId }))
         })
-      // dispatch(authReady({ uid, displayName, photoURL, email }))
+
       unsub()
     })
   }, [])
 
-  const { user, authIsReady = true, profileTheme } = useSelector(selectUserProfile)
+  const handleChangeBusiness = (e, businesses) => {
+    e.preventDefault()
+    Object.entries(businesses).forEach((bus) => {
+      bus[0] === e.target.value ? updateDocument(bus[0], { selected: true }) : updateDocument(bus[0], { selected: false })
+    })
+  }
 
   return (
     <ThemeProvider theme={theme[profileTheme]}>
@@ -56,18 +68,19 @@ const App = () => {
       {authIsReady && (
         <AppWrapper>
           <BrowserRouter>
-            {user && user.business.length > 0 && <Sidebar business={user.business} />}
+            {user && Object.keys(user.business).length > 0 && (
+              <Sidebar business={user.business} onChange={(e) => handleChangeBusiness(e, user.business)} />
+            )}
             <Routes>
-              <Route path="/" element={<Landing />} />
-              <Route path="/signup" element={!user ? <Signup /> : <Navigate replace to="/dashboard" />} />
-              <Route path="/dashboard" element={user ? <Dashboard /> : <Navigate replace to="/signin" />} />
+              <Route path="/" element={user ? <Dashboard /> : <Navigate replace to="/signin" />} />
+              <Route path="/signup" element={!user ? <Signup /> : <Navigate replace to="/" />} />
               <Route
                 path="/signin"
                 element={
-                  user && user.business.length < 1 ? (
+                  user && Object.keys(user.business).length < 1 ? (
                     <Navigate replace to="/add-business" />
-                  ) : user && user.business.length > 0 ? (
-                    <Navigate replace to="/dashboard" />
+                  ) : user && Object.keys(user.business).length > 0 ? (
+                    <Navigate replace to="/" />
                   ) : (
                     <Signin />
                   )
