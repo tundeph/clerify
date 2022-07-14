@@ -59,7 +59,7 @@ const Signin = () => {
           </DivWrapper>
           <DivWrapper top={0.2}>
             {handleButtonState(isPending, "Loading", "Login", buttonCondition)}
-            {/* <Button> Login </Button> */}
+
             <CustomText>
               Don’t have an account? <Link to="/signup"> Sign Up </Link>
             </CustomText>
