@@ -19,3 +19,29 @@ export const handleButtonState = (loading, loadingText, buttonText, condition) =
     }
   }
 }
+
+export const textSorter = (array, type) => {
+  const sorted = array.sort((a, b) => {
+    if (type === "asc") {
+      if (a.toLowerCase() > b.toLowerCase()) {
+        return 1
+      } else if (a.toLowerCase() < b.toLowerCase()) {
+        return -1
+      } else {
+        return 0
+      }
+    } else if (type === "desc") {
+      if (a.toLowerCase() > b.toLowerCase()) {
+        return -1
+      } else if (a.toLowerCase() < b.toLowerCase()) {
+        return 1
+      } else {
+        return 0
+      }
+    } else {
+      return array
+    }
+  })
+
+  return sorted
+}
