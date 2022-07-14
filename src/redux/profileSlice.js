@@ -18,6 +18,9 @@ export const profileSlice = createSlice({
       state.selectedBusinessId = payload.selectedBusinessId
       state.authIsReady = true
     },
+    updateBusinessCategory: (state, { payload }) => {
+      state.user.business[payload.selectedBusinessId].categories = payload.data
+    },
     logOut: () => {
       return { ...initialState, authIsReady: true }
     },
@@ -26,7 +29,8 @@ export const profileSlice = createSlice({
 
 export const selectUserProfile = (state) => state.userProfile
 export const selectUserBusiness = (state) => state.userProfile.user.business
+export const selectTransactionCategories = (state, id) => state.userProfile.user.business[id].categories
 
-export const { isLoggedIn, authReady, logOut } = profileSlice.actions
+export const { isLoggedIn, authReady, updateBusinessCategory, logOut } = profileSlice.actions
 
 export default profileSlice.reducer
