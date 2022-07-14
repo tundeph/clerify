@@ -30,7 +30,7 @@ const buttonProps = css`
   height: 3.5rem;
   font: ${size.xxs}em "Beatrice-Bold", sans-serif;
   border-radius: 50px;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 25px;
   border: 0px;
 `
 
@@ -98,6 +98,20 @@ export const CloseIcon = styled(CloseOutline)`
   margin-left: 1em;
 `
 
+export const CustomCloseIcon = styled(CloseOutline)`
+  height: 1.2em;
+  padding: 10px 10px;
+  border-radius: 100px;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.gray600};
+    background-color: ${({ theme }) => theme.colors.gray100};
+  }
+
+  &:active {
+    background-color: ${({ theme }) => theme.colors.gray300};
+  }
+`
 export const PageWrapper = styled.div`
   flex-grow: 1;
   display: flex;
