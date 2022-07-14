@@ -8,7 +8,7 @@ export const businessType = [
 ]
 
 export const businessCategories = [
-  { value: "", text: "Select type of business" },
+  { value: "", text: "Select from categories" },
   { value: "Sales Income", text: "Sales Income" },
   { value: "Payroll", text: "Payroll" },
   { value: "Rent or mortgage payments", text: "Rent or mortgage payments" },
