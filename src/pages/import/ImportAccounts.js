@@ -1,14 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { size } from "../../layout/theme"
-import {
-  PageWrapper,
-  UserWrapper,
-  DivWrapper,
-  Title,
-  Text,
-  SubTitle,
-} from "../../layout/styles"
+import { PageWrapper, UserWrapper, DivWrapper, Title, Text, SubTitle } from "../../layout/styles"
 
 import TabDiv from "../../components/TabDiv"
 
@@ -33,7 +26,9 @@ const ImportAccounts = () => {
     { value: "zenith", text: "Zenith Bank" },
   ]
 
-  const Tab1 = (
+  const Tab1 = <SyncFromOpenBank selectData={categories} />
+
+  const Tab2 = (
     <UploadFromDevice
       name="moi"
       selectData={categories}
@@ -43,11 +38,9 @@ const ImportAccounts = () => {
     />
   )
 
-  const Tab2 = <SyncFromOpenBank selectData={categories} />
-
   const contents = [
-    { title: "Upload from Device", data: Tab1 },
-    { title: "Sync from Open Bank data", data: Tab2 },
+    { title: "Sync from Open Bank data", data: Tab1 },
+    { title: "Upload from Device", data: Tab2 },
   ]
 
   return (
