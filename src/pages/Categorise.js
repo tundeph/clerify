@@ -2,8 +2,10 @@ import React, { useState, useContext } from "react"
 import styled, { ThemeContext } from "styled-components"
 import { useFirestore } from "../hooks/useFirestore"
 import { useDocument } from "../hooks/useDocument"
-import { useSelector } from "react-redux"
-import { selectUserProfile } from "../redux/profileSlice"
+import { useSelector, useDispatch } from "react-redux"
+import { selectUserProfile, updateBusinessCategory } from "../redux/profileSlice"
+import { handleButtonState } from "../helper"
+import { businessCategories } from "../helper/defaultData"
 
 import { size } from "../layout/theme"
 import {
@@ -13,12 +15,15 @@ import {
   Title,
   SubTitle,
   FormInput,
-  Button,
+  Text,
   Divider,
   KeywordsWrapper,
+  Button,
 } from "../layout/styles"
 import Select from "../components/Select"
 import Keyword from "../components/Keyword"
+import Modal from "../components/Modal"
+import ButtonState from "../components/ButtonState"
 
 const HalfDiv = styled(DivWrapper)`
   width: 50%;
@@ -26,36 +31,44 @@ const HalfDiv = styled(DivWrapper)`
 
 const Categorise = () => {
   const { colors } = useContext(ThemeContext)
-  const { updateDocument } = useFirestore("business")
+  const { updateDocument, response } = useFirestore("business")
   const { user, selectedBusinessId } = useSelector(selectUserProfile)
   const { document, error } = useDocument("business", selectedBusinessId)
-  // console.log("document", document)
+  const dispatch = useDispatch()
+
+  //
   const [customCategory, setCustomCategory] = useState("")
   const [standardCategory, setStandardCategory] = useState("")
+  const [errorModal, setErrorModal] = useState(false)
+  const [deleteModal, setDeleteModal] = useState({ status: false })
 
-  const categories = [
-    { value: "", text: "Select standard categories" },
-    { value: "Rent", text: "Rent" },
-    { value: "Marketing & Advertising", text: "Marketing & Advertising" },
-  ]
+  const buttonCondition = standardCategory || customCategory.length > 1
 
-  const handleClick = (text) => {
-    console.log(text)
+  const handleDeleteCategory = async (category, document) => {
+    setDeleteModal(true)
+    delete document.categories[category]
+    await updateDocument(selectedBusinessId, { categories: document.categories })
+    dispatch(updateBusinessCategory({ data: { ...document.categories }, selectedBusinessId }))
   }
 
   const handleAddCategory = async (e) => {
     e.preventDefault()
     const data = {}
-    if (standardCategory) {
+    if (standardCategory && !document.categories[standardCategory]) {
       data[standardCategory] = []
     }
-    if (customCategory) {
+    if (customCategory && !document.categories[customCategory]) {
       data[customCategory] = []
     }
-    console.log({ ...document.categories, ...data })
+    // console.log({ ...document.categories, ...data })
 
-    await updateDocument(selectedBusinessId, { categories: { ...document.categories, ...data } })
-    setCustomCategory("")
+    if (Object.keys(data).length > 0) {
+      await updateDocument(selectedBusinessId, { categories: { ...document.categories, ...data } })
+      setCustomCategory("")
+    } else {
+      setErrorModal(true)
+    }
+
     setStandardCategory("")
   }
 
@@ -72,7 +85,7 @@ const Categorise = () => {
               <HalfDiv gap={size.xs}>
                 <Title color={colors.secondary}> Choose </Title>
                 <Select
-                  data={categories}
+                  data={businessCategories}
                   height={size.xl}
                   bgColor={colors.gray100}
                   fontSize={size.xxxs}
@@ -88,19 +101,41 @@ const Categorise = () => {
                   onChange={(e) => setCustomCategory(e.target.value)}
                   height={size.xl}
                   fontSize={size.xxxs}
-                  placeholder="Type a custom category name"
+                  placeholder="Enter a custom category"
                 />
-                <Button type="submit"> Add </Button>
+
+                <ButtonState loading={response.isPending} loadingText="Loading" condition={buttonCondition}>
+                  Add
+                </ButtonState>
               </HalfDiv>
             </DivWrapper>
           </form>
           <Divider />
           <KeywordsWrapper top={0.2}>
-            <Keyword text="Rent" onClick={handleClick} />
-            <Keyword text="Marketing & Advertising" onClick={handleClick} />
+            {Object.keys(user.business[selectedBusinessId].categories).map((category, i) => (
+              <Keyword key={i} text={category} onClick={() => setDeleteModal({ status: true, category, document })} />
+            ))}
           </KeywordsWrapper>
         </UserWrapper>
       </PageWrapper>
+      {errorModal && (
+        <Modal title="Error" handleClose={() => setErrorModal(false)}>
+          <Text justify="center" color={colors.red}>
+            This category already exists and cannot be overwritten
+          </Text>
+        </Modal>
+      )}
+
+      {deleteModal.status && (
+        <Modal title="Are you sure?" handleClose={() => setDeleteModal(false)}>
+          <DivWrapper align="center" gap={2}>
+            <Text justify="center" color={colors.red}>
+              You are about to permanently delete this category and all associated keywords (for sorting) connected to it
+            </Text>
+            <Button onClick={() => handleDeleteCategory(deleteModal.category, deleteModal.document)}> Yes, Delete it </Button>
+          </DivWrapper>
+        </Modal>
+      )}
     </>
   )
 }
