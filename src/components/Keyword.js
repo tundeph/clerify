@@ -1,11 +1,15 @@
 import React from "react"
 import styled from "styled-components"
 
-import { CloseIcon } from "../layout/styles"
+import { CustomCloseIcon } from "../layout/styles"
 
-const KeywordButton = styled.span`
-  min-width: 100px;
-  padding: 1em 1.5em;
+const KeywordButton = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 10px;
+  justify-self: center;
+  align-items: center;
+  min-width: 50px;
+  padding: 0.5em 2.5em;
   border-radius: 100px;
   background-color: ${({ theme }) => theme.colors.background};
   font-size: 0.8rem;
@@ -16,7 +20,7 @@ const KeywordButton = styled.span`
 const Keyword = ({ text, onClick }) => {
   return (
     <KeywordButton>
-      {text} <CloseIcon onClick={() => onClick(text)} />
+      {text} <CustomCloseIcon onClick={() => onClick(text)} />
     </KeywordButton>
   )
 }
