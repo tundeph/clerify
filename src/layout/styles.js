@@ -224,6 +224,7 @@ export const DivWrapper = styled.div`
   gap: ${null || ((props) => props.gap)}rem;
   justify-content: ${(props) => props.justify || "left"};
   align-items: ${(props) => props.align || "left"};
+  flex-wrap: ${(props) => props.wrap || "nowrap"};
 `
 
 export const Text = styled.span`
@@ -235,6 +236,8 @@ export const Text = styled.span`
   font-size: ${null || ((props) => props.size)}rem;
   text-align: ${null || ((props) => props.align)};
   color: ${null || ((props) => props.color)};
+
+  ${({ bold }) => bold && ` font-family: "Beatrice Bold", sans-serif`}
 `
 
 export const Divider = styled.div`
@@ -283,8 +286,12 @@ export const UploadInput = styled.input`
   }
 `
 
-export const HalfDiv = styled(DivWrapper)`
-  width: 50%;
+export const HalfDiv = styled.div`
+  flex-grow: 1;
+  min-width: ${(props) => props.minWidth || "50"}px;
+  justify-content: ${(props) => props.justify || "left"};
+  align-items: ${(props) => props.align || "left"};
+  text-align: ${(props) => props.alignText || "left"};
 `
 
 export const DateInput = styled.input`
@@ -301,4 +308,29 @@ export const DateInput = styled.input`
     border-color: ${({ theme }) => theme.colors.primary};
     background-color: ${({ theme }) => theme.colors.reverse};
   }
+`
+
+export const InfoBoxDangerProp = css`
+  background-color: #f8d7da;
+  border: 1px solid #f5c2c7;
+  color: ${({ theme }) => theme.colors.red};
+`
+
+export const InfoBoxSuccessProp = css`
+  background-color: #d1e7dd;
+  border: 1px solid #badbcc;
+  color: ${({ theme }) => theme.colors.green};
+`
+
+export const InfoBox = styled.div`
+  background-color: #e2e3e5;
+  border: 1px solid #d3d6d8;
+  border-radius: 20px;
+  color: ${({ theme }) => theme.colors.gray600};
+  text-align: center;
+  padding: ${size.s}rem ${size.xxs}rem;
+  font-size: ${size.xxxs}rem;
+
+  ${({ danger }) => danger && InfoBoxDangerProp}
+  ${({ success }) => success && InfoBoxSuccessProp}
 `
