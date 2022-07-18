@@ -78,8 +78,8 @@ const Sidebar = ({ business, onChange }) => {
           <KeywordsIcon /> Keywords
         </Nav>
 
-        <Nav to="/imports">
-          <ImportAccountsIcon /> Import Accounts
+        <Nav to="/sync-accounts">
+          <ImportAccountsIcon /> Sync Accounts
         </Nav>
 
         <Nav to="/reconcile">
