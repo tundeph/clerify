@@ -19,6 +19,7 @@ import Categorise from "../pages/Categorise"
 import Sidebar from "../pages/Sidebar"
 import KeywordsEdit from "../pages/KeywordsEdit"
 import ImportAccounts from "../pages/import/ImportAccounts"
+import SyncFromOpenBank from "../pages/import/SyncFromOpenBank"
 import Reconcile from "../pages/Reconcile"
 import Reports from "../pages/reports/Reports"
 
@@ -30,28 +31,39 @@ const AppWrapper = styled.div`
 const App = () => {
   const dispatch = useDispatch()
   const { updateDocument } = useFirestore("business")
-  const { user, authIsReady = true, profileTheme } = useSelector(selectUserProfile)
+  const { user, authIsReady, profileTheme } = useSelector(selectUserProfile)
+  // console.log("user: ", user, authIsReady)
 
   useEffect(() => {
     const unsub = authService.onAuthStateChanged((user) => {
-      const { uid, displayName, photoURL, email } = user
-      db.collection("business")
-        .where("uid", "==", uid)
-        .onSnapshot((snapshot) => {
-          let business = {}
-          let selectedBusinessId = null
-          snapshot.docs.forEach((doc) => {
-            let id = doc.id
-            const { accts, name, type, selected, categories } = doc.data()
-            if (selected) {
-              selectedBusinessId = id
-            }
-            business[id] = { id, accts, name, type, selected, categories }
+      if (!user && !authIsReady) {
+        dispatch(authReady({ authIsReady: true }))
+      }
+      if (user) {
+        const { uid, displayName, photoURL, email } = user
+        db.collection("business")
+          .where("uid", "==", user.uid)
+          .onSnapshot((snapshot) => {
+            let business = {}
+            let selectedBusinessId = null
+            snapshot.docs.forEach((doc) => {
+              let id = doc.id
+              const { accts, name, type, selected, categories } = doc.data()
+              if (selected) {
+                selectedBusinessId = id
+              }
+              business[id] = { id, accts, name, type, selected, categories }
+            })
+            dispatch(
+              authReady({
+                data: { uid, displayName, photoURL, email, business },
+                selectedBusinessId,
+              })
+            )
           })
-          dispatch(authReady({ data: { uid, displayName, photoURL, email, business }, selectedBusinessId }))
-        })
 
-      unsub()
+        unsub()
+      }
     })
   }, [])
 
@@ -60,6 +72,14 @@ const App = () => {
     Object.entries(businesses).forEach((bus) => {
       bus[0] === e.target.value ? updateDocument(bus[0], { selected: true }) : updateDocument(bus[0], { selected: false })
     })
+  }
+
+  const hasBusiness = (user) => {
+    if (user) {
+      if (Object.keys(user.business).length) {
+        return true
+      }
+    }
   }
 
   return (
@@ -72,25 +92,24 @@ const App = () => {
               <Sidebar business={user.business} onChange={(e) => handleChangeBusiness(e, user.business)} />
             )}
             <Routes>
-              <Route path="/" element={user ? <Dashboard /> : <Navigate replace to="/signin" />} />
+              <Route path="/" element={user ? <Dashboard /> : <Navigate to="/signin" />} />
               <Route path="/signup" element={!user ? <Signup /> : <Navigate replace to="/" />} />
               <Route
                 path="/signin"
-                element={
-                  user && Object.keys(user.business).length < 1 ? (
-                    <Navigate replace to="/add-business" />
-                  ) : user && Object.keys(user.business).length > 0 ? (
-                    <Navigate replace to="/" />
-                  ) : (
-                    <Signin />
-                  )
-                }
+                element={!user ? <Signin /> : <Navigate to="/add-business" />}
+                // user && Object.keys(user.business).length < 1 ? (
+                //   <Navigate replace to="/add-business" />
+                // ) : user && Object.keys(user.business).length > 0 ? (
+                //   <Navigate replace to="/" />
+                // ) : (
+                //   <Signin />
+                // )
               />
-              <Route path="/add-business" element={user ? <AddBusiness /> : <Navigate replace to="/signin" />} />
+              <Route path="/add-business" element={!hasBusiness ? <AddBusiness /> : <Navigate replace to="/" />} />
               <Route path="/categorise" element={user ? <Categorise /> : <Navigate replace to="/signin" />} />
               <Route path="/keywords" element={user ? <KeywordsEdit /> : <Navigate replace to="/signin" />} />
 
-              <Route path="/imports" element={user ? <ImportAccounts /> : <Navigate replace to="/signin" />} />
+              <Route path="/sync-accounts" element={user ? <SyncFromOpenBank /> : <Navigate replace to="/signin" />} />
               <Route path="/reconcile" element={user ? <Reconcile /> : <Navigate replace to="/signin" />} />
               <Route path="/reports" element={user ? <Reports /> : <Navigate replace to="/signin" />} />
             </Routes>
