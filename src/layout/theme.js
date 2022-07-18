@@ -8,6 +8,7 @@ const theme = {
       gray300: "#CCCCCC",
       gray600: "#434343",
       red: "#B60101",
+      green: "#0f5132",
       foreground: "#000000",
       background: "#F6F6F6",
     },
