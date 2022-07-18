@@ -4,7 +4,6 @@ import { useFirestore } from "../hooks/useFirestore"
 import { useDocument } from "../hooks/useDocument"
 import { useSelector, useDispatch } from "react-redux"
 import { selectUserProfile, updateBusinessCategory } from "../redux/profileSlice"
-import { handleButtonState } from "../helper"
 import { businessCategories } from "../helper/defaultData"
 
 import { size } from "../layout/theme"
