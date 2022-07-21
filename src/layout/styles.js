@@ -15,6 +15,7 @@ import { DiagonalArrowRightUpOutline } from "styled-icons/evaicons-outline"
 import { DiagonalArrowLeftDownOutline } from "styled-icons/evaicons-outline"
 import { ArrowForwardOutline } from "@styled-icons/evaicons-outline/ArrowForwardOutline"
 import { LoaderAlt } from "styled-icons/boxicons-regular"
+import { Loader3 } from "@styled-icons/remix-fill/Loader3"
 
 const SideBarIconProps = css`
   height: 1.2em;
@@ -69,19 +70,20 @@ export const CalendarIcon = styled(Calendar)`
   ${SideBarIconProps}
 `
 export const LoadingIcon = styled(LoaderAlt)`
-  height: 1.5em;
-  /* transform: rotate (40deg); */
+  height: ${(props) => props.size || 25}px;
+
   @keyframes spin {
     from {
-      transform: rotate(10deg);
+      transform: rotate(0deg);
     }
 
     to {
       transform: rotate(360deg);
     }
   }
-  animation: spin 0.5s linear 1s infinite running;
+  animation: spin 0.5s linear 0s infinite running;
 `
+
 export const DebitIcon = styled(DiagonalArrowRightUpOutline)`
   height: 1.2em;
   margin-left: 1em;
