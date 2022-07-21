@@ -41,12 +41,14 @@ const ModalBody = styled.div`
   text-align: center;
 `
 
-const Modal = ({ title, children, handleClose }) => {
+const Modal = ({ title, children, handleClose, icon }) => {
   return ReactDOM.createPortal(
     <ModalBackdrop>
       <ModalContents>
         <ModalHeader>
-          <ModalTitle>{title} </ModalTitle>
+          <ModalTitle>
+            {title} {icon}{" "}
+          </ModalTitle>
           <CustomCloseIcon onClick={handleClose} />
         </ModalHeader>
         <ModalBody> {children} </ModalBody>
