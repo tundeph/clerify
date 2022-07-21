@@ -126,7 +126,7 @@ const Categorise = () => {
       )}
 
       {deleteModal.status && (
-        <Modal title="Are you sure?" handleClose={() => setDeleteModal(false)}>
+        <Modal title="Are you sure?" handleClose={() => setDeleteModal({ status: false })}>
           <DivWrapper align="center" gap={2}>
             <Text justify="center" color={colors.red}>
               You are about to permanently delete this category and all associated keywords (for sorting) connected to it
