@@ -20,20 +20,31 @@ export const handleButtonState = (loading, loadingText, buttonText, condition) =
   }
 }
 
-export const textSorter = (array, type) => {
+export const textSorter = (array, type, sortbyAttr) => {
   const sorted = array.sort((a, b) => {
+    let aWithAttr = ""
+    let bWithAttr = ""
+
+    if (sortbyAttr) {
+      aWithAttr = a[sortbyAttr]
+      bWithAttr = b[sortbyAttr]
+    } else {
+      aWithAttr = a
+      bWithAttr = b
+    }
+
     if (type === "asc") {
-      if (a.toLowerCase() > b.toLowerCase()) {
+      if (aWithAttr.toLowerCase() > bWithAttr.toLowerCase()) {
         return 1
-      } else if (a.toLowerCase() < b.toLowerCase()) {
+      } else if (aWithAttr.toLowerCase() < bWithAttr.toLowerCase()) {
         return -1
       } else {
         return 0
       }
     } else if (type === "desc") {
-      if (a.toLowerCase() > b.toLowerCase()) {
+      if (aWithAttr.toLowerCase() > bWithAttr.toLowerCase()) {
         return -1
-      } else if (a.toLowerCase() < b.toLowerCase()) {
+      } else if (aWithAttr.toLowerCase() < bWithAttr.toLowerCase()) {
         return 1
       } else {
         return 0
