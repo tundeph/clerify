@@ -29,6 +29,7 @@ export const profileSlice = createSlice({
 
 export const selectUserProfile = (state) => state.userProfile
 export const selectUserBusiness = (state) => state.userProfile.user.business
+export const selectBusinessAccounts = (state, id) => state.userProfile.user.business[id].accts
 export const selectTransactionCategories = (state, id) => state.userProfile.user.business[id].categories
 
 export const { isLoggedIn, authReady, updateBusinessCategory, logOut } = profileSlice.actions
