@@ -55,6 +55,18 @@ export const useFirestore = (collection) => {
     }
   }
 
+  //add a document
+  const addDocumentWithId = async (id, doc) => {
+    dispatch({ type: "IS_PENDING" })
+    try {
+      const createdAt = timestamp.fromDate(new Date())
+      const addDocumentWithId = await ref.doc(id).set({ ...doc, createdAt })
+      dispatchIfNotCancelled({ type: "ADDED_DOCUMENT", payload: addDocumentWithId })
+    } catch (err) {
+      dispatchIfNotCancelled({ type: "ERROR", payload: err.message })
+    }
+  }
+
   //update a document
   const updateDocument = async (id, updates) => {
     dispatch({ type: "IS_PENDING" })
@@ -73,5 +85,5 @@ export const useFirestore = (collection) => {
     return () => setIsCancelled(true)
   }, [])
 
-  return { addDocument, updateDocument, response }
+  return { addDocument, addDocumentWithId, updateDocument, response }
 }
