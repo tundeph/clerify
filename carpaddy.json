@@ -1,1390 +1,378 @@
 {
   "zenith": [
     {
-      "transDate": "01/06/2022",
-      "valueDate": "01/06/2022",
+      "balance": "172,584.40",
+      "remarks": "NIP/WBP/PayStack-Paystack/374dc041-f75e-4a4e-96cf-feaab2647a3c/Paystack payo",
+      "date": "15/06/2022",
+      "type": "credit",
+      "transDate": "15/06/2022",
+      "amount": 1621061,
+      "categoryId": "v6Ct7LTUP",
       "reference": "",
-      "remarks": "NIP/WBP/PayStack-Paystack/7deea536-f88e-4080-b790-d88e28df6f2c/Paystack payo",
-      "debit": "",
-      "credit": "10,406.01",
-      "balance": "300,933.53"
+      "acctName": "foafgub3e"
     },
     {
-      "transDate": "01/06/2022",
-      "valueDate": "01/06/2022",
-      "reference": "",
-      "remarks": "NIP/GTB/OGUNLADE OLUMUYIWA AYOMITAN/via GTWORLD",
-      "debit": "",
-      "credit": "50,700.00",
-      "balance": "351,633.53"
-    },
-    {
-      "transDate": "01/06/2022",
-      "valueDate": "01/06/2022",
-      "reference": "",
+      "categoryId": "TX53qha1b",
+      "transDate": "03/06/2022",
+      "amount": 2688,
       "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "351,606.65"
+      "date": "03/06/2022",
+      "type": "debit",
+      "reference": "",
+      "balance": "326,875.92",
+      "acctName": "foafgub3e"
     },
     {
-      "transDate": "01/06/2022",
-      "valueDate": "01/06/2022",
       "reference": "",
+      "type": "debit",
       "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB",
-      "debit": "50,000.00",
-      "credit": "",
-      "balance": "301,606.65"
+      "categoryId": "3GwFN56Bm",
+      "transDate": "01/06/2022",
+      "acctName": "foafgub3e",
+      "amount": 500000,
+      "balance": "301,606.65",
+      "date": "01/06/2022"
     },
     {
-      "transDate": "02/06/2022",
-      "valueDate": "02/06/2022",
-      "reference": "",
-      "remarks": "NIP/ROLEZ/POS Agent NUREX MAR COMPANY/NUREX MAR CO POS Trf for Customer/AT68_TRF",
-      "debit": "",
-      "credit": "1,500.00",
-      "balance": "303,106.65"
-    },
-    {
-      "transDate": "02/06/2022",
-      "valueDate": "02/06/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "303,079.77"
-    },
-    {
-      "transDate": "02/06/2022",
-      "valueDate": "02/06/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "53.75",
-      "credit": "",
-      "balance": "303,026.02"
-    },
-    {
-      "transDate": "02/06/2022",
-      "valueDate": "02/06/2022",
-      "reference": "",
-      "remarks": "NIP CR/ADEBAYO MARY/GTB",
-      "debit": "45,000.00",
-      "credit": "",
-      "balance": "258,026.02"
-    },
-    {
-      "transDate": "02/06/2022",
-      "valueDate": "02/06/2022",
-      "reference": "",
+      "type": "debit",
+      "date": "14/06/2022",
+      "transDate": "14/06/2022",
+      "balance": "140,173.79",
       "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB",
-      "debit": "56,000.00",
-      "credit": "",
-      "balance": "202,026.02"
-    },
-    {
-      "transDate": "03/06/2022",
-      "valueDate": "03/06/2022",
+      "categoryId": "3GwFN56Bm",
+      "amount": 1000000,
       "reference": "",
-      "remarks": "NIP/UBN/FUNSHO R O MR/MOBILE/UNION Transfer from FUNSHO R O MR - rasaqf@yahoo.co",
-      "debit": "",
-      "credit": "2,100.00",
-      "balance": "204,126.02"
+      "acctName": "foafgub3e"
     },
     {
-      "transDate": "03/06/2022",
-      "valueDate": "03/06/2022",
-      "reference": "",
-      "remarks": "NIP/FCMB/OBAYAGBO GLORIA ONAJEME/web:from Mrs Fadipe Gloria",
-      "debit": "",
-      "credit": "13,500.00",
-      "balance": "217,626.02"
-    },
-    {
-      "transDate": "03/06/2022",
-      "valueDate": "03/06/2022",
-      "reference": "",
-      "remarks": "NIP/WBP/PayStack-Paystack/0189c6f7-c112-46e9-b96e-656073f842a1/Paystack payo",
-      "debit": "",
-      "credit": "109,276.78",
-      "balance": "326,902.80"
-    },
-    {
-      "transDate": "03/06/2022",
-      "valueDate": "03/06/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "326,875.92"
-    },
-    {
-      "transDate": "03/06/2022",
-      "valueDate": "03/06/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "326,849.04"
-    },
-    {
-      "transDate": "03/06/2022",
-      "valueDate": "03/06/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "326,822.16"
-    },
-    {
-      "transDate": "03/06/2022",
-      "valueDate": "03/06/2022",
-      "reference": "",
-      "remarks": "NIP CR/FUNMILAYO TEMITOPE UMUKORO/STBC",
-      "debit": "14,700.00",
-      "credit": "",
-      "balance": "312,122.16"
-    },
-    {
-      "transDate": "03/06/2022",
-      "valueDate": "03/06/2022",
-      "reference": "",
-      "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB",
-      "debit": "15,000.00",
-      "credit": "",
-      "balance": "297,122.16"
-    },
-    {
-      "transDate": "03/06/2022",
-      "valueDate": "03/06/2022",
-      "reference": "",
-      "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB",
-      "debit": "20,000.00",
-      "credit": "",
-      "balance": "277,122.16"
-    },
-    {
-      "transDate": "04/06/2022",
-      "valueDate": "04/06/2022",
-      "reference": "",
-      "remarks": "STAMP DUTY CHARGE",
-      "debit": "500.00",
-      "credit": "",
-      "balance": "276,622.16"
-    },
-    {
+      "type": "credit",
       "transDate": "06/06/2022",
-      "valueDate": "06/06/2022",
-      "reference": "",
       "remarks": "NIP/GTB/FASIPEBI  CHRISTOPHER ADEBIYI/USSD NIP Transfer from  08037158984",
-      "debit": "",
-      "credit": "1,000.00",
-      "balance": "277,622.16"
+      "categoryId": "v6Ct7LTUP",
+      "acctName": "foafgub3e",
+      "balance": "277,622.16",
+      "amount": 100000,
+      "date": "06/06/2022",
+      "reference": ""
     },
     {
-      "transDate": "06/06/2022",
-      "valueDate": "06/06/2022",
+      "balance": "132,177.98",
       "reference": "",
-      "remarks": "NIP/WBP/PayStack-Paystack/affce3d8-0e9a-47ea-baea-363d18d1ab2a/Paystack payo",
-      "debit": "",
-      "credit": "26,717.09",
-      "balance": "304,339.25"
-    },
-    {
-      "transDate": "06/06/2022",
-      "valueDate": "06/06/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "304,312.37"
-    },
-    {
-      "transDate": "06/06/2022",
-      "valueDate": "06/06/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "304,285.49"
-    },
-    {
-      "transDate": "06/06/2022",
-      "valueDate": "06/06/2022",
-      "reference": "",
-      "remarks": "NIP CR/PHOSTER SOLUTION ENTERPRISES/GTB",
-      "debit": "40,000.00",
-      "credit": "",
-      "balance": "264,285.49"
-    },
-    {
-      "transDate": "06/06/2022",
-      "valueDate": "06/06/2022",
-      "reference": "",
-      "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB",
-      "debit": "50,000.00",
-      "credit": "",
-      "balance": "214,285.49"
-    },
-    {
-      "transDate": "07/06/2022",
-      "valueDate": "07/06/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "214,258.61"
-    },
-    {
-      "transDate": "07/06/2022",
-      "valueDate": "07/06/2022",
-      "reference": "",
-      "remarks": "NIP CR/OGUNLAKINNASIRUDEEN OLALEKAN/GTB",
-      "debit": "26,000.00",
-      "credit": "",
-      "balance": "188,258.61"
-    },
-    {
+      "date": "08/06/2022",
+      "remarks": "NIP CR/THEPADDY MARKETING TECHNOLOGY COMPANY/FCMB",
+      "type": "debit",
+      "acctName": "foafgub3e",
+      "categoryId": "",
       "transDate": "08/06/2022",
-      "valueDate": "08/06/2022",
+      "amount": 50000000
+    },
+    {
+      "type": "credit",
+      "balance": "326,902.80",
+      "date": "03/06/2022",
+      "remarks": "NIP/WBP/PayStack-Paystack/0189c6f7-c112-46e9-b96e-656073f842a1/Paystack payo",
+      "categoryId": "v6Ct7LTUP",
+      "acctName": "foafgub3e",
+      "amount": 10927678,
+      "transDate": "03/06/2022",
+      "reference": ""
+    },
+    {
+      "type": "credit",
+      "acctName": "foafgub3e",
+      "date": "08/06/2022",
+      "categoryId": "v6Ct7LTUP",
       "reference": "",
+      "amount": 47400000,
       "remarks": "NIP/GTB/PHOSTER SOLUTION ENTERPRISES/via GTWORLD Lent returned",
-      "debit": "",
-      "credit": "474,000.00",
+      "transDate": "08/06/2022",
       "balance": "662,258.61"
     },
     {
-      "transDate": "08/06/2022",
-      "valueDate": "08/06/2022",
+      "date": "01/06/2022",
+      "amount": 2688,
+      "type": "debit",
+      "balance": "351,606.65",
+      "categoryId": "TX53qha1b",
       "reference": "",
+      "acctName": "foafgub3e",
       "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "662,231.73"
+      "transDate": "01/06/2022"
     },
     {
-      "transDate": "08/06/2022",
-      "valueDate": "08/06/2022",
       "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "53.75",
-      "credit": "",
-      "balance": "662,177.98"
+      "balance": "204,126.02",
+      "acctName": "foafgub3e",
+      "amount": 210000,
+      "type": "credit",
+      "date": "03/06/2022",
+      "categoryId": "v6Ct7LTUP",
+      "transDate": "03/06/2022",
+      "remarks": "NIP/UBN/FUNSHO R O MR/MOBILE/UNION Transfer from FUNSHO R O MR - rasaqf@yahoo.co"
     },
     {
-      "transDate": "08/06/2022",
-      "valueDate": "08/06/2022",
+      "balance": "277,122.16",
+      "categoryId": "3GwFN56Bm",
+      "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB",
+      "reference": "",
+      "transDate": "03/06/2022",
+      "acctName": "foafgub3e",
+      "date": "03/06/2022",
+      "type": "debit",
+      "amount": 2000000
+    },
+    {
+      "reference": "",
+      "acctName": "foafgub3e",
+      "type": "debit",
+      "date": "06/06/2022",
+      "balance": "214,285.49",
+      "amount": 5000000,
+      "transDate": "06/06/2022",
+      "categoryId": "3GwFN56Bm",
+      "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB"
+    },
+    {
+      "remarks": "NIP/WBP/PayStack-Paystack/7deea536-f88e-4080-b790-d88e28df6f2c/Paystack payo",
+      "acctName": "foafgub3e",
+      "date": "01/06/2022",
+      "amount": 1040601,
+      "transDate": "01/06/2022",
+      "balance": "300,933.53",
+      "reference": "",
+      "type": "credit",
+      "categoryId": "v6Ct7LTUP"
+    },
+    {
+      "type": "debit",
+      "transDate": "01/06/2022",
+      "date": "01/06/2022",
+      "balance": "351,606.65",
+      "acctName": "foafgub3e",
+      "reference": "",
+      "remarks": "NIP Charge + VAT",
+      "amount": 2688,
+      "categoryId": "TX53qha1b"
+    },
+    {
+      "type": "debit",
+      "balance": "202,026.02",
+      "transDate": "02/06/2022",
+      "acctName": "foafgub3e",
+      "categoryId": "3GwFN56Bm",
+      "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB",
+      "reference": "",
+      "amount": 5600000,
+      "date": "02/06/2022"
+    },
+    {
+      "acctName": "foafgub3e",
+      "amount": 5000000,
+      "date": "01/06/2022",
+      "type": "debit",
+      "balance": "301,606.65",
+      "transDate": "01/06/2022",
       "reference": "",
       "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB",
-      "debit": "30,000.00",
-      "credit": "",
+      "categoryId": "3GwFN56Bm"
+    },
+    {
+      "type": "debit",
+      "categoryId": "TX53qha1b",
+      "acctName": "foafgub3e",
+      "balance": "662,177.98",
+      "date": "08/06/2022",
+      "amount": 5375,
+      "transDate": "08/06/2022",
+      "reference": "",
+      "remarks": "NIP Charge + VAT"
+    },
+    {
+      "reference": "",
+      "date": "02/06/2022",
+      "amount": 4500000,
+      "categoryId": "Eso8XfPoY",
+      "remarks": "NIP CR/ADEBAYO MARY/GTB mp",
+      "transDate": "02/06/2022",
+      "type": "debit",
+      "balance": "258,026.02",
+      "acctName": "foafgub3e"
+    },
+    {
+      "amount": 2688,
+      "remarks": "NIP Charge + VAT",
+      "balance": "303,079.77",
+      "acctName": "foafgub3e",
+      "categoryId": "TX53qha1b",
+      "type": "debit",
+      "date": "02/06/2022",
+      "reference": "",
+      "transDate": "02/06/2022"
+    },
+    {
+      "amount": 1280000,
+      "acctName": "foafgub3e",
+      "transDate": "09/06/2022",
+      "type": "credit",
+      "remarks": "NIP/GTB/ANISIOBI CHUKWUEBUKA NKEM/AcuraMDXRenewal REF208750512000012800002206091",
+      "categoryId": "v6Ct7LTUP",
+      "balance": "144,977.98",
+      "reference": "",
+      "date": "09/06/2022"
+    },
+    {
+      "transDate": "02/06/2022",
+      "categoryId": "TX53qha1b",
+      "date": "02/06/2022",
+      "type": "debit",
+      "amount": 5375,
+      "remarks": "NIP Charge + VAT",
+      "acctName": "foafgub3e",
+      "reference": "",
+      "balance": "303,026.02"
+    },
+    {
+      "categoryId": "TX53qha1b",
+      "date": "04/06/2022",
+      "remarks": "STAMP DUTY CHARGE",
+      "amount": 50000,
+      "balance": "276,622.16",
+      "reference": "",
+      "type": "debit",
+      "acctName": "foafgub3e",
+      "transDate": "04/06/2022"
+    },
+    {
+      "acctName": "foafgub3e",
+      "reference": "",
+      "date": "14/06/2022",
+      "categoryId": "TX53qha1b",
+      "remarks": "NIP Charge + VAT",
+      "transDate": "14/06/2022",
+      "type": "debit",
+      "balance": 15590067,
+      "amount": 2688
+    },
+    {
+      "remarks": "NIP/WBP/PayStack-Paystack/7deea536-f88e-4080-b790-d88e28df6f2c/Paystack payo",
+      "reference": "",
+      "transDate": "01/06/2022",
+      "acctName": "foafgub3e",
+      "balance": "300,933.53",
+      "date": "01/06/2022",
+      "amount": 1040601,
+      "type": "credit",
+      "categoryId": "v6Ct7LTUP"
+    },
+    {
+      "remarks": "NIP Charge + VAT",
+      "acctName": "foafgub3e",
+      "transDate": "06/06/2022",
+      "balance": "304,312.37",
+      "date": "06/06/2022",
+      "amount": 2688,
+      "reference": "",
+      "type": "debit",
+      "categoryId": "TX53qha1b"
+    },
+    {
+      "type": "credit",
+      "acctName": "foafgub3e",
+      "balance": "181,749.83",
+      "amount": 100000,
+      "categoryId": "v6Ct7LTUP",
+      "date": "16/06/2022",
+      "remarks": "NIP Charge + VAT",
+      "transDate": "16/06/2022",
+      "reference": ""
+    },
+    {
+      "reference": "",
+      "transDate": "06/06/2022",
+      "amount": 4000000,
+      "balance": 26428549,
+      "acctName": "foafgub3e",
+      "date": "06/06/2022",
+      "remarks": "NIP CR/PHOSTER SOLUTION ENTERPRISES/GTB",
+      "type": "debit",
+      "categoryId": "ZDE7XJXBR"
+    },
+    {
+      "categoryId": "3GwFN56Bm",
+      "transDate": "08/06/2022",
+      "type": "debit",
+      "acctName": "foafgub3e",
+      "amount": 3000000,
+      "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB",
+      "reference": "",
+      "date": "08/06/2022",
       "balance": "632,177.98"
     },
     {
-      "transDate": "08/06/2022",
-      "valueDate": "08/06/2022",
-      "reference": "",
-      "remarks": "NIP CR/THEPADDY MARKETING TECHNOLOGY COMPANY/FCMB",
-      "debit": "500,000.00",
-      "credit": "",
-      "balance": "132,177.98"
-    },
-    {
-      "transDate": "09/06/2022",
-      "valueDate": "09/06/2022",
-      "reference": "",
-      "remarks": "NIP/GTB/ANISIOBI CHUKWUEBUKA NKEM/AcuraMDXRenewal REF208750512000012800002206091",
-      "debit": "",
-      "credit": "12,800.00",
-      "balance": "144,977.98"
-    },
-    {
-      "transDate": "10/06/2022",
-      "valueDate": "10/06/2022",
-      "reference": "",
       "remarks": "NIP Charge + VAT",
-      "debit": "10.75",
-      "credit": "",
-      "balance": "144,967.23"
+      "date": "15/06/2022",
+      "categoryId": "TX53qha1b",
+      "acctName": "foafgub3e",
+      "reference": "",
+      "type": "debit",
+      "amount": 1075,
+      "balance": "172,573.65",
+      "transDate": "15/06/2022"
     },
     {
-      "transDate": "10/06/2022",
-      "valueDate": "10/06/2022",
-      "reference": "",
-      "remarks": "NIP CR/ADEBAYO MARY/GTB",
-      "debit": "4,200.00",
-      "credit": "",
-      "balance": "140,767.23"
+      "acctName": "foafgub3e",
+      "categoryId": "v6Ct7LTUP",
+      "type": "credit",
+      "amount": 1350000,
+      "transDate": "03/06/2022",
+      "remarks": "NIP/FCMB/OBAYAGBO GLORIA ONAJEME/web:from Mrs Fadipe Gloria",
+      "balance": "217,626.02",
+      "date": "03/06/2022",
+      "reference": ""
     },
     {
-      "transDate": "11/06/2022",
-      "valueDate": "11/06/2022",
+      "amount": 5070000,
+      "balance": "351,633.53",
+      "remarks": "NIP/GTB/OGUNLADE OLUMUYIWA AYOMITAN/via GTWORLD",
+      "date": "01/06/2022",
+      "categoryId": "v6Ct7LTUP",
+      "transDate": "01/06/2022",
       "reference": "",
-      "remarks": "STAMP DUTY CHARGE",
-      "debit": "150.00",
-      "credit": "",
-      "balance": "140,617.23"
+      "type": "credit",
+      "acctName": "foafgub3e"
     },
     {
-      "transDate": "14/06/2022",
-      "valueDate": "14/06/2022",
-      "reference": "",
-      "remarks": "NIP/WBP/PayStack-Paystack/dfd0b888-3336-4a4b-8057-a8984e9566bf/Paystack payo",
-      "debit": "",
-      "credit": "15,310.32",
-      "balance": "155,927.55"
-    },
-    {
-      "transDate": "14/06/2022",
-      "valueDate": "14/06/2022",
-      "reference": "",
+      "type": "debit",
+      "acctName": "foafgub3e",
+      "balance": "181,749.83",
+      "amount": 2688,
+      "categoryId": "TX53qha1b",
+      "date": "15/06/2022",
       "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "155,900.67"
-    },
-    {
-      "transDate": "14/06/2022",
-      "valueDate": "14/06/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "155,873.79"
-    },
-    {
-      "transDate": "14/06/2022",
-      "valueDate": "14/06/2022",
-      "reference": "",
-      "remarks": "NIP CR/TAMUNOSAKI BOMA BENEBO/STLB",
-      "debit": "5,700.00",
-      "credit": "",
-      "balance": "150,173.79"
-    },
-    {
-      "transDate": "14/06/2022",
-      "valueDate": "14/06/2022",
-      "reference": "",
-      "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB",
-      "debit": "10,000.00",
-      "credit": "",
-      "balance": "140,173.79"
-    },
-    {
-      "transDate": "15/06/2022",
-      "valueDate": "15/06/2022",
-      "reference": "",
-      "remarks": "NIP/GTB/BAMIDELE  HAMMED YAKUBUBAMIDELE, HAMMED /PAYMENTFORPAPERRENEWKSF319EE RE",
-      "debit": "",
-      "credit": "16,200.00",
-      "balance": "156,373.79"
-    },
-    {
-      "transDate": "15/06/2022",
-      "valueDate": "15/06/2022",
-      "reference": "",
-      "remarks": "NIP/WBP/PayStack-Paystack/374dc041-f75e-4a4e-96cf-feaab2647a3c/Paystack payo",
-      "debit": "",
-      "credit": "16,210.61",
-      "balance": "172,584.40"
-    },
-    {
-      "transDate": "15/06/2022",
-      "valueDate": "15/06/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "10.75",
-      "credit": "",
-      "balance": "172,573.65"
-    },
-    {
-      "transDate": "15/06/2022",
-      "valueDate": "15/06/2022",
-      "reference": "",
-      "remarks": "NIP CR/QOODI COMPANY/GTB",
-      "debit": "1,500.00",
-      "credit": "",
-      "balance": "171,073.65"
-    },
-    {
       "transDate": "16/06/2022",
-      "valueDate": "16/06/2022",
-      "reference": "",
-      "remarks": "NIP/GTB/BAMIDELE  HAMMED YAKUBUBAMIDELE, HAMMED /FORLICENCERENEWOFKSF317EE REF25",
-      "debit": "",
-      "credit": "4,700.00",
-      "balance": "175,773.65"
+      "reference": ""
     },
     {
+      "type": "debit",
+      "acctName": "foafgub3e",
+      "balance": "181,749.83",
+      "amount": 100000,
+      "categoryId": "TX53qha1b",
+      "date": "16/06/2022",
+      "remarks": "NIP Charge + VAT",
       "transDate": "16/06/2022",
-      "valueDate": "16/06/2022",
-      "reference": "",
-      "remarks": "NIP/WBP/PayStack-Paystack/938f17cb-1e2d-4559-a1ef-86cf43690a27/Paystack payo",
-      "debit": "",
-      "credit": "6,003.06",
-      "balance": "181,776.71"
+      "reference": ""
     },
     {
-      "transDate": "16/06/2022",
-      "valueDate": "16/06/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "181,749.83"
-    },
-    {
-      "transDate": "16/06/2022",
-      "valueDate": "16/06/2022",
-      "reference": "",
+      "acctName": "foafgub3e",
+      "transDate": "03/06/2022",
       "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB",
-      "debit": "40,000.00",
-      "credit": "",
-      "balance": "141,749.83"
-    },
-    {
-      "transDate": "17/06/2022",
-      "valueDate": "17/06/2022",
-      "reference": "",
-      "remarks": "NIP/WBP/PayStack-Paystack/e863150e-1180-424c-a685-08240d25cb03/Paystack payo",
-      "debit": "",
-      "credit": "22,013.71",
-      "balance": "163,763.54"
-    },
-    {
-      "transDate": "18/06/2022",
-      "valueDate": "18/06/2022",
-      "reference": "",
-      "remarks": "NIP/GTB/IKPEOYI EBELECHUKWU STEPHANIE/via GTWORLD ikpeoyiebelegmail.com",
-      "debit": "",
-      "credit": "12,200.00",
-      "balance": "175,963.54"
-    },
-    {
-      "transDate": "18/06/2022",
-      "valueDate": "18/06/2022",
-      "reference": "",
-      "remarks": "STAMP DUTY CHARGE",
-      "debit": "200.00",
-      "credit": "",
-      "balance": "175,763.54"
-    },
-    {
-      "transDate": "20/06/2022",
-      "valueDate": "20/06/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "175,736.66"
-    },
-    {
-      "transDate": "20/06/2022",
-      "valueDate": "20/06/2022",
-      "reference": "",
-      "remarks": "NIP CR/OWOEYEPHOSTER OLATUNDESEUN/GTB",
-      "debit": "25,000.00",
-      "credit": "",
-      "balance": "150,736.66"
-    },
-    {
-      "transDate": "21/06/2022",
-      "valueDate": "21/06/2022",
-      "reference": "",
-      "remarks": "NIP/GTB/OROBOSA-OGBEIDE OSARUYI/ooogbeidegmail.com REF20214642500001520000220621",
-      "debit": "",
-      "credit": "15,200.00",
-      "balance": "165,936.66"
-    },
-    {
-      "transDate": "22/06/2022",
-      "valueDate": "22/06/2022",
-      "reference": "",
-      "remarks": "TRF FRM GBEMINIYI OLARIBIGBE MUYI TO THEPADDY MARKETING TECHNOLOGY COMPANY|niyim",
-      "debit": "",
-      "credit": "4,400.00",
-      "balance": "170,336.66"
-    },
-    {
-      "transDate": "23/06/2022",
-      "valueDate": "23/06/2022",
-      "reference": "",
-      "remarks": "NIP/WBP/PayStack-Paystack/1138d51e-6173-4212-bfa1-c858f8430bfe/Paystack payo",
-      "debit": "",
-      "credit": "5,803.10",
-      "balance": "176,139.76"
-    },
-    {
-      "transDate": "23/06/2022",
-      "valueDate": "23/06/2022",
-      "reference": "",
-      "remarks": "NIP/KBL/EFFIONG EDET EMMAUNEL/TRF BO EFFIONG EDET EMMAUNEL/vehicle renewal",
-      "debit": "",
-      "credit": "15,200.00",
-      "balance": "191,339.76"
-    },
-    {
-      "transDate": "23/06/2022",
-      "valueDate": "23/06/2022",
-      "reference": "",
-      "remarks": "NIP/GTB/OLUWAFEMI  OLABODE WILLIAMS/NIP Inflow from OLUWAFEMI  OLABODE WILLIAMS",
-      "debit": "",
-      "credit": "52,500.00",
-      "balance": "243,839.76"
-    },
-    {
-      "transDate": "23/06/2022",
-      "valueDate": "23/06/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "243,812.88"
-    },
-    {
-      "transDate": "23/06/2022",
-      "valueDate": "23/06/2022",
-      "reference": "",
-      "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB",
-      "debit": "20,000.00",
-      "credit": "",
-      "balance": "223,812.88"
-    },
-    {
-      "transDate": "24/06/2022",
-      "valueDate": "24/06/2022",
-      "reference": "",
-      "remarks": "NIP/KBL/ALAFA-A ROMEO VICTORIA/TRF BO ALAFA-A ROMEO VICTORIA/Renewal of Car Pape",
-      "debit": "",
-      "credit": "9,300.00",
-      "balance": "233,112.88"
-    },
-    {
-      "transDate": "24/06/2022",
-      "valueDate": "24/06/2022",
-      "reference": "",
-      "remarks": "NIP/KBL/EFFIONG EDET EMMAUNEL/TRF BO EFFIONG EDET EMMAUNEL/vehicle document rene",
-      "debit": "",
-      "credit": "10,400.00",
-      "balance": "243,512.88"
-    },
-    {
-      "transDate": "24/06/2022",
-      "valueDate": "24/06/2022",
-      "reference": "",
-      "remarks": "NIP/GTB/OLUSOLA AFEEZ OLADAPOOLUSOLA AFEEZ OLADA/via GTWORLD",
-      "debit": "",
-      "credit": "27,000.00",
-      "balance": "270,512.88"
-    },
-    {
-      "transDate": "24/06/2022",
-      "valueDate": "24/06/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "270,486.00"
-    },
-    {
-      "transDate": "24/06/2022",
-      "valueDate": "24/06/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "270,459.12"
-    },
-    {
-      "transDate": "24/06/2022",
-      "valueDate": "24/06/2022",
-      "reference": "",
-      "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB",
-      "debit": "21,000.00",
-      "credit": "",
-      "balance": "249,459.12"
-    },
-    {
-      "transDate": "24/06/2022",
-      "valueDate": "24/06/2022",
-      "reference": "",
-      "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB",
-      "debit": "50,000.00",
-      "credit": "",
-      "balance": "199,459.12"
-    },
-    {
-      "transDate": "25/06/2022",
-      "valueDate": "25/06/2022",
-      "reference": "",
-      "remarks": "STAMP DUTY CHARGE",
-      "debit": "250.00",
-      "credit": "",
-      "balance": "199,209.12"
-    },
-    {
-      "transDate": "27/06/2022",
-      "valueDate": "27/06/2022",
-      "reference": "",
-      "remarks": "NIP/CHANE/OGBEDE-NWACHUKWU MERCEDES WERUCHE/FT0536072398 1211145540",
-      "debit": "",
-      "credit": "3,400.00",
-      "balance": "202,609.12"
-    },
-    {
-      "transDate": "27/06/2022",
-      "valueDate": "27/06/2022",
-      "reference": "",
-      "remarks": "NIP/CHANE/OGBEDE-NWACHUKWU MERCEDES WERUCHE/FT0536072398 1211145540",
-      "debit": "",
-      "credit": "14,100.00",
-      "balance": "216,709.12"
-    },
-    {
-      "transDate": "27/06/2022",
-      "valueDate": "27/06/2022",
-      "reference": "",
-      "remarks": "NIP/WBP/PayStack-Paystack/7e160e00-378a-4be9-ad3f-cf7062aed9b7/Paystack payo",
-      "debit": "",
-      "credit": "16,509.54",
-      "balance": "233,218.66"
-    },
-    {
-      "transDate": "27/06/2022",
-      "valueDate": "27/06/2022",
-      "reference": "",
-      "remarks": "NIP/WBP/PayStack-Paystack/bc21a95e-ee0e-4984-aa6e-6578add81f4a/Paystack payo",
-      "debit": "",
-      "credit": "30,920.08",
-      "balance": "264,138.74"
-    },
-    {
-      "transDate": "27/06/2022",
-      "valueDate": "27/06/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "264,111.86"
-    },
-    {
-      "transDate": "27/06/2022",
-      "valueDate": "27/06/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "264,084.98"
-    },
-    {
-      "transDate": "27/06/2022",
-      "valueDate": "27/06/2022",
-      "reference": "",
-      "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB",
-      "debit": "25,000.00",
-      "credit": "",
-      "balance": "239,084.98"
-    },
-    {
-      "transDate": "27/06/2022",
-      "valueDate": "27/06/2022",
-      "reference": "",
-      "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB",
-      "debit": "40,000.00",
-      "credit": "",
-      "balance": "199,084.98"
-    },
-    {
-      "transDate": "28/06/2022",
-      "valueDate": "28/06/2022",
-      "reference": "",
-      "remarks": "NIP/GTB/MAXPOT/via GTWORLD Nissan Insurance Ola Opesan",
-      "debit": "",
-      "credit": "5,000.00",
-      "balance": "204,084.98"
-    },
-    {
-      "transDate": "28/06/2022",
-      "valueDate": "28/06/2022",
-      "reference": "",
-      "remarks": "NIP/GTB/STEPHEN TEMITAYOSTEPHEN,TEMITAYO/Roadworthinessandvehiclelicence REF2238",
-      "debit": "",
-      "credit": "12,200.00",
-      "balance": "216,284.98"
-    },
-    {
-      "transDate": "28/06/2022",
-      "valueDate": "28/06/2022",
-      "reference": "",
-      "remarks": "NIP/WBP/PayStack-Paystack/66803ed0-4995-4ccc-a94c-3964329c6d3f/Paystack payo",
-      "debit": "",
-      "credit": "58,637.93",
-      "balance": "274,922.91"
-    },
-    {
-      "transDate": "28/06/2022",
-      "valueDate": "28/06/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "274,896.03"
-    },
-    {
-      "transDate": "28/06/2022",
-      "valueDate": "28/06/2022",
-      "reference": "",
-      "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB",
-      "debit": "50,000.00",
-      "credit": "",
-      "balance": "224,896.03"
-    },
-    {
-      "transDate": "29/06/2022",
-      "valueDate": "29/06/2022",
-      "reference": "",
-      "remarks": "TRF FRM TOLU JOHN APPAREL LIMITED TO THEPADDY MARKETING TECHNOLOGY COMPANY|vehic",
-      "debit": "",
-      "credit": "6,300.00",
-      "balance": "231,196.03"
-    },
-    {
-      "transDate": "30/06/2022",
-      "valueDate": "30/06/2022",
-      "reference": "",
-      "remarks": "NIP/GTB/IKOGHO PHILIPIKOGHO,PHILIP/REF221846871000065034002206301547",
-      "debit": "",
-      "credit": "65,034.00",
-      "balance": "296,230.03"
-    },
-    {
-      "transDate": "30/06/2022",
-      "valueDate": "30/06/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "296,203.15"
-    },
-    {
-      "transDate": "30/06/2022",
-      "valueDate": "30/06/2022",
-      "reference": "",
-      "remarks": "Acct Maint. Fee + VAT",
-      "debit": "1,256.78",
-      "credit": "",
-      "balance": "294,946.37"
-    },
-    {
-      "transDate": "30/06/2022",
-      "valueDate": "30/06/2022",
-      "reference": "",
-      "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB",
-      "debit": "30,000.00",
-      "credit": "",
-      "balance": "264,946.37"
-    },
-    {
-      "transDate": "01/07/2022",
-      "valueDate": "01/07/2022",
-      "reference": "",
-      "remarks": "NIP/ABN/MICHAEL OLATUNDE/TRFRenewal for mrmikeolatundegmailcomFRM MICHAEL OLATUN",
-      "debit": "",
-      "credit": "12,800.00",
-      "balance": "277,746.37"
-    },
-    {
-      "transDate": "01/07/2022",
-      "valueDate": "01/07/2022",
-      "reference": "",
-      "remarks": "NIP/WBP/PayStack-Paystack/8f016be8-2826-46a8-b4f1-23e32e4c43d8/Paystack payo",
-      "debit": "",
-      "credit": "31,216.53",
-      "balance": "308,962.90"
-    },
-    {
-      "transDate": "01/07/2022",
-      "valueDate": "01/07/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "308,936.02"
-    },
-    {
-      "transDate": "01/07/2022",
-      "valueDate": "01/07/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "308,909.14"
-    },
-    {
-      "transDate": "01/07/2022",
-      "valueDate": "01/07/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "308,882.26"
-    },
-    {
-      "transDate": "01/07/2022",
-      "valueDate": "01/07/2022",
-      "reference": "",
-      "remarks": "NIP CR/SUNDAY IBUKUN ABOLAJI/KUDA",
-      "debit": "15,700.00",
-      "credit": "",
-      "balance": "293,182.26"
-    },
-    {
-      "transDate": "01/07/2022",
-      "valueDate": "01/07/2022",
-      "reference": "",
-      "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB",
-      "debit": "40,000.00",
-      "credit": "",
-      "balance": "253,182.26"
-    },
-    {
-      "transDate": "01/07/2022",
-      "valueDate": "01/07/2022",
-      "reference": "",
-      "remarks": "NIP CR/ADEBAYO MARY/GTB",
-      "debit": "45,000.00",
-      "credit": "",
-      "balance": "208,182.26"
-    },
-    {
-      "transDate": "02/07/2022",
-      "valueDate": "02/07/2022",
-      "reference": "",
-      "remarks": "STAMP DUTY CHARGE",
-      "debit": "400.00",
-      "credit": "",
-      "balance": "207,782.26"
-    },
-    {
-      "transDate": "03/07/2022",
-      "valueDate": "03/07/2022",
-      "reference": "",
-      "remarks": "NIP/KUDA/RASHEED OPEYEMI MURAINA/FOR PARTICULARS",
-      "debit": "",
-      "credit": "12,200.00",
-      "balance": "219,982.26"
-    },
-    {
-      "transDate": "04/07/2022",
-      "valueDate": "04/07/2022",
-      "reference": "",
-      "remarks": "NIP/GTB/EMIEDAFE BARRY  IGHOFEWOEMIEDAFE BARRY, /via GTWORLD BDG908AQ Vehicle Li",
-      "debit": "",
-      "credit": "4,400.00",
-      "balance": "224,382.26"
-    },
-    {
-      "transDate": "04/07/2022",
-      "valueDate": "04/07/2022",
-      "reference": "",
-      "remarks": "ZENITH MOBILE TRANSFER FROM OSEREMEN STEPHANIE AGENMONMEN",
-      "debit": "",
-      "credit": "4,900.00",
-      "balance": "229,282.26"
-    },
-    {
-      "transDate": "04/07/2022",
-      "valueDate": "04/07/2022",
-      "reference": "",
-      "remarks": "NIP/CARBO/Gabriel Ajigboye/Transfer from Gabriel Ajigboye",
-      "debit": "",
-      "credit": "7,500.00",
-      "balance": "236,782.26"
-    },
-    {
-      "transDate": "04/07/2022",
-      "valueDate": "04/07/2022",
-      "reference": "",
-      "remarks": "NIP/FBN/ASADE MOJEED ADENIYI/FBNMOBILE:THEPADDY MARKETING TECHNOLOGY COMPANY/PRI",
-      "debit": "",
-      "credit": "17,100.00",
-      "balance": "253,882.26"
-    },
-    {
-      "transDate": "04/07/2022",
-      "valueDate": "04/07/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "253,855.38"
-    },
-    {
-      "transDate": "04/07/2022",
-      "valueDate": "04/07/2022",
-      "reference": "",
-      "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB",
-      "debit": "46,000.00",
-      "credit": "",
-      "balance": "207,855.38"
-    },
-    {
-      "transDate": "05/07/2022",
-      "valueDate": "05/07/2022",
-      "reference": "",
-      "remarks": "NIP/FBN/OKEZIE CHUKWUEMEKA ALBERT/FBNMOBILE:THEPADDY MARKETING TECHNOLOGY COMPAN",
-      "debit": "",
-      "credit": "5,700.00",
-      "balance": "213,555.38"
-    },
-    {
-      "transDate": "05/07/2022",
-      "valueDate": "05/07/2022",
-      "reference": "",
-      "remarks": "NIP/GTB/OROLU MUJIDAT TOMIWA/ForRoadWorthiness REF421435011000006400002207051424",
-      "debit": "",
-      "credit": "6,400.00",
-      "balance": "219,955.38"
-    },
-    {
-      "transDate": "05/07/2022",
-      "valueDate": "05/07/2022",
-      "reference": "",
-      "remarks": "TRF FRM OSEREMEN STEPHANIE AGENMONMEN TO THEPADDY MARKETING TECHNOLOGY COMPANY|o",
-      "debit": "",
-      "credit": "27,000.00",
-      "balance": "246,955.38"
-    },
-    {
-      "transDate": "05/07/2022",
-      "valueDate": "05/07/2022",
-      "reference": "",
-      "remarks": "NIP/WBP/PayStack-Paystack/1dd0031f-305a-4c2b-8a5b-6678e220eca2/Paystack payo",
-      "debit": "",
-      "credit": "49,232.69",
-      "balance": "296,188.07"
-    },
-    {
-      "transDate": "05/07/2022",
-      "valueDate": "05/07/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "296,161.19"
-    },
-    {
-      "transDate": "05/07/2022",
-      "valueDate": "05/07/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "53.75",
-      "credit": "",
-      "balance": "296,107.44"
-    },
-    {
-      "transDate": "05/07/2022",
-      "valueDate": "05/07/2022",
-      "reference": "",
-      "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB",
-      "debit": "30,000.00",
-      "credit": "",
-      "balance": "266,107.44"
-    },
-    {
-      "transDate": "05/07/2022",
-      "valueDate": "05/07/2022",
-      "reference": "",
-      "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB",
-      "debit": "53,000.00",
-      "credit": "",
-      "balance": "213,107.44"
-    },
-    {
-      "transDate": "06/07/2022",
-      "valueDate": "06/07/2022",
-      "reference": "",
-      "remarks": "NIP/GTB/STEPHEN  JAHSWILL OBI/via GTWORLD Renewal for JJJ444FA",
-      "debit": "",
-      "credit": "16,200.00",
-      "balance": "229,307.44"
-    },
-    {
-      "transDate": "06/07/2022",
-      "valueDate": "06/07/2022",
-      "reference": "",
-      "remarks": "NIP/GTB/AMINU   PETER OLAMIDE/Peterolamideaminu.LSR900GZMATRIX08062141921 REF214",
-      "debit": "",
-      "credit": "20,200.00",
-      "balance": "249,507.44"
-    },
-    {
-      "transDate": "06/07/2022",
-      "valueDate": "06/07/2022",
-      "reference": "",
-      "remarks": "NIP/WBP/PayStack-Paystack/054e105e-beb9-4c64-b3b1-c1e10b867d2a/Paystack payo",
-      "debit": "",
-      "credit": "26,015.77",
-      "balance": "275,523.21"
-    },
-    {
-      "transDate": "06/07/2022",
-      "valueDate": "06/07/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "275,496.33"
-    },
-    {
-      "transDate": "06/07/2022",
-      "valueDate": "06/07/2022",
-      "reference": "",
-      "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB",
-      "debit": "20,000.00",
-      "credit": "",
-      "balance": "255,496.33"
-    },
-    {
-      "transDate": "07/07/2022",
-      "valueDate": "07/07/2022",
-      "reference": "",
-      "remarks": "NIP/GTB/LORDSKY ENTERTAINMENT/via GTWORLD",
-      "debit": "",
-      "credit": "10,000.00",
-      "balance": "265,496.33"
-    },
-    {
-      "transDate": "07/07/2022",
-      "valueDate": "07/07/2022",
-      "reference": "",
-      "remarks": "NIP/WBP/PayStack-Paystack/23228759-3e48-4363-99f5-d8109ca8d465/Paystack payo",
-      "debit": "",
-      "credit": "52,332.44",
-      "balance": "317,828.77"
-    },
-    {
-      "transDate": "07/07/2022",
-      "valueDate": "07/07/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "317,801.89"
-    },
-    {
-      "transDate": "07/07/2022",
-      "valueDate": "07/07/2022",
-      "reference": "",
-      "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB",
-      "debit": "50,000.00",
-      "credit": "",
-      "balance": "267,801.89"
-    },
-    {
-      "transDate": "08/07/2022",
-      "valueDate": "08/07/2022",
-      "reference": "",
-      "remarks": "NIP/STBC/ISAAC OLAWALE OJO/KJA662DQ License",
-      "debit": "",
-      "credit": "3,900.00",
-      "balance": "271,701.89"
-    },
-    {
-      "transDate": "08/07/2022",
-      "valueDate": "08/07/2022",
-      "reference": "",
-      "remarks": "NIP/WBP/PayStack-Paystack/f9517797-bd7f-4b4e-9ef3-54c5db50c1a2/Paystack payo",
-      "debit": "",
-      "credit": "27,517.89",
-      "balance": "299,219.78"
-    },
-    {
-      "transDate": "08/07/2022",
-      "valueDate": "08/07/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "299,192.90"
-    },
-    {
-      "transDate": "08/07/2022",
-      "valueDate": "08/07/2022",
-      "reference": "",
-      "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB",
-      "debit": "50,000.00",
-      "credit": "",
-      "balance": "249,192.90"
-    },
-    {
-      "transDate": "09/07/2022",
-      "valueDate": "09/07/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "249,166.02"
-    },
-    {
-      "transDate": "09/07/2022",
-      "valueDate": "09/07/2022",
-      "reference": "",
-      "remarks": "STAMP DUTY CHARGE",
-      "debit": "500.00",
-      "credit": "",
-      "balance": "248,666.02"
-    },
-    {
-      "transDate": "09/07/2022",
-      "valueDate": "09/07/2022",
-      "reference": "",
-      "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB",
-      "debit": "20,000.00",
-      "credit": "",
-      "balance": "228,666.02"
-    },
-    {
-      "transDate": "10/07/2022",
-      "valueDate": "10/07/2022",
-      "reference": "",
-      "remarks": "NIP/WBP/JAHSWILL OBI STEPHEN/ZENITH BANK-",
-      "debit": "",
-      "credit": "9,400.00",
-      "balance": "238,066.02"
-    },
-    {
-      "transDate": "11/07/2022",
-      "valueDate": "11/07/2022",
-      "reference": "",
-      "remarks": "NIP/GTB/SONOIKI  OLUSEYE/Paper renew akd572ff",
-      "debit": "",
-      "credit": "15,300.00",
-      "balance": "253,366.02"
-    },
-    {
-      "transDate": "12/07/2022",
-      "valueDate": "12/07/2022",
-      "reference": "",
-      "remarks": "NIP/ABN/HALIMA NKECHI NWADEI/TRFReferral noteFRM HALIMA NKECHI NWADEI TO THEPADD",
-      "debit": "",
-      "credit": "7,600.00",
-      "balance": "260,966.02"
-    },
-    {
-      "transDate": "12/07/2022",
-      "valueDate": "12/07/2022",
-      "reference": "",
-      "remarks": "TRF FRM HAMILTON C EGBAI TO THEPADDY MARKETING TECHNOLOGY COMPANY|Vehicle doc re",
-      "debit": "",
-      "credit": "15,300.00",
-      "balance": "276,266.02"
-    },
-    {
-      "transDate": "13/07/2022",
-      "valueDate": "13/07/2022",
-      "reference": "",
-      "remarks": "NIP/WBP/PayStack-Paystack/da7ff778-552f-4255-9f85-95683f62a52d/Paystack payo",
-      "debit": "",
-      "credit": "4,501.92",
-      "balance": "280,767.94"
-    },
-    {
-      "transDate": "13/07/2022",
-      "valueDate": "13/07/2022",
-      "reference": "",
-      "remarks": "NIP/FBN/AFOLABI AREMU OLATUNDE/USSD_AFOLABI AREMU OLATUNDE",
-      "debit": "",
-      "credit": "16,200.00",
-      "balance": "296,967.94"
-    },
-    {
-      "transDate": "13/07/2022",
-      "valueDate": "13/07/2022",
-      "reference": "",
-      "remarks": "NIP/GTB/OMOAREBUN  ABIOLA FOLAKEOMOAREBUN, ABIOL/RenewalofRWVLandInsuranceAPP841",
-      "debit": "",
-      "credit": "16,200.00",
-      "balance": "313,167.94"
-    },
-    {
-      "transDate": "13/07/2022",
-      "valueDate": "13/07/2022",
-      "reference": "",
-      "remarks": "NIP/WBP/PayStack-Paystack/93931de3-e037-4754-8e46-e8e2e937fa6f/Paystack payo",
-      "debit": "",
-      "credit": "27,519.40",
-      "balance": "340,687.34"
-    },
-    {
-      "transDate": "13/07/2022",
-      "valueDate": "13/07/2022",
-      "reference": "",
-      "remarks": "NIP/WBP/PayStack-Paystack/844997bb-63b1-4311-85fd-70696c90e251/Paystack payo",
-      "debit": "",
-      "credit": "39,323.07",
-      "balance": "380,010.41"
-    },
-    {
-      "transDate": "13/07/2022",
-      "valueDate": "13/07/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "10.75",
-      "credit": "",
-      "balance": "379,999.66"
-    },
-    {
-      "transDate": "13/07/2022",
-      "valueDate": "13/07/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "379,972.78"
-    },
-    {
-      "transDate": "13/07/2022",
-      "valueDate": "13/07/2022",
-      "reference": "",
-      "remarks": "NIP CR/PHOSTER SOLUTION ENTERPRISES/GTB",
-      "debit": "3,000.00",
-      "credit": "",
-      "balance": "376,972.78"
-    },
-    {
-      "transDate": "13/07/2022",
-      "valueDate": "13/07/2022",
-      "reference": "",
-      "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB",
-      "debit": "40,000.00",
-      "credit": "",
-      "balance": "336,972.78"
-    },
-    {
-      "transDate": "14/07/2022",
-      "valueDate": "14/07/2022",
-      "reference": "",
-      "remarks": "NIP/UBA/CHUKELU  CHIBUZOR  ANTHONY/MOB/THEPADDY MARKET/UTO/11964272177/Chibuzora",
-      "debit": "",
-      "credit": "500.00",
-      "balance": "337,472.78"
-    },
-    {
-      "transDate": "14/07/2022",
-      "valueDate": "14/07/2022",
-      "reference": "",
-      "remarks": "NIP/GTB/PHOSTER SOLUTION ENTERPRISES/via GTWORLD Transport vehicle papers",
-      "debit": "",
-      "credit": "7,400.00",
-      "balance": "344,872.78"
-    },
-    {
-      "transDate": "14/07/2022",
-      "valueDate": "14/07/2022",
-      "reference": "",
-      "remarks": "NIP/ABN/ADEWALE OSIBERU/TRFELEPE Fortuner papersFRM ADEWALE OSIBERU TO THEPADDY",
-      "debit": "",
-      "credit": "8,700.00",
-      "balance": "353,572.78"
-    },
-    {
-      "transDate": "14/07/2022",
-      "valueDate": "14/07/2022",
-      "reference": "",
-      "remarks": "NIP/UBA/CHUKELU  CHIBUZOR  ANTHONY/MOB/THEPADDY MARKET/UTO/11961778001/chibuzora",
-      "debit": "",
-      "credit": "11,400.00",
-      "balance": "364,972.78"
-    },
-    {
-      "transDate": "14/07/2022",
-      "valueDate": "14/07/2022",
-      "reference": "",
-      "remarks": "NIP/GTB/BANKOLE MUYIWA.H./Moyeewayahoo.com REF221855306000016200002207141319",
-      "debit": "",
-      "credit": "16,200.00",
-      "balance": "381,172.78"
-    },
-    {
-      "transDate": "14/07/2022",
-      "valueDate": "14/07/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "381,145.90"
-    },
-    {
-      "transDate": "14/07/2022",
-      "valueDate": "14/07/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "381,119.02"
-    },
-    {
-      "transDate": "14/07/2022",
-      "valueDate": "14/07/2022",
-      "reference": "",
-      "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB",
-      "debit": "30,000.00",
-      "credit": "",
-      "balance": "351,119.02"
-    },
-    {
-      "transDate": "14/07/2022",
-      "valueDate": "14/07/2022",
-      "reference": "",
-      "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB",
-      "debit": "40,000.00",
-      "credit": "",
-      "balance": "311,119.02"
-    },
-    {
-      "transDate": "15/07/2022",
-      "valueDate": "15/07/2022",
-      "reference": "",
-      "remarks": "TRF FRM KAYODE KABIR OLAMBIWONNINU TO THEPADDY MARKETING TECHNOLOGY COMPANY|olam",
-      "debit": "",
-      "credit": "6,400.00",
-      "balance": "317,519.02"
-    },
-    {
-      "transDate": "15/07/2022",
-      "valueDate": "15/07/2022",
-      "reference": "",
-      "remarks": "NIP/GTB/OMOAREBUN  ABIOLA FOLAKE/Vehiclepapersrenewal REF20618366600003050000220",
-      "debit": "",
-      "credit": "30,500.00",
-      "balance": "348,019.02"
-    },
-    {
-      "transDate": "15/07/2022",
-      "valueDate": "15/07/2022",
-      "reference": "",
-      "remarks": "NIP Charge + VAT",
-      "debit": "26.88",
-      "credit": "",
-      "balance": "347,992.14"
-    },
-    {
-      "transDate": "15/07/2022",
-      "valueDate": "15/07/2022",
-      "reference": "",
-      "remarks": "NIP CR/OLATUNDE SEUN OWOEYE-PHOSTER/STLB",
-      "debit": "50,000.00",
-      "credit": "",
-      "balance": "297,992.14"
-    },
-    {
-      "transDate": "16/07/2022",
-      "valueDate": "16/07/2022",
-      "reference": "",
-      "remarks": "NIP/FLUTT/DAVID ARIYO-ADEOYE/DAVID ARIYO-ADEOYE",
-      "debit": "",
-      "credit": "16,200.00",
-      "balance": "314,192.14"
+      "type": "debit",
+      "date": "03/06/2022",
+      "categoryId": "3GwFN56Bm",
+      "balance": "297,122.16",
+      "reference": "",
+      "amount": 1500000
     }
   ]
 }
