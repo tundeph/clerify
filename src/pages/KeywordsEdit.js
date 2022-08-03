@@ -5,7 +5,7 @@ import { useSelector } from "react-redux"
 import { selectUserProfile, selectTransactionCategories } from "../redux/profileSlice"
 import { useFirestore } from "../hooks/useFirestore"
 import { useDocument } from "../hooks/useDocument"
-import { textSorter, handleButtonState } from "../helper"
+import { textSorter, formatCategory, formatUpdatedCategories } from "../helper"
 
 import { PageWrapper, UserWrapper, DivWrapper, Title, SubTitle, FormInput, KeywordsWrapper, Button, Text } from "../layout/styles"
 import Select from "../components/Select"
@@ -40,73 +40,73 @@ const KeywordsEdit = () => {
 
   const { colors } = useContext(ThemeContext)
   const { user, selectedBusinessId } = useSelector(selectUserProfile)
-  const selectCategory = useSelector((state) => selectTransactionCategories(state, selectedBusinessId))
+  const transactionCategories = useSelector((state) => selectTransactionCategories(state, selectedBusinessId))
 
   const { document, error } = useDocument("business", selectedBusinessId)
   const { updateDocument, response } = useFirestore("business")
 
-  const sortedCategories = textSorter(Object.keys(selectCategory), "asc").map((category) => ({
-    value: category,
-    text: category,
-  }))
-  const categories = [{ value: "", text: "Select a category" }, ...sortedCategories]
+  const categories = formatCategory(transactionCategories)
 
   const handleDeleteKeyword = async (keyword) => {
-    const filteredCategories = document.categories[category].filter((selectedKeyword) => selectedKeyword !== keyword)
-    document.categories[category] = filteredCategories
-    await updateDocument(selectedBusinessId, { categories: document.categories })
+    const filteredCategories = document.categories.reduce((acc, item) => {
+      if (item.categoryId === category) {
+        const newKeywords = item.keywords.filter((selectedKeyword) => selectedKeyword !== keyword)
+        item.keywords = newKeywords
+        acc.push(item)
+      } else {
+        acc.push(item)
+      }
+      return acc
+    }, [])
+
+    await updateDocument(selectedBusinessId, { categories: filteredCategories })
     setDeleteModal((deleteModal) => ({ ...deleteModal, ...{ status: false } }))
   }
 
   const handleAddKeyword = async () => {
-    const keywordExist = document.categories[category].filter((selectedKeyword) => selectedKeyword === keyword)
-    if (keywordExist.length === 0) {
-      document.categories[category].push(keyword)
-      await updateDocument(selectedBusinessId, { categories: document.categories })
-    }
+    const updatedCategories = formatUpdatedCategories(document, category, keyword)
+    await updateDocument(selectedBusinessId, { categories: updatedCategories })
+
     setKeyword("")
   }
 
   return (
     <>
-      <PageWrapper>
-        <UserWrapper>
-          <DivWrapper bottom={size.m}>
-            <Title> Keywords </Title>
-            <SubTitle> Edit keywords for sorting your transactions </SubTitle>
-          </DivWrapper>
-          <DivWrapper bottom={size.m}>
-            <Select data={categories} value={category} onChange={(e) => setCategory(e.target.value)} />
-          </DivWrapper>
+      <DivWrapper bottom={size.m}>
+        <SubTitle> Edit keywords for sorting your transactions </SubTitle>
+      </DivWrapper>
+      <DivWrapper bottom={size.m}>
+        <Select data={categories} value={category} onChange={(e) => setCategory(e.target.value)} />
+      </DivWrapper>
 
-          <CustomWrapper bottom={size.m} gap={1}>
-            <CustomSplitWrapper gap={size.m}>
-              <FormInput
-                type="text"
-                height={size.xl}
-                fontSize={size.xxxs}
-                value={keyword}
-                onChange={(e) => setKeyword(e.target.value)}
-                placeholder="Add keyword under current category"
-              />
-              <ButtonState
-                loading={response.isPending}
-                loadingText="Loading"
-                condition={buttonCondition}
-                onClick={handleAddKeyword}
-              >
-                Add
-              </ButtonState>
-            </CustomSplitWrapper>
-            <CustomKeyWordsWrapper top={0.2}>
-              {category &&
-                selectCategory[category].map((cat, i) => (
-                  <Keyword key={i} text={cat} onClick={() => setDeleteModal({ status: true, keyword: cat })} />
-                ))}
-            </CustomKeyWordsWrapper>
-          </CustomWrapper>
-        </UserWrapper>
-      </PageWrapper>
+      <CustomWrapper bottom={size.m} gap={1}>
+        <CustomSplitWrapper gap={size.m}>
+          <FormInput
+            type="text"
+            height={size.xl}
+            fontSize={size.xxxs}
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
+            placeholder="Add keyword under current category"
+          />
+          <ButtonState
+            loading={response.isPending && keyword}
+            loadingText="Loading"
+            condition={buttonCondition}
+            onClick={handleAddKeyword}
+          >
+            Add
+          </ButtonState>
+        </CustomSplitWrapper>
+        <CustomKeyWordsWrapper top={0.2}>
+          {category &&
+            transactionCategories
+              .filter((transactionCategory) => transactionCategory.categoryId === category)[0]
+              .keywords.map((cat, i) => (
+                <Keyword key={i} text={cat} onClick={() => setDeleteModal({ status: true, keyword: cat })} />
+              ))}
+        </CustomKeyWordsWrapper>
+      </CustomWrapper>
 
       {deleteModal.status && (
         <Modal title="Delete?" handleClose={() => setDeleteModal(false)}>
