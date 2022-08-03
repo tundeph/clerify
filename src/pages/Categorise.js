@@ -1,9 +1,10 @@
 import React, { useState, useContext } from "react"
 import styled, { ThemeContext } from "styled-components"
+import shortid from "shortid"
 import { useFirestore } from "../hooks/useFirestore"
 import { useDocument } from "../hooks/useDocument"
 import { useSelector, useDispatch } from "react-redux"
-import { selectUserProfile, updateBusinessCategory } from "../redux/profileSlice"
+import { selectUserProfile, updateBusinessCategory, selectTransactionCategories } from "../redux/profileSlice"
 import { businessCategories } from "../helper/defaultData"
 
 import { size } from "../layout/theme"
@@ -23,100 +24,138 @@ import Select from "../components/Select"
 import Keyword from "../components/Keyword"
 import Modal from "../components/Modal"
 import ButtonState from "../components/ButtonState"
-
-const HalfDiv = styled(DivWrapper)`
-  width: 50%;
-`
+import RadioButton from "../components/RadioButton"
+import SectionDivider from "../components/SectionDivider"
 
 const Categorise = () => {
   const { colors } = useContext(ThemeContext)
   const { updateDocument, response } = useFirestore("business")
-  const { user, selectedBusinessId } = useSelector(selectUserProfile)
+  const { selectedBusinessId } = useSelector(selectUserProfile)
+  const transactionCategories = useSelector((state) => selectTransactionCategories(state, selectedBusinessId))
   const { document, error } = useDocument("business", selectedBusinessId)
+
   const dispatch = useDispatch()
 
   //
   const [customCategory, setCustomCategory] = useState("")
   const [standardCategory, setStandardCategory] = useState("")
   const [errorModal, setErrorModal] = useState(false)
-  const [deleteModal, setDeleteModal] = useState({ status: false })
+  const [transactionType, setTransactionType] = useState("")
+  const [deleteModal, setDeleteModal] = useState({ status: false, category: "" })
+  const buttonCondition = (standardCategory || customCategory.length > 1) && transactionType
 
-  const buttonCondition = standardCategory || customCategory.length > 1
-
-  const handleDeleteCategory = async (category, document) => {
-    setDeleteModal(true)
-    delete document.categories[category]
-    await updateDocument(selectedBusinessId, { categories: document.categories })
-    dispatch(updateBusinessCategory({ data: { ...document.categories }, selectedBusinessId }))
+  const handleDeleteCategory = async (categoryId) => {
+    setDeleteModal({ ...deleteModal, status: false })
+    const filteredCategories = document.categories.filter((category) => category.categoryId !== categoryId)
+    await updateDocument(selectedBusinessId, { categories: filteredCategories })
+    dispatch(updateBusinessCategory({ data: filteredCategories, selectedBusinessId }))
   }
 
   const handleAddCategory = async (e) => {
     e.preventDefault()
-    const data = {}
-    if (standardCategory && !document.categories[standardCategory]) {
-      data[standardCategory] = []
-    }
-    if (customCategory && !document.categories[customCategory]) {
-      data[customCategory] = []
-    }
-    // console.log({ ...document.categories, ...data })
 
-    if (Object.keys(data).length > 0) {
-      await updateDocument(selectedBusinessId, { categories: { ...document.categories, ...data } })
-      setCustomCategory("")
-    } else {
-      setErrorModal(true)
+    if (standardCategory || customCategory) {
+      const standardCategoryExist = document.categories.some((selectedCategory) => selectedCategory.title === standardCategory)
+      const customCategoryExist = document.categories.some((selectedCategory) => selectedCategory.title === customCategory)
+      let data = []
+      if (!standardCategoryExist && standardCategory !== "") {
+        const categoryId = shortid.generate()
+        data.push({ categoryId, type: transactionType, title: standardCategory, keywords: [] })
+      }
+      if (!customCategoryExist && customCategory !== "") {
+        const categoryId = shortid.generate()
+        data.push({ categoryId, type: transactionType, title: customCategory, keywords: [] })
+      }
+      await updateDocument(selectedBusinessId, { categories: [...document.categories, ...data] })
     }
+    setCustomCategory("")
+    setStandardCategory("")
+  }
 
+  const handleSetStandardCategory = (e) => {
+    setStandardCategory(e.target.value)
+    setCustomCategory("")
+  }
+
+  const handleSetCustomCategory = (e) => {
+    setCustomCategory(e.target.value)
     setStandardCategory("")
   }
 
   return (
     <>
-      <PageWrapper>
-        <UserWrapper>
-          <DivWrapper bottom={size.xl}>
-            <Title> Categorise </Title>
-            <SubTitle> Customize income and expense categories </SubTitle>
+      <DivWrapper bottom={size.s}>
+        <SubTitle> Customize income and expense categories </SubTitle>
+      </DivWrapper>
+      <form onSubmit={handleAddCategory}>
+        <DivWrapper direction="column" gap={2} bottom={5}>
+          <DivWrapper>
+            <Text left={1} color={colors.gray600} size={size.xxs}>
+              Choose
+            </Text>
+            <Select
+              data={businessCategories}
+              height={size.xl}
+              bgColor={colors.gray100}
+              fontSize={size.xxxs}
+              value={standardCategory}
+              onChange={handleSetStandardCategory}
+            />
           </DivWrapper>
-          <form onSubmit={handleAddCategory}>
-            <DivWrapper direction="row" gap={4} bottom={5}>
-              <HalfDiv gap={size.xs}>
-                <Title color={colors.secondary}> Choose </Title>
-                <Select
-                  data={businessCategories}
-                  height={size.xl}
-                  bgColor={colors.gray100}
-                  fontSize={size.xxxs}
-                  value={standardCategory}
-                  onChange={(e) => setStandardCategory(e.target.value)}
-                />
-              </HalfDiv>
-              <HalfDiv gap={size.xs}>
-                <Title color={colors.secondary}> Add </Title>
-                <FormInput
-                  type="text"
-                  value={customCategory}
-                  onChange={(e) => setCustomCategory(e.target.value)}
-                  height={size.xl}
-                  fontSize={size.xxxs}
-                  placeholder="Enter a custom category"
-                />
+          <SectionDivider> OR </SectionDivider>
+          <DivWrapper>
+            <Text left={1} color={colors.gray600} size={size.xxs}>
+              Add
+            </Text>
+            <FormInput
+              type="text"
+              value={customCategory}
+              onChange={handleSetCustomCategory}
+              height={size.xl}
+              fontSize={size.xxxs}
+              placeholder="Enter a custom category"
+            />
+          </DivWrapper>
 
-                <ButtonState loading={response.isPending} loadingText="Loading" condition={buttonCondition}>
-                  Add
-                </ButtonState>
-              </HalfDiv>
+          <DivWrapper direction="row" justify="space-between" align="center">
+            <Text left={1}> What type of transaction is it? </Text>
+            <DivWrapper direction="row" gap={1}>
+              <RadioButton
+                labelText="Inflow"
+                value="credit"
+                checked={transactionType === "credit"}
+                onChange={() => setTransactionType("credit")}
+              />
+              <RadioButton
+                labelText="Outflow"
+                value="debit"
+                checked={transactionType === "debit"}
+                onChange={() => setTransactionType("debit")}
+              />
             </DivWrapper>
-          </form>
-          <Divider />
-          <KeywordsWrapper top={0.2}>
-            {Object.keys(user.business[selectedBusinessId].categories).map((category, i) => (
-              <Keyword key={i} text={category} onClick={() => setDeleteModal({ status: true, category, document })} />
-            ))}
-          </KeywordsWrapper>
-        </UserWrapper>
-      </PageWrapper>
+          </DivWrapper>
+          <ButtonState
+            loading={response.isPending && (customCategory || standardCategory)}
+            loadingText="Loading"
+            condition={buttonCondition}
+          >
+            Add
+          </ButtonState>
+          {/* </HalfDiv> */}
+        </DivWrapper>
+      </form>
+      <Divider />
+      <KeywordsWrapper top={0.2}>
+        {transactionCategories.length > 0 &&
+          transactionCategories.map((category) => (
+            <Keyword
+              key={category.categoryId}
+              text={category.title}
+              onClick={() => setDeleteModal({ status: true, category: category.categoryId })}
+            />
+          ))}
+      </KeywordsWrapper>
+
       {errorModal && (
         <Modal title="Error" handleClose={() => setErrorModal(false)}>
           <Text justify="center" color={colors.red}>
@@ -126,12 +165,12 @@ const Categorise = () => {
       )}
 
       {deleteModal.status && (
-        <Modal title="Are you sure?" handleClose={() => setDeleteModal({ status: false })}>
+        <Modal title="Are you sure?" handleClose={() => setDeleteModal({ ...deleteModal, status: false })}>
           <DivWrapper align="center" gap={2}>
             <Text justify="center" color={colors.red}>
               You are about to permanently delete this category and all associated keywords (for sorting) connected to it
             </Text>
-            <Button onClick={() => handleDeleteCategory(deleteModal.category, deleteModal.document)}> Yes, Delete it </Button>
+            <Button onClick={() => handleDeleteCategory(deleteModal.category)}> Yes, Delete it </Button>
           </DivWrapper>
         </Modal>
       )}
