@@ -1,3 +1,6 @@
+import React from "react"
+import { Text } from "../layout/styles"
+
 export const businessType = [
   { value: "", text: "Select type of business" },
   { value: "Sole Proprietorship", text: "Sole Proprietorship" },
@@ -26,3 +29,38 @@ export const businessCategories = [
   { value: "Insurance", text: "Insurance" },
   { value: "Cost of goods", text: "Cost of goods" },
 ]
+
+export const syncModalMessages = (colors) => ({
+  loading: {
+    title: "Sync in Progress",
+    text: (
+      <Text justify="center" color={colors.gray600}>
+        Please be patient, your data is being synchronized. Don't close this page, as this may take up to 5 mins.
+      </Text>
+    ),
+  },
+  adding: {
+    title: "Adding to Database",
+    text: (
+      <Text justify="center" color={colors.green}>
+        The your financial data is now being added to your account, please wait a bit more!
+      </Text>
+    ),
+  },
+  reconciling: {
+    title: "Reconciling accounts...",
+    text: (
+      <Text justify="center" color={colors.green}>
+        We're almost there. We are now automatically reconciling your new data with your categories.
+      </Text>
+    ),
+  },
+  error: {
+    title: "Error!",
+    text: (
+      <Text justify="center" color={colors.red}>
+        Data sync was not successful. Please retry!
+      </Text>
+    ),
+  },
+})
