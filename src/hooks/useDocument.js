@@ -12,7 +12,8 @@ export const useDocument = (collection, id) => {
     const unsub = ref.onSnapshot(
       (snapshot) => {
         if (snapshot.data()) {
-          setDocument({ ...snapshot.data(), id: snapshot.id })
+          // setDocument({ data: snapshot.data(), id: snapshot.id })
+          setDocument(snapshot.data())
           setError(null)
         } else {
           setError("Oops! Nothing exists there")
