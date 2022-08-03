@@ -3,6 +3,7 @@ import { useSelector } from "react-redux"
 import { selectUserProfile } from "../redux/profileSlice"
 import { useFirestore } from "../hooks/useFirestore"
 import { useNavigate } from "react-router-dom"
+import shortid from "shortid"
 import Logo from "../components/Logo"
 import Select from "../components/Select"
 import styled from "styled-components"
@@ -24,19 +25,19 @@ const AddBusiness = () => {
   const { addDocument, response } = useFirestore("business")
   const defaultBusinessCategories = businessCategories.reduce((acc, item) => {
     if (item.value !== "") {
-      acc = {
-        ...acc,
-        [item.value]: [],
-      }
+      const categoryId = shortid.generate()
+      acc.push({ categoryId: categoryId, title: item.value, keywords: [] })
     }
     return acc
-  }, {})
+  }, [])
 
+  const firstId = shortid.generate()
+  const secondId = shortid.generate()
   const [name, setName] = useState("")
   const [type, setType] = useState("")
   const [accts, setAccts] = useState([
-    { id: 1, acctName: "" },
-    { id: 2, acctName: "" },
+    { id: firstId, acctName: "" },
+    { id: secondId, acctName: "" },
   ])
 
   const buttonCondition = name.length > 0 && type.length > 0
@@ -46,7 +47,8 @@ const AddBusiness = () => {
   }
 
   const handleAddMore = () => {
-    setAccts([...accts, { id: accts.length + 1, acctName: "" }])
+    const id = shortid.generate()
+    setAccts([...accts, { id, acctName: "" }])
   }
 
   const handleSubmit = async (e) => {
