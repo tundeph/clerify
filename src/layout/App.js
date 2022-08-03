@@ -1,3 +1,5 @@
+// NEEDED - Error handling if useeffect data fails to render a modal or something
+
 import React, { useEffect } from "react"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 
@@ -22,6 +24,9 @@ import ImportAccounts from "../pages/import/ImportAccounts"
 import SyncFromOpenBank from "../pages/import/SyncFromOpenBank"
 import Reconcile from "../pages/Reconcile"
 import Reports from "../pages/reports/Reports"
+import CategoryReports from "../pages/reports/CategoryReports"
+import FinancialReports from "../pages/reports/FinancialReports"
+import Settings from "../pages/settings/Settings"
 
 const AppWrapper = styled.div`
   display: flex;
@@ -32,12 +37,12 @@ const App = () => {
   const dispatch = useDispatch()
   const { updateDocument } = useFirestore("business")
   const { user, authIsReady, profileTheme } = useSelector(selectUserProfile)
-  // console.log("user: ", user, authIsReady)
 
   useEffect(() => {
     const unsub = authService.onAuthStateChanged((user) => {
       if (!user && !authIsReady) {
         dispatch(authReady({ authIsReady: true }))
+        // console.log("user: ", user, authIsReady)
       }
       if (user) {
         const { uid, displayName, photoURL, email } = user
@@ -62,7 +67,7 @@ const App = () => {
             )
           })
 
-        unsub()
+        unsub(user)
       }
     })
   }, [])
@@ -94,24 +99,18 @@ const App = () => {
             <Routes>
               <Route path="/" element={user ? <Dashboard /> : <Navigate to="/signin" />} />
               <Route path="/signup" element={!user ? <Signup /> : <Navigate replace to="/" />} />
-              <Route
-                path="/signin"
-                element={!user ? <Signin /> : <Navigate to="/add-business" />}
-                // user && Object.keys(user.business).length < 1 ? (
-                //   <Navigate replace to="/add-business" />
-                // ) : user && Object.keys(user.business).length > 0 ? (
-                //   <Navigate replace to="/" />
-                // ) : (
-                //   <Signin />
-                // )
-              />
+              <Route path="/signin" element={!user ? <Signin /> : <Navigate to="/add-business" />} />
               <Route path="/add-business" element={!hasBusiness ? <AddBusiness /> : <Navigate replace to="/" />} />
-              <Route path="/categorise" element={user ? <Categorise /> : <Navigate replace to="/signin" />} />
-              <Route path="/keywords" element={user ? <KeywordsEdit /> : <Navigate replace to="/signin" />} />
-
               <Route path="/sync-accounts" element={user ? <SyncFromOpenBank /> : <Navigate replace to="/signin" />} />
               <Route path="/reconcile" element={user ? <Reconcile /> : <Navigate replace to="/signin" />} />
-              <Route path="/reports" element={user ? <Reports /> : <Navigate replace to="/signin" />} />
+              <Route path="/reports" element={user ? <Reports /> : <Navigate replace to="/signin" />}>
+                <Route index element={<CategoryReports />} />
+                <Route path="/reports/financial" element={user ? <FinancialReports /> : <Navigate replace to="/signin" />} />
+              </Route>
+              <Route path="/settings" element={user ? <Settings /> : <Navigate replace to="/signin" />}>
+                <Route index element={<Categorise />} />
+                <Route path="/settings/keywords" element={user ? <KeywordsEdit /> : <Navigate replace to="/signin" />} />
+              </Route>
             </Routes>
           </BrowserRouter>
         </AppWrapper>
