@@ -16,10 +16,14 @@ import { DiagonalArrowLeftDownOutline } from "styled-icons/evaicons-outline"
 import { ArrowForwardOutline } from "@styled-icons/evaicons-outline/ArrowForwardOutline"
 import { LoaderAlt } from "styled-icons/boxicons-regular"
 import { Loader3 } from "@styled-icons/remix-fill/Loader3"
+import { DownArrow } from "@styled-icons/boxicons-solid/DownArrow"
+import { ArrowRight } from "@styled-icons/bootstrap/ArrowRight"
+import { CheckmarkCircle } from "@styled-icons/fluentui-system-regular/CheckmarkCircle"
+import { Cabinet } from "@styled-icons/boxicons-regular/Cabinet"
+import { Check2 } from "@styled-icons/bootstrap/Check2"
 
-const SideBarIconProps = css`
-  height: 1.2em;
-  margin-right: 1.2em;
+const IconProps = css`
+  height: ${(props) => props.size || 20}px;
 `
 
 const buttonProps = css`
@@ -36,41 +40,46 @@ const buttonProps = css`
 `
 
 export const DashboardIcon = styled(Dashboard)`
-  ${SideBarIconProps}
+  ${IconProps}
 `
 export const CategoriseIcon = styled(EditOff)`
-  ${SideBarIconProps}
+  ${IconProps}
 `
 
 export const KeywordsIcon = styled(SlackHash)`
-  ${SideBarIconProps}
+  ${IconProps}
 `
 
 export const ImportAccountsIcon = styled(ImportExport)`
-  ${SideBarIconProps}
+  ${IconProps}
 `
 
 export const ReportsIcon = styled(BarChartFill)`
-  ${SideBarIconProps}
+  ${IconProps}
 `
 
 export const SettingsIcon = styled(Settings)`
-  ${SideBarIconProps}
+  ${IconProps}
 `
 
 export const SignOutIcon = styled(SignOut)`
-  ${SideBarIconProps}
+  ${IconProps}
 `
 
 export const ReconcileIcon = styled(AccountTree)`
-  ${SideBarIconProps}
+  ${IconProps}
 `
 
 export const CalendarIcon = styled(Calendar)`
-  ${SideBarIconProps}
+  ${IconProps}
 `
+
+export const ArrowRightIcon = styled(ArrowRight)`
+  height: 1.2em;
+`
+
 export const LoadingIcon = styled(LoaderAlt)`
-  height: ${(props) => props.size || 25}px;
+  ${IconProps}
 
   @keyframes spin {
     from {
@@ -84,12 +93,25 @@ export const LoadingIcon = styled(LoaderAlt)`
   animation: spin 0.5s linear 0s infinite running;
 `
 
+export const BouncingCabinetIcon = styled(Cabinet)`
+  ${IconProps}
+
+  @keyframes bounce {
+    10%,
+    100% {
+      transform: translateY(5px);
+    }
+  }
+  animation: bounce 1s linear 0s infinite running;
+`
+
 export const DebitIcon = styled(DiagonalArrowRightUpOutline)`
   height: 1.2em;
   margin-left: 1em;
 `
 export const CreditIcon = styled(DiagonalArrowLeftDownOutline)`
   height: 1.2em;
+  margin-left: 1em;
 `
 export const ArrowForwardIcon = styled(ArrowForwardOutline)`
   height: 1.2em;
@@ -98,6 +120,15 @@ export const ArrowForwardIcon = styled(ArrowForwardOutline)`
 export const CloseIcon = styled(CloseOutline)`
   height: 1.2em;
   margin-left: 1em;
+`
+export const CheckmarkCircleIcon = styled(CheckmarkCircle)`
+  height: 1.2em;
+`
+export const CheckmarkIcon = styled(Check2)`
+  height: 1.2em;
+`
+export const CabinetIcon = styled(Cabinet)`
+  ${IconProps}
 `
 
 export const CustomCloseIcon = styled(CloseOutline)`
@@ -154,7 +185,7 @@ export const SubTitle = styled.span`
 export const FormInput = styled.input`
   height: ${(props) => (props.height ? props.height : size.xxl)}rem;
   width: 100%;
-  border: 1.5px solid ${({ theme }) => theme.colors.secondary};
+  border: 1px solid ${({ theme }) => theme.colors.gray300};
   border-radius: 50px;
   padding: 0.5rem 2rem;
   font-size: ${(props) => props.fontSize || size.xxs}em;
@@ -173,7 +204,7 @@ export const FormInput = styled.input`
 export const SelectInput = styled.select`
   height: ${(props) => (props.height ? props.height : size.xxl)}rem;
   width: 100%;
-  border: 1.5px solid ${({ theme }) => theme.colors.secondary};
+  border: 1.5px solid ${({ theme }) => theme.colors.gray300};
   border-radius: 50px;
   padding: 0rem 20px;
   font-size: ${(props) => (props.fontSize ? props.fontSize : size.xxs)}em;
@@ -183,7 +214,7 @@ export const SelectInput = styled.select`
   background-color: ${(props) => (props.bgColor ? props.bgColor : ({ theme }) => theme.colors.gray100)};
 
   &:focus {
-    border-color: ${({ theme }) => theme.colors.primary};
+    border-color: ${({ theme }) => theme.colors.gray600};
     background-color: ${(props) => (props.bgColor ? props.bgColor : ({ theme }) => theme.colors.reverse)};
     outline: none;
   }
@@ -227,6 +258,7 @@ export const DivWrapper = styled.div`
   justify-content: ${(props) => props.justify || "left"};
   align-items: ${(props) => props.align || "left"};
   flex-wrap: ${(props) => props.wrap || "nowrap"};
+  color: ${null || ((props) => props.color)};
 `
 
 export const Text = styled.span`
@@ -245,6 +277,7 @@ export const Text = styled.span`
 export const Divider = styled.div`
   display: inline-block;
   border-top: 1px solid ${({ theme }) => theme.colors.gray300};
+  border-color: ${((props) => props.color) || (({ theme }) => theme.colors.gray300)};
   margin: ${null || ((props) => props.gap)}rem 0;
 `
 
@@ -289,18 +322,30 @@ export const UploadInput = styled.input`
 `
 
 export const HalfDiv = styled.div`
+  display: flex;
   flex-grow: 1;
   min-width: ${(props) => props.minWidth || "50"}px;
   justify-content: ${(props) => props.justify || "left"};
   align-items: ${(props) => props.align || "left"};
   text-align: ${(props) => props.alignText || "left"};
+  gap: ${null || ((props) => props.gap)}rem;
+`
+
+export const SplitDiv = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(${(props) => props.minWidth || "200"}px, 1fr));
+  gap: ${((props) => props.gap) || null}rem;
+  margin-bottom: ${null || ((props) => props.bottom)}rem;
+  margin-top: ${null || ((props) => props.top)}rem;
+  margin-left: ${null || ((props) => props.left)}rem;
+  margin-right: ${null || ((props) => props.right)}rem;
 `
 
 export const DateInput = styled.input`
   height: ${(props) => (props.height ? props.height : size.xxl)}rem;
   background-color: ${({ theme }) => theme.colors.gray100};
   border-radius: 100px;
-  border: 1.5px solid ${({ theme }) => theme.colors.secondary};
+  border: 1.5px solid ${({ theme }) => theme.colors.gray300};
   padding: ${size.xxs}rem ${size.xs}rem;
   box-sizing: border-box;
   font-family: "Beatrice", sans-serif;
@@ -336,3 +381,5 @@ export const InfoBox = styled.div`
   ${({ danger }) => danger && InfoBoxDangerProp}
   ${({ success }) => success && InfoBoxSuccessProp}
 `
+
+export const SpanWrapper = styled.span``
