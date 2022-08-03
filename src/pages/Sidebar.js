@@ -1,14 +1,13 @@
 import React, { useContext } from "react"
 import { NavLink } from "react-router-dom"
-import styled, { ThemeContext } from "styled-components"
+import styled, { css, ThemeContext } from "styled-components"
 import { useLogout } from "../hooks/useLogout"
 
 import {
   PageWrapper,
   DivWrapper,
+  SpanWrapper,
   DashboardIcon,
-  CategoriseIcon,
-  KeywordsIcon,
   ImportAccountsIcon,
   ReconcileIcon,
   ReportsIcon,
@@ -35,9 +34,11 @@ const SidebarContent = styled(DivWrapper)`
   position: fixed;
 `
 
-const Nav = styled(NavLink)`
+const NavProps = css`
+  display: flex;
+  gap: 1.2rem;
   text-decoration: none;
-  margin-bottom: 1em;
+  margin: 0.5em 0;
   color: ${({ theme }) => theme.colors.gray300};
 
   &:hover {
@@ -49,6 +50,23 @@ const Nav = styled(NavLink)`
     filter: invert(80%);
     font-family: "Beatrice-Bold", sans-serif;
   }
+`
+const Nav = styled(NavLink)`
+  ${NavProps}
+`
+
+const SuperNav = styled(DivWrapper)`
+  ${NavProps}
+  cursor: pointer;
+`
+const selectedProps = css`
+  filter: brightness(200%);
+  font-family: "Beatrice-Bold", sans-serif;
+`
+const CustomSpanWrapper = styled(SpanWrapper)`
+  display: flex;
+  gap: 1.2rem;
+  ${({ selected }) => selected && selectedProps}
 `
 
 const Sidebar = ({ business, onChange }) => {
@@ -69,15 +87,6 @@ const Sidebar = ({ business, onChange }) => {
         <Nav to="/">
           <DashboardIcon /> Dashboard
         </Nav>
-
-        <Nav to="/categorise">
-          <CategoriseIcon /> Categorise
-        </Nav>
-
-        <Nav to="/keywords">
-          <KeywordsIcon /> Keywords
-        </Nav>
-
         <Nav to="/sync-accounts">
           <ImportAccountsIcon /> Sync Accounts
         </Nav>
@@ -93,6 +102,27 @@ const Sidebar = ({ business, onChange }) => {
         <Nav to="/settings">
           <SettingsIcon /> Settings
         </Nav>
+
+        {/* <DivWrapper>
+          <SuperNav to="/settings" gap={2} align="center" direction="row" onClick={() => setSettingsSubmenu(!settingsSubmenu)}>
+            <CustomSpanWrapper gap={3} selected={settingsSubmenu && shouldShow}>
+              <SettingsIcon /> Settings
+            </CustomSpanWrapper>
+            <ArrowRightIcon />
+          </SuperNav>
+          {settingsSubmenu && (
+            <DivWrapper top={1} bottom={1}>
+              <Divider color={colors.gray600} />
+              <Nav to={CATEGORISE_PATH}>
+                <CategoriseIcon /> Category Settings
+              </Nav>
+              <Nav to={KEYWORDS_PATH}>
+                <KeywordsIcon /> Keywords Settings
+              </Nav>
+              <Divider color={colors.gray600} />
+            </DivWrapper>
+          )}
+        </DivWrapper> */}
 
         <Nav to="/signin" onClick={logout}>
           <SignOutIcon /> Sign out
