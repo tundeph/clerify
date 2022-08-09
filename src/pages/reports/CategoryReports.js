@@ -4,37 +4,64 @@
 //get the chart.js graph from my exercise repo
 //if number of days is more than 30, monthly chart is spooled, if more then 365 days, yearly chart
 
-import React, { useState, useContext } from "react"
-import { useSelector } from "react-redux"
+import React, { useState, useEffect, useContext } from "react"
+import { useSelector, useDispatch } from "react-redux"
 import { selectUserProfile, selectTransactionCategories } from "../../redux/profileSlice"
+import { getTransactions, selectUserTransactions } from "../../redux/accountSlice"
+import { useDocument } from "../../hooks/useDocument"
 import { formatCategory } from "../../helper"
-import { format, getDaysInMonth } from "date-fns"
+import { size } from "../../layout/theme"
+import { format, subDays } from "date-fns"
 import styled, { ThemeContext } from "styled-components"
+import { useCharts } from "../../hooks/useCharts"
 
 import Checkbox from "../../components/Checkbox"
-import { DivWrapper, SplitDiv, SubTitle, Text, Divider, DateInput } from "../../layout/styles"
-
+import { DivWrapper, SplitDiv, SubTitle, Text, Divider, DateInput, Button } from "../../layout/styles"
 import { LineChart } from "../../components/Charts"
 
 const CustomDivWrapper = styled(DivWrapper)`
   flex-wrap: wrap;
 `
 
+export const GraphWrapper = styled(DivWrapper)`
+  min-height: 400px;
+  background-color: ${({ theme }) => theme.colors.reverse};
+  border-radius: 15px;
+  padding: ${size.xs}rem ${size.xxs}rem;
+  box-sizing: border-box;
+  border: 1px solid ${({ theme }) => theme.colors.gray300};
+`
+
 const CategoryReports = ({ onChange }) => {
   const { colors } = useContext(ThemeContext)
+  const dispatch = useDispatch()
+  const todayDate = format(new Date(), "yyyy-MM-dd")
+  const thirtyDaysAgo = format(subDays(new Date(), 30), "yyyy-MM-dd")
+  const [startDate, setStartDate] = useState(thirtyDaysAgo)
+  const [endDate, setEndDate] = useState(todayDate)
+
+  //
+
+  const { getChartLabels, dailyCategoryObjects, getData, dailyCategoryData } = useCharts(startDate, endDate)
   const { selectedBusinessId } = useSelector(selectUserProfile)
   const transactionCategories = useSelector((state) => selectTransactionCategories(state, selectedBusinessId))
   const categories = formatCategory(transactionCategories)
-  const [showCategories, setShowCategories] = useState([])
+  const getTransactionsDoc = useDocument("accounts", selectedBusinessId)
+  // dispatch(getTransactions({ data: getTransactionsDoc.document }))
+  // const transactions = useSelector(selectUserTransactions)
+  const [showCategories, setShowCategories] = useState(categories.map((category) => category.value))
 
-  const currentMonthAndYear = format(new Date(), "yyyy-MM")
-  const totalDaysInMonth = getDaysInMonth(new Date(format(new Date(), "yyyy"), format(new Date(), "M")))
-  const [startDate, setStartDate] = useState(`${currentMonthAndYear}-01`)
-  const [endDate, setEndDate] = useState(`${currentMonthAndYear}-${totalDaysInMonth}`)
+  useEffect(() => {
+    getChartLabels()
+  }, [])
 
-  const handleStartDateChange = () => {}
-
-  const handleEndDateChange = () => {}
+  //
+  const handlePlotChart = () => {
+    //setChartLabels(getChartLabels(startDate, endDate))
+    // console.log(format(new Date(startDate), "yyyy/MM/dd"))
+    getChartLabels(startDate, endDate)
+    getData(getTransactionsDoc.document, transactionCategories, showCategories)
+  }
 
   const handleCheckboxChange = (e) => {
     if (showCategories.includes(e.target.value)) {
@@ -44,7 +71,7 @@ const CategoryReports = ({ onChange }) => {
       setShowCategories([...showCategories, e.target.value])
     }
   }
-  // console.log("show: ", showCategories)
+
   return (
     <DivWrapper>
       <SubTitle>Select the categories you want to generate reports for.</SubTitle>
@@ -69,23 +96,21 @@ const CategoryReports = ({ onChange }) => {
       <Divider />
 
       <SplitDiv minWidth={200} gap={1} top={1}>
-        <DivWrapper>
-          <Text left={1} color={colors.gray600} size={0.8}>
-            From:
-          </Text>
-          <DateInput type="date" value={startDate} onChange={handleStartDateChange} />
-        </DivWrapper>
-        <DivWrapper>
-          <Text left={1} color={colors.gray600} size={0.8}>
-            To:
-          </Text>
-          <DateInput type="date" value={endDate} onChange={handleEndDateChange} />
-        </DivWrapper>
+        <DateInput type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} size="small" />
+        <DateInput type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} size="small" />
+        <Button size="small" onClick={handlePlotChart}>
+          Apply
+        </Button>
       </SplitDiv>
 
-      <DivWrapper>
-        <LineChart />
-      </DivWrapper>
+      <GraphWrapper top={3} align="center">
+        {dailyCategoryData && (
+          <>
+            <LineChart data={dailyCategoryData} />
+            <SubTitle> Category Reports </SubTitle>
+          </>
+        )}
+      </GraphWrapper>
     </DivWrapper>
   )
 }
