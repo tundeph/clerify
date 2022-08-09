@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
   accounts: {},
-  uncategorisedAccts: {},
 }
 
 export const accountSlice = createSlice({
