@@ -229,6 +229,13 @@ export const Button = styled.button`
     transform: scale(1.02);
     cursor: pointer;
   }
+
+  ${({ size }) =>
+    size === "small" &&
+    css`
+      height: 2.5rem;
+      // padding: 0.1rem, 15px !important;
+    `}
 `
 
 export const DisabledButton = styled.button.attrs((props) => ({
@@ -342,7 +349,7 @@ export const SplitDiv = styled.div`
 `
 
 export const DateInput = styled.input`
-  height: ${(props) => (props.height ? props.height : size.xxl)}rem;
+  height: ${size.xxl}rem;
   background-color: ${({ theme }) => theme.colors.gray100};
   border-radius: 100px;
   border: 1.5px solid ${({ theme }) => theme.colors.gray300};
@@ -355,6 +362,12 @@ export const DateInput = styled.input`
     border-color: ${({ theme }) => theme.colors.primary};
     background-color: ${({ theme }) => theme.colors.reverse};
   }
+
+  ${({ size }) =>
+    size === "small" &&
+    css`
+      height: 2.5rem;
+    `}
 `
 
 export const InfoBoxDangerProp = css`
