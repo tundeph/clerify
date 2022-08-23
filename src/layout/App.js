@@ -1,7 +1,7 @@
 // NEEDED - Error handling if useeffect data fails to render a modal or something
 
 import React, { useEffect } from "react"
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-router-dom"
 
 import { useSelector, useDispatch } from "react-redux"
 import { selectUserProfile, authReady } from "../redux/profileSlice"
@@ -37,6 +37,7 @@ const App = () => {
   const dispatch = useDispatch()
   const { updateDocument } = useFirestore("business")
   const { user, authIsReady, profileTheme } = useSelector(selectUserProfile)
+  // const navigate = useNavigate()
 
   useEffect(() => {
     const unsub = authService.onAuthStateChanged((user) => {
@@ -81,10 +82,11 @@ const App = () => {
 
   const hasBusiness = (user) => {
     if (user) {
-      if (Object.keys(user.business).length) {
+      if (user.hasOwnProperty("business") && Object.keys(user.business).length) {
         return true
       }
     }
+    return false
   }
 
   return (
@@ -93,14 +95,12 @@ const App = () => {
       {authIsReady && (
         <AppWrapper>
           <BrowserRouter>
-            {user && Object.keys(user.business).length > 0 && (
-              <Sidebar business={user.business} onChange={(e) => handleChangeBusiness(e, user.business)} />
-            )}
+            {hasBusiness(user) && <Sidebar business={user.business} onChange={(e) => handleChangeBusiness(e, user.business)} />}
             <Routes>
-              <Route path="/" element={user ? <Dashboard /> : <Navigate to="/signin" />} />
+              <Route path="/" element={hasBusiness(user) ? <Dashboard /> : <Navigate to="/signin" />} />
               <Route path="/signup" element={!user ? <Signup /> : <Navigate replace to="/" />} />
               <Route path="/signin" element={!user ? <Signin /> : <Navigate to="/add-business" />} />
-              <Route path="/add-business" element={!hasBusiness ? <AddBusiness /> : <Navigate replace to="/" />} />
+              <Route path="/add-business" element={!hasBusiness(user) ? <AddBusiness /> : <Navigate replace to="/" />} />
               <Route path="/sync-accounts" element={user ? <SyncFromOpenBank /> : <Navigate replace to="/signin" />} />
               <Route path="/reconcile" element={user ? <Reconcile /> : <Navigate replace to="/signin" />} />
               <Route path="/reports" element={user ? <Reports /> : <Navigate replace to="/signin" />}>
