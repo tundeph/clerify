@@ -73,7 +73,7 @@ const Sidebar = ({ business, onChange }) => {
   const { logout } = useLogout()
   const { colors } = useContext(ThemeContext)
 
-  const data = Object.entries(business).map((bus) => ({ value: bus[0], text: bus[1].name, selected: bus[1].selected }))
+  const data = Object.entries(business).map((bus) => ({ value: bus[0], label: bus[1].name, selected: bus[1].selected }))
 
   return (
     <SideBar>
@@ -82,7 +82,7 @@ const Sidebar = ({ business, onChange }) => {
           <Logo reverse />
         </DivWrapper>
         <DivWrapper bottom={4}>
-          <Select height={2.5} bgColor={colors.foreground} data={data} onChange={onChange} />
+          <Select height={2.5} bgColor={colors.foreground} options={data} onChange={onChange} />
         </DivWrapper>
         <Nav to="/">
           <DashboardIcon /> Dashboard
@@ -92,7 +92,7 @@ const Sidebar = ({ business, onChange }) => {
         </Nav>
 
         <Nav to="/reconcile">
-          <ReconcileIcon /> Reconcile
+          <ReconcileIcon /> Categorize
         </Nav>
 
         <Nav to="/reports">
