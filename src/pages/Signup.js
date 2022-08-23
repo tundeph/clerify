@@ -4,8 +4,19 @@ import { handleButtonState } from "../helper"
 
 import Logo from "../components/Logo"
 import styled, { ThemeContext } from "styled-components"
+import { Link } from "react-router-dom"
 
-import { PageWrapper, MidWrapper, DivWrapper, Title, SubTitle, FormInput, Text, PasswordInput } from "../layout/styles"
+import {
+  PageWrapper,
+  MidWrapper,
+  DivWrapper,
+  Title,
+  SubTitle,
+  FormInput,
+  Text,
+  PasswordInput,
+  UnderFormText,
+} from "../layout/styles"
 
 const CustomMidWrapper = styled(MidWrapper)`
   gap: 1.5rem;
@@ -50,6 +61,9 @@ const Signup = () => {
           <DivWrapper top={3} bottom={1}>
             {handleButtonState(isPending, "Loading", "Create account", buttonCondition)}
           </DivWrapper>
+          <UnderFormText>
+            Already have an account? <Link to="/signin"> Log in </Link>
+          </UnderFormText>
           {error && <Text color={colors.red}>{error}</Text>}
         </form>
       </CustomMidWrapper>
