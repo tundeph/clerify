@@ -11,7 +11,8 @@ export const profileSlice = createSlice({
   initialState,
   reducers: {
     isLoggedIn: (state, { payload }) => {
-      state.user = payload
+      state.user = payload.data
+      state.selectedBusinessId = payload.selectedBusinessId
     },
     authReady: (state, { payload }) => {
       state.user = payload.data
