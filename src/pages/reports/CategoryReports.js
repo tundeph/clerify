@@ -4,7 +4,7 @@
 //get the chart.js graph from my exercise repo
 //if number of days is more than 30, monthly chart is spooled, if more then 365 days, yearly chart
 
-import React, { useState, useEffect, useContext } from "react"
+import React, { useState, useEffect, useContext, useLayoutEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { selectUserProfile, selectTransactionCategories } from "../../redux/profileSlice"
 import { getTransactions, selectUserTransactions } from "../../redux/accountSlice"
@@ -14,6 +14,7 @@ import { size } from "../../layout/theme"
 import { format, subDays } from "date-fns"
 import styled, { ThemeContext } from "styled-components"
 import { useCharts } from "../../hooks/useCharts"
+import { db } from "../../firebase/config"
 
 import Checkbox from "../../components/Checkbox"
 import { DivWrapper, SplitDiv, SubTitle, Text, Divider, DateInput, Button } from "../../layout/styles"
@@ -35,10 +36,11 @@ export const GraphWrapper = styled(DivWrapper)`
 const CategoryReports = ({ onChange }) => {
   const { colors } = useContext(ThemeContext)
   const dispatch = useDispatch()
-  const todayDate = format(new Date(), "yyyy-MM-dd")
-  const thirtyDaysAgo = format(subDays(new Date(), 30), "yyyy-MM-dd")
+  const todayDate = format(new Date("2022/06/30"), "yyyy-MM-dd")
+  const thirtyDaysAgo = format(subDays(new Date("2022/06/30"), 30), "yyyy-MM-dd")
   const [startDate, setStartDate] = useState(thirtyDaysAgo)
   const [endDate, setEndDate] = useState(todayDate)
+  const [transactionsDoc, setTransactionsDoc] = useState()
 
   //
 
@@ -52,10 +54,20 @@ const CategoryReports = ({ onChange }) => {
   const [showCategories, setShowCategories] = useState(categories.map((category) => category.value))
 
   useEffect(() => {
-    getChartLabels()
+    db.collection("accounts")
+      .doc(selectedBusinessId)
+      .onSnapshot(
+        (snapshot) => {
+          if (snapshot.data()) {
+            getData(snapshot.data(), transactionCategories, showCategories)
+          }
+        },
+        (err) => {
+          console.log(err.message)
+        }
+      )
   }, [])
 
-  //
   const handlePlotChart = () => {
     //setChartLabels(getChartLabels(startDate, endDate))
     // console.log(format(new Date(startDate), "yyyy/MM/dd"))
@@ -102,15 +114,10 @@ const CategoryReports = ({ onChange }) => {
           Apply
         </Button>
       </SplitDiv>
-
-      <GraphWrapper top={3} align="center">
-        {dailyCategoryData && (
-          <>
-            <LineChart data={dailyCategoryData} />
-            <SubTitle> Category Reports </SubTitle>
-          </>
-        )}
-      </GraphWrapper>
+      <DivWrapper>
+        <GraphWrapper top={3}>{dailyCategoryData && <LineChart data={dailyCategoryData} />}</GraphWrapper>
+        <SubTitle> Category Reports </SubTitle>
+      </DivWrapper>
     </DivWrapper>
   )
 }
