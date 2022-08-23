@@ -11,7 +11,7 @@
 
 import React, { useState, useEffect, useContext } from "react"
 import styled, { ThemeContext } from "styled-components"
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector } from "react-redux"
 import { useDocument } from "../hooks/useDocument"
 import { selectUserProfile, selectTransactionCategories } from "../redux/profileSlice"
 import { useFirestore } from "../hooks/useFirestore"
@@ -30,12 +30,13 @@ import {
   CreditIcon,
   Text,
   ArrowForwardIcon,
-  CheckmarkCircleIcon,
   BouncingCabinetIcon,
 } from "../layout/styles"
 
 import Select from "../components/Select"
 import ButtonState from "../components/ButtonState"
+import NoTransactions from "../components/NoTransactions"
+import { default as ReactSelect } from "react-select"
 
 export const GrayWrapper = styled(DivWrapper)`
   background-color: ${({ theme }) => theme.colors.gray100};
@@ -58,9 +59,6 @@ export const CustomDivWrapper = styled(DivWrapper)`
 const CustomButton = styled(ButtonState)`
   padding: ${size.s}rem ${size.s}rem;
 `
-const CustomCheckmarkCircleIcon = styled(CheckmarkCircleIcon)`
-  height: 5em;
-`
 
 const Reconcile = () => {
   const { colors } = useContext(ThemeContext)
@@ -70,6 +68,8 @@ const Reconcile = () => {
   const [isPending, setIsPending] = useState(false)
   const [transactions, setTransactions] = useState()
   const [index, setIndex] = useState(0)
+  const [loading, setLoading] = useState(true)
+  const [chosenThirdParty, setChosenThirdParty] = useState()
 
   useEffect(() => {
     db.collection("accounts")
@@ -78,6 +78,7 @@ const Reconcile = () => {
         (snapshot) => {
           if (snapshot.data()) {
             setTransactions(snapshot.data())
+            setLoading(false)
           } else {
             // setError("Oops! Nothing exists there")
           }
@@ -96,7 +97,7 @@ const Reconcile = () => {
   }
 
   const buttonCondition = category && chosenKeyword
-  const showReconcileButton = index > 0 && (index >= sorted.length || index > 30)
+  const showReconcileButton = index > 0 && (index >= sorted.length || index > 10)
 
   const transactionCategories = useSelector((state) => selectTransactionCategories(state, selectedBusinessId))
   const categories = formatCategory(transactionCategories)
@@ -134,13 +135,12 @@ const Reconcile = () => {
   return (
     <>
       <PageWrapper>
-        {transactions && (
-          <UserWrapper>
-            <DivWrapper bottom={size.xs}>
-              <Title> Reconcile records </Title>
-              <SubTitle> Reconcile your data by categorising them properly.</SubTitle>
-            </DivWrapper>
-
+        <UserWrapper>
+          <DivWrapper bottom={size.xs}>
+            <Title> Reconcile records </Title>
+            <SubTitle> Reconcile your data by categorising them properly.</SubTitle>
+          </DivWrapper>
+          {transactions && (
             <GrayWrapper gap={3}>
               {sorted && index < sorted.length && (
                 <>
@@ -151,8 +151,8 @@ const Reconcile = () => {
                       </Text>
                     </DivWrapper>
                     <DivWrapper direction="row">
-                      <Text size={size.xxxs} color={sorted[index][1].credit ? colors.green : colors.red}>
-                        {sorted[index][1].credit ? (
+                      <Text size={size.xxxs} color={sorted[index][1].type === "credit" ? colors.green : colors.red}>
+                        {sorted[index][1].type === "credit" ? (
                           <>
                             CREDIT <CreditIcon />
                           </>
@@ -166,18 +166,37 @@ const Reconcile = () => {
                   </DivWrapper>
 
                   <CustomDivWrapper align="center">
-                    <Text size={size.m} color={sorted[index][1].credit ? colors.green : colors.red}>
-                      {sorted[index][1].credit ? sorted[index][1].credit : sorted[index][1].debit}
+                    <Text size={size.m} color={sorted[index][1].type === "credit" ? colors.green : colors.red}>
+                      {(sorted[index][1].amount / 100).toFixed(2)}
                     </Text>
                     <Text color={colors.gray600}> {sorted[index][1].remarks} </Text>
                   </CustomDivWrapper>
-                  <Select
-                    data={formatKeywordsDropDown(sorted[index][1].remarks)}
-                    value={chosenKeyword}
-                    onChange={(e) => setChosenKeyword(e.target.value)}
-                  />
+                  <ReactSelect options={formatKeywordsDropDown(sorted[index][1].remarks)} />
+                  <DivWrapper>
+                    <Text left={1} color={colors.gray600} size={0.8}>
+                      Select a unique keyword or phrase to identify similar transactions
+                    </Text>
+                    <Select
+                      options={formatKeywordsDropDown(sorted[index][1].remarks)}
+                      value={chosenKeyword}
+                      onChange={(e) => setChosenKeyword(e.target.value)}
+                    />
+                  </DivWrapper>
+
+                  <DivWrapper>
+                    <Text left={1} color={colors.gray600} size={0.8}>
+                      Do you want to add a compulsory third-party {sorted[index][1].type === "credit" ? `(sender)` : `(receiver)`}{" "}
+                      for this type of transaction?
+                    </Text>
+                    <Select
+                      options={formatKeywordsDropDown(sorted[index][1].remarks)}
+                      value={chosenKeyword}
+                      onChange={(e) => setChosenThirdParty(e.target.value)}
+                    />
+                  </DivWrapper>
+
                   <DivWrapper direction="row" gap={1}>
-                    <Select data={categories} value={category} onChange={(e) => setCategory(e.target.value)} />
+                    <Select options={categories} value={category} onChange={(e) => setCategory(e.target.value)} />
                     <CustomButton
                       loading={isPending}
                       loadingText=""
@@ -189,12 +208,7 @@ const Reconcile = () => {
                   </DivWrapper>
                 </>
               )}
-              {sorted.length === 0 && !isPending && (
-                <DivWrapper color={colors.green} align="center" gap={2}>
-                  <CustomCheckmarkCircleIcon />
-                  <Text>You don't have any uncategorised transaction!</Text>
-                </DivWrapper>
-              )}
+              {sorted.length === 0 && !isPending && <NoTransactions />}
               {showReconcileButton && (
                 <DivWrapper align="center" gap={2}>
                   <Text color={colors.gray300}>
@@ -207,8 +221,14 @@ const Reconcile = () => {
                 </DivWrapper>
               )}
             </GrayWrapper>
-          </UserWrapper>
-        )}
+          )}
+
+          {!loading && !transactions && (
+            <GrayWrapper>
+              <NoTransactions />
+            </GrayWrapper>
+          )}
+        </UserWrapper>
       </PageWrapper>
     </>
   )
