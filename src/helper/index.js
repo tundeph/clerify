@@ -100,9 +100,9 @@ export const reconcileAccts = (categories, accounts) => {
 export const formatCategory = (transactionCategories) => {
   const sortedCategories = textSorter([...transactionCategories], "asc", "title").map((category) => ({
     value: category.categoryId,
-    text: category.title,
+    label: category.title,
   }))
-  const categories = [{ value: "", text: "Select a category" }, ...sortedCategories]
+  const categories = [{ value: "", label: "Select a category" }, ...sortedCategories]
   return categories
 }
 
@@ -111,15 +111,29 @@ export const formatDropDown = (data, selectDescription) => {
     .filter((filteredData) => filteredData.trim().length > 0)
     .map((selectedData) => ({
       value: selectedData,
-      text: selectedData,
+      label: selectedData,
     }))
-  const finalData = [{ value: "", text: selectDescription }, ...sortedData]
+  const finalData = [{ value: "", label: selectDescription }, ...sortedData]
   return finalData
 }
 
 export const formatKeywordsDropDown = (uncategorisedAccts) => {
-  const keywordsArray = uncategorisedAccts.split(/\/| |-/)
-  return formatDropDown(keywordsArray, "Select a unique keyword")
+  let keywordsArray = uncategorisedAccts.trim().split(/\/| |-/)
+  // add 2-word keywords
+  const twoWordKeyWords = []
+  for (let counter = 0; counter <= keywordsArray.length - 1; counter++) {
+    if (keywordsArray[counter] && keywordsArray[counter + 1]) {
+      twoWordKeyWords.push(`${keywordsArray[counter]} ${keywordsArray[counter + 1]}`)
+    }
+  }
+  const threeWordKeyWords = []
+  for (let counter = 0; counter <= Math.abs(keywordsArray.length / 2); counter++) {
+    if (keywordsArray[counter] && keywordsArray[counter + 1] && keywordsArray[counter + 2]) {
+      threeWordKeyWords.push(`${keywordsArray[counter]} ${keywordsArray[counter + 1]} ${keywordsArray[counter + 2]}`)
+    }
+  }
+  keywordsArray = [...keywordsArray, ...twoWordKeyWords, ...threeWordKeyWords]
+  return formatDropDown(keywordsArray, "Select a keyword or phrase")
 }
 
 export const formatUpdatedCategories = (document, category, keyword) => {
