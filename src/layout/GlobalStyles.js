@@ -20,4 +20,12 @@ body{
         
     }
 
+    a{
+      color: ${({ theme }) => theme.colors.foreground};
+
+      &:hover{
+        color: ${({ theme }) => theme.colors.gray600};
+        text-decoration: underline;
+      }
+    }
     `
