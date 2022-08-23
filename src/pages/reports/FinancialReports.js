@@ -8,16 +8,16 @@ import { DivWrapper, Text, Divider, KeywordsWrapper, DateInput } from "../../lay
 const FinancialReports = ({ onChange }) => {
   const { colors } = useContext(ThemeContext)
   const categories = [
-    { value: "", text: "Select category" },
-    { value: "rent", text: "Rent" },
-    { value: "marketing", text: "Marketing & Advertising" },
+    { value: "", label: "Select category" },
+    { value: "rent", label: "Rent" },
+    { value: "marketing", label: "Marketing & Advertising" },
   ]
 
   return (
     <DivWrapper gap={2}>
       <DivWrapper direction="row" top={2} gap={1}>
         <DivWrapper width={size["4xxl"]}>
-          <Select data={categories} />
+          <Select options={categories} />
         </DivWrapper>
         <DivWrapper direction="row" align="center" gap={0.8}>
           <Text left={1} color={colors.gray600} size={0.8}>
