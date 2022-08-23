@@ -396,3 +396,11 @@ export const InfoBox = styled.div`
 `
 
 export const SpanWrapper = styled.span``
+
+export const UnderFormText = styled(Text)`
+  margin-top: 0.8rem;
+  margin-right: 1rem;
+  font-size: 0.8rem;
+  text-align: right;
+  color: ${({ theme }) => theme.colors.secondary};
+`
