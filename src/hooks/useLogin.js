@@ -17,14 +17,25 @@ export const useLogin = () => {
     try {
       const res = await authService.signInWithEmailAndPassword(userEmail, userPassword)
       const { uid, displayName, photoURL, email } = res.user
-      let business = []
+      let business = {}
+      let selectedBusinessId = null
       db.collection("business")
         .where("uid", "==", uid)
         .onSnapshot((snapshot) => {
           snapshot.docs.forEach((doc, i) => {
-            business.push(doc.data())
+            let id = doc.id
+            const { accts, name, type, selected, categories } = doc.data()
+            if (selected) {
+              selectedBusinessId = id
+            }
+            business[id] = { id, accts, name, type, selected, categories }
           })
-          dispatch(isLoggedIn({ uid, displayName, photoURL, email, business }))
+          dispatch(
+            isLoggedIn({
+              data: { uid, displayName, photoURL, email, business },
+              selectedBusinessId,
+            })
+          )
         })
 
       // const { documents } = useCollection("business", ["uid", "==", uid])
@@ -45,9 +56,29 @@ export const useLogin = () => {
     }
   }
 
+  const resetPassword = async (userEmail) => {
+    setError(null)
+    setIsPending(true)
+
+    try {
+      await authService.sendPasswordResetEmail(userEmail)
+      // if (!isCancelled) {
+      setError(null)
+      setIsPending(false)
+      // }
+    } catch (err) {
+      // if (!isCancelled) {
+      console.log(err)
+      setError(err.message)
+      setIsPending(false)
+
+      // }
+    }
+  }
+
   useEffect(() => {
     return () => setIsCancelled(true)
   }, [])
 
-  return { error, isPending, login }
+  return { error, isPending, login, resetPassword }
 }
