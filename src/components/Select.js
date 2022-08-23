@@ -1,7 +1,7 @@
 import React from "react"
 import { SelectInput } from "../layout/styles"
 
-const Select = ({ name, data, height, bgColor, fontSize, value, onChange }) => {
+const Select = ({ name, options, height, bgColor, fontSize, value, onChange }) => {
   const handleValue = (val, object) => {
     let res = ""
     if (val) {
@@ -16,14 +16,14 @@ const Select = ({ name, data, height, bgColor, fontSize, value, onChange }) => {
 
     return res
   }
-  const newValue = handleValue(value, data)
+  const newValue = handleValue(value, options)
 
   return (
     <SelectInput height={height} bgColor={bgColor} fontSize={fontSize} name={name} onChange={onChange} value={newValue}>
-      {data.map((d, i) => {
+      {options.map((option, i) => {
         return (
-          <option key={i} value={d.value}>
-            {d.text}
+          <option key={i} value={option.value}>
+            {option.label}
           </option>
         )
       })}
