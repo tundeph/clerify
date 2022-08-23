@@ -36,7 +36,7 @@ const KeywordsEdit = () => {
   const [keyword, setKeyword] = useState("")
   const [deleteModal, setDeleteModal] = useState({ status: false, keyword })
 
-  const buttonCondition = category.length > 0
+  const buttonCondition = category.length > 0 && keyword.trim().length
 
   const { colors } = useContext(ThemeContext)
   const { user, selectedBusinessId } = useSelector(selectUserProfile)
@@ -64,9 +64,10 @@ const KeywordsEdit = () => {
   }
 
   const handleAddKeyword = async () => {
-    const updatedCategories = formatUpdatedCategories(document, category, keyword)
-    await updateDocument(selectedBusinessId, { categories: updatedCategories })
-
+    if (keyword.trim().length) {
+      const updatedCategories = formatUpdatedCategories(document, category, keyword)
+      await updateDocument(selectedBusinessId, { categories: updatedCategories })
+    }
     setKeyword("")
   }
 
@@ -76,7 +77,7 @@ const KeywordsEdit = () => {
         <SubTitle> Edit keywords for sorting your transactions </SubTitle>
       </DivWrapper>
       <DivWrapper bottom={size.m}>
-        <Select data={categories} value={category} onChange={(e) => setCategory(e.target.value)} />
+        <Select options={categories} value={category} onChange={(e) => setCategory(e.target.value)} />
       </DivWrapper>
 
       <CustomWrapper bottom={size.m} gap={1}>
