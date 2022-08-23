@@ -85,7 +85,7 @@ const Categorise = () => {
   return (
     <>
       <DivWrapper bottom={size.s}>
-        <SubTitle> Customize income and expense categories </SubTitle>
+        <SubTitle> Add customized or standard transaction categories </SubTitle>
       </DivWrapper>
       <form onSubmit={handleAddCategory}>
         <DivWrapper direction="column" gap={2} bottom={5}>
@@ -94,7 +94,7 @@ const Categorise = () => {
               Choose
             </Text>
             <Select
-              data={businessCategories}
+              options={businessCategories}
               height={size.xl}
               bgColor={colors.gray100}
               fontSize={size.xxxs}
