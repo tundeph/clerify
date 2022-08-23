@@ -81,10 +81,10 @@ const SyncFromOpenBank = () => {
   //
   const bankAccounts = textSorter([...business[selectedBusinessId].accts], "asc", "acctName").map((acct) => ({
     value: acct.id,
-    text: acct.acctName,
+    label: acct.acctName,
   }))
 
-  const sortedBankAccounts = [{ value: "", text: "Select account" }, ...bankAccounts]
+  const sortedBankAccounts = [{ value: "", label: "Select account" }, ...bankAccounts]
 
   //
   const handleStartDateChange = (e) => {
@@ -177,7 +177,7 @@ const SyncFromOpenBank = () => {
               <SubTitle> Sync your financial records from your bank. </SubTitle>
             </DivWrapper>
             <DivWrapper gap={2}>
-              <Select data={sortedBankAccounts} onChange={(e) => setSelectedAccount(e.target.value)} value={selectedAccount} />
+              <Select options={sortedBankAccounts} onChange={(e) => setSelectedAccount(e.target.value)} value={selectedAccount} />
               {businessAccts && !businessAccts.lastAcctData ? (
                 <>
                   <DivWrapper>
