@@ -43,11 +43,11 @@ const ModalBody = styled.div`
 
 const Modal = ({ title, children, handleClose, icon }) => {
   return ReactDOM.createPortal(
-    <ModalBackdrop>
+    <ModalBackdrop onClick={handleClose}>
       <ModalContents>
         <ModalHeader>
           <ModalTitle>
-            {title} {icon}{" "}
+            {title} {icon}
           </ModalTitle>
           <CustomCloseIcon onClick={handleClose} />
         </ModalHeader>
