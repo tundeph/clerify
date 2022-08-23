@@ -53,7 +53,8 @@ const AddBusiness = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const business = { uid: user.uid, name, type, accts, categories: defaultBusinessCategories }
+    const filteredAccts = accts.filter((acct) => acct.acctName.trim() !== "")
+    const business = { uid: user.uid, name, type, accts: filteredAccts, categories: defaultBusinessCategories, selected: true }
     await addDocument(business)
     if (!response.error) {
       navigate("/dashboard")
@@ -82,7 +83,7 @@ const AddBusiness = () => {
               placeholder="Name of business"
               required
             />
-            <Select onChange={(e) => setType(e.target.value)} value={type} data={businessType} />
+            <Select onChange={(e) => setType(e.target.value)} value={type} options={businessType} />
           </DivWrapper>
           <Divider gap={size.m} />
           <DivWrapper gap={size.xxs} left={size.m} right={size.m}>
@@ -94,7 +95,7 @@ const AddBusiness = () => {
               return (
                 <DivWrapper key={acct.id}>
                   <Text align="left" left={size.xxs} size={size.xxxs} color={colors.secondary}>
-                    Account {acct.id}:
+                    Account {i + 1}:
                   </Text>
                   <DivWrapper direction="row">
                     <FormInput
