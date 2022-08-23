@@ -47,11 +47,23 @@ export const useCharts = (startDate, endDate) => {
     let dailyCategory = {}
 
     //get date object
-    const final = Object.keys(labelArray).map((label) => 0)
+    const final = labelArray.map((label) => 0)
+
+    if (!datas) {
+      const initialData = {
+        labels: labelArray,
+        datasets: [],
+      }
+      return initialData
+    }
 
     Object.entries(datas)
       .filter((data) => {
-        return returnDate(data[1].date) >= returnDate(startDate) && returnDate(data[1].date) <= returnDate(endDate)
+        return (
+          returnDate(data[1].date) >= returnDate(startDate) &&
+          returnDate(data[1].date) <= returnDate(endDate) &&
+          data[1].categoryId
+        )
       })
       .sort((a, b) => returnDate(a[1].date) - returnDate(b[1].date))
       .map((item) => {
