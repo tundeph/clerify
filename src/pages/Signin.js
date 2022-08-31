@@ -16,7 +16,6 @@ import {
   Text,
   PasswordInput,
   UnderFormText,
-  Button,
 } from "../layout/styles"
 import Modal from "../components/Modal"
 
@@ -71,7 +70,12 @@ const Signin = () => {
               <SubTitle> Login with your email and password </SubTitle>
             </DivWrapper>
             <DivWrapper gap={1}>
-              <FormInput type="text" placeholder="Email address" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <FormInput
+                type="text"
+                placeholder="Email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
               <DivWrapper>
                 <PasswordInput
                   type="password"
@@ -80,9 +84,9 @@ const Signin = () => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 <UnderFormText>
-                  Forgot password?
+                  Forgot password?{" "}
                   <Link to="" onClick={handleResetPassword}>
-                    Reset
+                    Reset it
                   </Link>
                 </UnderFormText>
               </DivWrapper>
