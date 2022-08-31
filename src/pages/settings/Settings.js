@@ -15,6 +15,7 @@ const Settings = () => {
             <DivWrapper direction="row" gap={1.5} top={2}>
               <CustomNavLink to="/settings">Category Settings</CustomNavLink>
               <CustomNavLink to="/settings/keywords">Keyword Settings</CustomNavLink>
+              <CustomNavLink to="/settings/accounts">Account Settings</CustomNavLink>
             </DivWrapper>
             <Divider />
           </DivWrapper>
