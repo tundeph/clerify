@@ -1,12 +1,11 @@
-import React, { useContext } from "react"
+import React from "react"
 import { NavLink } from "react-router-dom"
-import styled, { css, ThemeContext } from "styled-components"
+import styled, { css } from "styled-components"
 import { useLogout } from "../hooks/useLogout"
 
 import {
   PageWrapper,
   DivWrapper,
-  SpanWrapper,
   DashboardIcon,
   ImportAccountsIcon,
   ReconcileIcon,
@@ -16,22 +15,24 @@ import {
 } from "../layout/styles"
 import Logo from "../components/Logo"
 import Select from "../components/Select"
-import { selectUserBusiness } from "../redux/profileSlice"
+
+const width = "300"
 
 const SideBar = styled(PageWrapper)`
   display: flex;
   flex-direction: "row";
   background-color: ${({ theme }) => theme.colors.foreground};
   min-height: 100vh;
-  width: 320px;
-  max-width: 320px;
-  min-width: 320px;
-  padding: 50px 50px;
+  width: ${width}px;
+  max-width: ${width}px;
+  min-width: ${width}px;
+  padding: ${width / 6}px ${width / 6}px;
   box-sizing: border-box;
 `
 
 const SidebarContent = styled(DivWrapper)`
   position: fixed;
+  min-width: ${width - width / 3}px;
 `
 
 const NavProps = css`
@@ -55,25 +56,15 @@ const Nav = styled(NavLink)`
   ${NavProps}
 `
 
-const SuperNav = styled(DivWrapper)`
-  ${NavProps}
-  cursor: pointer;
-`
-const selectedProps = css`
-  filter: brightness(200%);
-  font-family: "Beatrice-Bold", sans-serif;
-`
-const CustomSpanWrapper = styled(SpanWrapper)`
-  display: flex;
-  gap: 1.2rem;
-  ${({ selected }) => selected && selectedProps}
-`
-
 const Sidebar = ({ business, onChange }) => {
   const { logout } = useLogout()
-  const { colors } = useContext(ThemeContext)
 
-  const data = Object.entries(business).map((bus) => ({ value: bus[0], label: bus[1].name, selected: bus[1].selected }))
+  let data = Object.entries(business).map((bus) => ({
+    value: bus[0],
+    label: bus[1].name,
+    selected: bus[1].selected,
+  }))
+  data = [...data, { value: "add", label: "Add another business" }]
 
   return (
     <SideBar>
@@ -82,9 +73,9 @@ const Sidebar = ({ business, onChange }) => {
           <Logo reverse />
         </DivWrapper>
         <DivWrapper bottom={4}>
-          <Select height={2.5} bgColor={colors.foreground} options={data} onChange={onChange} />
+          <Select options={data} onChange={onChange} size="small" mode="reverse" />
         </DivWrapper>
-        <Nav to="/">
+        <Nav to="/dashboard">
           <DashboardIcon /> Dashboard
         </Nav>
         <Nav to="/sync-accounts">
@@ -102,28 +93,6 @@ const Sidebar = ({ business, onChange }) => {
         <Nav to="/settings">
           <SettingsIcon /> Settings
         </Nav>
-
-        {/* <DivWrapper>
-          <SuperNav to="/settings" gap={2} align="center" direction="row" onClick={() => setSettingsSubmenu(!settingsSubmenu)}>
-            <CustomSpanWrapper gap={3} selected={settingsSubmenu && shouldShow}>
-              <SettingsIcon /> Settings
-            </CustomSpanWrapper>
-            <ArrowRightIcon />
-          </SuperNav>
-          {settingsSubmenu && (
-            <DivWrapper top={1} bottom={1}>
-              <Divider color={colors.gray600} />
-              <Nav to={CATEGORISE_PATH}>
-                <CategoriseIcon /> Category Settings
-              </Nav>
-              <Nav to={KEYWORDS_PATH}>
-                <KeywordsIcon /> Keywords Settings
-              </Nav>
-              <Divider color={colors.gray600} />
-            </DivWrapper>
-          )}
-        </DivWrapper> */}
-
         <Nav to="/signin" onClick={logout}>
           <SignOutIcon /> Sign out
         </Nav>
