@@ -13,10 +13,12 @@ export const profileSlice = createSlice({
     isLoggedIn: (state, { payload }) => {
       state.user = payload.data
       state.selectedBusinessId = payload.selectedBusinessId
+      state.lastAcctData = payload.lastAcctData
     },
     authReady: (state, { payload }) => {
       state.user = payload.data
       state.selectedBusinessId = payload.selectedBusinessId
+      state.lastAcctData = payload.lastAcctData
       state.authIsReady = true
     },
     updateBusinessCategory: (state, { payload }) => {
@@ -31,7 +33,8 @@ export const profileSlice = createSlice({
 export const selectUserProfile = (state) => state.userProfile
 export const selectUserBusiness = (state) => state.userProfile.user.business
 export const selectBusinessAccounts = (state, id) => state.userProfile.user.business[id].accts
-export const selectTransactionCategories = (state, id) => state.userProfile.user.business[id].categories
+export const selectTransactionCategories = (state, id) =>
+  state.userProfile.user.business[id].categories
 
 export const { isLoggedIn, authReady, updateBusinessCategory, logOut } = profileSlice.actions
 
