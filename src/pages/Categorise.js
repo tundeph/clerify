@@ -1,11 +1,28 @@
-import React, { useState, useContext } from "react"
+// load transactions with useeffect
+//sort only transactions with no categoryId
+// create a state for array index starting from 0
+// create a state array for credit
+// create a state array for debit
+// show array [arrayindex]
+//after user clicks NEXT update state array for credit or debit with keyword
+//loop through array, if transaction is debit, check if its keyword exist in debit vice versa
+// if it does not exist, update array index
+//NEED: Change dropdown for keywords to checkboxes component, adn investigate adding array to keywords in db and state
+
+import React, { useState, useEffect, useContext } from "react"
 import styled, { ThemeContext } from "styled-components"
-import shortid from "shortid"
-import { useFirestore } from "../hooks/useFirestore"
+import { useSelector } from "react-redux"
 import { useDocument } from "../hooks/useDocument"
-import { useSelector, useDispatch } from "react-redux"
-import { selectUserProfile, updateBusinessCategory, selectTransactionCategories } from "../redux/profileSlice"
-import { businessCategories } from "../helper/defaultData"
+import { selectUserProfile, selectTransactionCategories } from "../redux/profileSlice"
+import { useFirestore } from "../hooks/useFirestore"
+import { db } from "../firebase/config"
+import {
+  formatCategoryDropDown,
+  formatKeywordsDropDown,
+  formatUpdatedCategories,
+  reconcileAccts,
+  currencyFormatter,
+} from "../helper"
 
 import { size } from "../layout/theme"
 import {
@@ -14,166 +31,243 @@ import {
   DivWrapper,
   Title,
   SubTitle,
-  FormInput,
+  CalendarIcon,
+  DebitIcon,
+  CreditIcon,
   Text,
-  Divider,
-  KeywordsWrapper,
-  Button,
+  ArrowForwardIcon,
+  BouncingCabinetIcon,
+  GrayWrapper,
 } from "../layout/styles"
+
 import Select from "../components/Select"
-import Keyword from "../components/Keyword"
-import Modal from "../components/Modal"
 import ButtonState from "../components/ButtonState"
-import RadioButton from "../components/RadioButton"
-import SectionDivider from "../components/SectionDivider"
+import NoTransactions from "../components/NoTransactions"
+import { default as ReactSelect } from "react-select"
+
+export const CustomDivWrapper = styled(DivWrapper)`
+  gap: ${size.xxxs}rem;
+  height: 160px;
+  box-shadow: 2px 2px 2px ${({ theme }) => theme.colors.gray300};
+  background-color: ${({ theme }) => theme.colors.reverse};
+  border-radius: 15px;
+  padding: ${size.xs}rem ${size.xxs}rem;
+  box-sizing: border-box;
+  /* overflow-y: scroll; */
+`
+
+const CustomButton = styled(ButtonState)`
+  padding: ${size.s}rem ${size.s}rem;
+`
 
 const Categorise = () => {
   const { colors } = useContext(ThemeContext)
-  const { updateDocument, response } = useFirestore("business")
   const { selectedBusinessId } = useSelector(selectUserProfile)
-  const transactionCategories = useSelector((state) => selectTransactionCategories(state, selectedBusinessId))
-  const { document, error } = useDocument("business", selectedBusinessId)
+  const [category, setCategory] = useState()
+  const [chosenKeyword, setChosenKeyword] = useState()
+  const [isPending, setIsPending] = useState(false)
+  const [transactions, setTransactions] = useState()
+  const [index, setIndex] = useState(0)
+  const [loading, setLoading] = useState(true)
+  const [chosenThirdParty, setChosenThirdParty] = useState("")
+  const [categorizedQty, setCategorizedQty] = useState(0)
 
-  const dispatch = useDispatch()
+  useEffect(() => {
+    db.collection("accounts")
+      .doc(selectedBusinessId)
+      .onSnapshot(
+        (snapshot) => {
+          if (snapshot.data()) {
+            setTransactions(snapshot.data())
+            setLoading(false)
+          } else {
+            // setError("Oops! Nothing exists there")
+          }
+        },
+        (err) => {
+          console.log(err.message)
+          // setError("failed to get document")
+        }
+      )
+  }, [])
 
-  //
-  const [customCategory, setCustomCategory] = useState("")
-  const [standardCategory, setStandardCategory] = useState("")
-  const [errorModal, setErrorModal] = useState(false)
-  const [transactionType, setTransactionType] = useState("")
-  const [deleteModal, setDeleteModal] = useState({ status: false, category: "" })
-  const buttonCondition = (standardCategory || customCategory.length > 1) && transactionType
+  let sorted = []
 
-  const handleDeleteCategory = async (categoryId) => {
-    setDeleteModal({ ...deleteModal, status: false })
-    const filteredCategories = document.categories.filter((category) => category.categoryId !== categoryId)
-    await updateDocument(selectedBusinessId, { categories: filteredCategories })
-    dispatch(updateBusinessCategory({ data: filteredCategories, selectedBusinessId }))
+  if (transactions) {
+    sorted = Object.entries(transactions).filter(
+      (transaction) => transaction[1].categoryId.trim() === ""
+    )
   }
 
-  const handleAddCategory = async (e) => {
-    e.preventDefault()
+  const buttonCondition = category && category
+  const showReconcileButton = index > 0 && (index >= sorted.length || categorizedQty === 6)
 
-    if (standardCategory || customCategory) {
-      const standardCategoryExist = document.categories.some((selectedCategory) => selectedCategory.title === standardCategory)
-      const customCategoryExist = document.categories.some((selectedCategory) => selectedCategory.title === customCategory)
-      let data = []
-      if (!standardCategoryExist && standardCategory !== "") {
-        const categoryId = shortid.generate()
-        data.push({ categoryId, type: transactionType, title: standardCategory, keywords: [] })
-      }
-      if (!customCategoryExist && customCategory !== "") {
-        const categoryId = shortid.generate()
-        data.push({ categoryId, type: transactionType, title: customCategory, keywords: [] })
-      }
-      await updateDocument(selectedBusinessId, { categories: [...document.categories, ...data] })
+  const transactionCategories = useSelector((state) =>
+    selectTransactionCategories(state, selectedBusinessId)
+  )
+  const categories = formatCategoryDropDown(transactionCategories)
+  const transactionsDb = useFirestore("accounts")
+  const businessDb = useFirestore("business")
+  const getTransactionsDoc = useDocument("accounts", selectedBusinessId)
+  const getBusinessDoc = useDocument("business", selectedBusinessId)
+
+  const handleReconcile = async () => {
+    setIsPending(true)
+    //do reconciliation
+
+    const reconciledAccts = reconcileAccts(transactionCategories, getTransactionsDoc.document)
+    setIndex(0)
+    //update transactions db
+    await transactionsDb.updateDocument(selectedBusinessId, reconciledAccts)
+
+    setCategorizedQty(0)
+    setIsPending(false)
+    // dispatch(getTransactions({ data: reconciled }))
+  }
+
+  const handleCategorise = async () => {
+    setCategorizedQty((categorizedQty) => categorizedQty + 1)
+    setIsPending(true)
+
+    //update categories with keyword
+    const updatedCategories = formatUpdatedCategories(
+      getBusinessDoc.document,
+      category,
+      chosenKeyword,
+      chosenThirdParty
+    )
+    // console.log(updatedCategories)
+    await businessDb.updateDocument(selectedBusinessId, { categories: updatedCategories })
+
+    if (index <= sorted.length) {
+      setIndex(index + 1)
     }
-    setCustomCategory("")
-    setStandardCategory("")
-  }
-
-  const handleSetStandardCategory = (e) => {
-    setStandardCategory(e.target.value)
-    setCustomCategory("")
-  }
-
-  const handleSetCustomCategory = (e) => {
-    setCustomCategory(e.target.value)
-    setStandardCategory("")
+    setChosenKeyword("")
+    setChosenThirdParty("")
+    setCategory("")
+    setIsPending(false)
   }
 
   return (
     <>
-      <DivWrapper bottom={size.s}>
-        <SubTitle> Add customized or standard transaction categories </SubTitle>
-      </DivWrapper>
-      <form onSubmit={handleAddCategory}>
-        <DivWrapper direction="column" gap={2} bottom={5}>
-          <DivWrapper>
-            <Text left={1} color={colors.gray600} size={size.xxs}>
-              Choose
-            </Text>
-            <Select
-              options={businessCategories}
-              height={size.xl}
-              bgColor={colors.gray100}
-              fontSize={size.xxxs}
-              value={standardCategory}
-              onChange={handleSetStandardCategory}
-            />
+      <PageWrapper>
+        <UserWrapper>
+          <DivWrapper bottom={size.xs}>
+            <Title> Reconcile records </Title>
+            <SubTitle> Reconcile your data by categorising them properly.</SubTitle>
           </DivWrapper>
-          <SectionDivider> OR </SectionDivider>
-          <DivWrapper>
-            <Text left={1} color={colors.gray600} size={size.xxs}>
-              Add
-            </Text>
-            <FormInput
-              type="text"
-              value={customCategory}
-              onChange={handleSetCustomCategory}
-              height={size.xl}
-              fontSize={size.xxxs}
-              placeholder="Enter a custom category"
-            />
-          </DivWrapper>
+          {transactions && (
+            <GrayWrapper gap={3}>
+              {sorted && index < sorted.length && categorizedQty <= 5 && (
+                <>
+                  <DivWrapper direction="row" justify="space-between">
+                    <DivWrapper direction="row">
+                      <Text size={size.xxxs} color={colors.gray600}>
+                        <CalendarIcon /> {sorted[index][1].date}
+                      </Text>
+                    </DivWrapper>
+                    <DivWrapper direction="row">
+                      <Text
+                        size={size.xxxs}
+                        color={sorted[index][1].type === "credit" ? colors.green : colors.red}
+                      >
+                        {sorted[index][1].type === "credit" ? (
+                          <>
+                            CREDIT <CreditIcon />
+                          </>
+                        ) : (
+                          <>
+                            DEBIT <DebitIcon />
+                          </>
+                        )}
+                      </Text>
+                    </DivWrapper>
+                  </DivWrapper>
 
-          <DivWrapper direction="row" justify="space-between" align="center">
-            <Text left={1}> What type of transaction is it? </Text>
-            <DivWrapper direction="row" gap={1}>
-              <RadioButton
-                labelText="Inflow"
-                value="credit"
-                checked={transactionType === "credit"}
-                onChange={() => setTransactionType("credit")}
-              />
-              <RadioButton
-                labelText="Outflow"
-                value="debit"
-                checked={transactionType === "debit"}
-                onChange={() => setTransactionType("debit")}
-              />
-            </DivWrapper>
-          </DivWrapper>
-          <ButtonState
-            loading={response.isPending && (customCategory || standardCategory)}
-            loadingText="Loading"
-            condition={buttonCondition}
-          >
-            Add
-          </ButtonState>
-          {/* </HalfDiv> */}
-        </DivWrapper>
-      </form>
-      <Divider />
-      <KeywordsWrapper top={0.2}>
-        {transactionCategories.length > 0 &&
-          transactionCategories.map((category) => (
-            <Keyword
-              key={category.categoryId}
-              text={category.title}
-              onClick={() => setDeleteModal({ status: true, category: category.categoryId })}
-            />
-          ))}
-      </KeywordsWrapper>
+                  <CustomDivWrapper align="center">
+                    <Text
+                      size={size.m}
+                      color={sorted[index][1].type === "credit" ? colors.green : colors.red}
+                    >
+                      {currencyFormatter(sorted[index][1].amount / 100)}
+                    </Text>
+                    <Text color={colors.gray600}> {sorted[index][1].remarks} </Text>
+                  </CustomDivWrapper>
+                  {/* <ReactSelect options={formatKeywordsDropDown(sorted[index][1].remarks)} /> */}
+                  <DivWrapper>
+                    <Text left={1} bottom={size["4xs"]} color={colors.gray600} size={0.8}>
+                      Select a <Text bold> unique keyword or phrase </Text> to identify similar
+                      transactions
+                    </Text>
+                    <Select
+                      options={formatKeywordsDropDown(sorted[index][1].remarks)}
+                      value={chosenKeyword}
+                      onChange={(e) => setChosenKeyword(e.target.value)}
+                    />
+                  </DivWrapper>
 
-      {errorModal && (
-        <Modal title="Error" handleClose={() => setErrorModal(false)}>
-          <Text justify="center" color={colors.red}>
-            This category already exists and cannot be overwritten
-          </Text>
-        </Modal>
-      )}
+                  <DivWrapper>
+                    <Text left={1} bottom={size["4xs"]} color={colors.gray600} size={0.8}>
+                      Do you want to add a compulsory{" "}
+                      <Text bold>
+                        third-party {sorted[index][1].type === "credit" ? `(sender)` : `(receiver)`}{" "}
+                      </Text>{" "}
+                      for this type of transaction?
+                    </Text>
+                    <Select
+                      options={formatKeywordsDropDown(sorted[index][1].remarks)}
+                      value={chosenThirdParty}
+                      onChange={(e) => setChosenThirdParty(e.target.value)}
+                    />
+                  </DivWrapper>
 
-      {deleteModal.status && (
-        <Modal title="Are you sure?" handleClose={() => setDeleteModal({ ...deleteModal, status: false })}>
-          <DivWrapper align="center" gap={2}>
-            <Text justify="center" color={colors.red}>
-              You are about to permanently delete this category and all associated keywords (for sorting) connected to it
-            </Text>
-            <Button onClick={() => handleDeleteCategory(deleteModal.category)}> Yes, Delete it </Button>
-          </DivWrapper>
-        </Modal>
-      )}
+                  <DivWrapper direction="row" gap={1}>
+                    <Select
+                      options={categories}
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
+                    />
+                    <CustomButton
+                      loading={isPending}
+                      loadingText=""
+                      condition={true}
+                      onClick={() => handleCategorise()}
+                    >
+                      {!buttonCondition ? "Skip" : "Next"} <ArrowForwardIcon />
+                    </CustomButton>
+                  </DivWrapper>
+                </>
+              )}
+              {sorted.length === 0 && !isPending && <NoTransactions />}
+              {showReconcileButton && (
+                <DivWrapper align="center" gap={2}>
+                  <Text color={colors.gray300}>
+                    <BouncingCabinetIcon size={80} />
+                  </Text>
+                  <Text align="center">
+                    {" "}
+                    Click the button below to reconcile your transactions{" "}
+                  </Text>
+                  <ButtonState
+                    loading={isPending}
+                    condition={true}
+                    loadingText=""
+                    onClick={() => handleReconcile()}
+                  >
+                    Reconcile
+                  </ButtonState>
+                </DivWrapper>
+              )}
+            </GrayWrapper>
+          )}
+
+          {!loading && !transactions && (
+            <GrayWrapper>
+              <NoTransactions />
+            </GrayWrapper>
+          )}
+        </UserWrapper>
+      </PageWrapper>
     </>
   )
 }
