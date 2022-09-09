@@ -23,6 +23,7 @@ const theme = {
 }
 
 export const size = {
+  "4xs": 0.5,
   xxxs: 0.8,
   xxs: 1.0,
   xs: 1.4,
@@ -32,7 +33,9 @@ export const size = {
   xl: 3.2,
   xxl: 3.6,
   "2xxl": 7.2,
+  "3xxl": 10.8,
   "4xxl": 14.4,
+  "8xxl": 28.8,
 }
 
 export default theme
