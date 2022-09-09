@@ -4,54 +4,54 @@
 //get the chart.js graph from my exercise repo
 //if number of days is more than 30, monthly chart is spooled, if more then 365 days, yearly chart
 
-import React, { useState, useEffect, useContext, useLayoutEffect } from "react"
-import { useSelector, useDispatch } from "react-redux"
+import React, { useState, useEffect } from "react"
+import { useSelector } from "react-redux"
 import { selectUserProfile, selectTransactionCategories } from "../../redux/profileSlice"
-import { getTransactions, selectUserTransactions } from "../../redux/accountSlice"
 import { useDocument } from "../../hooks/useDocument"
-import { formatCategory } from "../../helper"
-import { size } from "../../layout/theme"
+import { formatCategory, formatCategoryDropDown } from "../../helper"
 import { format, subDays } from "date-fns"
-import styled, { ThemeContext } from "styled-components"
 import { useCharts } from "../../hooks/useCharts"
 import { db } from "../../firebase/config"
 
-import Checkbox from "../../components/Checkbox"
-import { DivWrapper, SplitDiv, SubTitle, Text, Divider, DateInput, Button } from "../../layout/styles"
-import { LineChart } from "../../components/Charts"
+import Select from "../../components/Select"
+import {
+  DivWrapper,
+  SplitDiv,
+  Text,
+  Divider,
+  DateInput,
+  Button,
+  GraphWrapper,
+} from "../../layout/styles"
+import { LineChart, PieChart, BarChart } from "../../components/Charts"
+import ButtonState from "../../components/ButtonState"
 
-const CustomDivWrapper = styled(DivWrapper)`
-  flex-wrap: wrap;
-`
-
-export const GraphWrapper = styled(DivWrapper)`
-  min-height: 400px;
-  background-color: ${({ theme }) => theme.colors.reverse};
-  border-radius: 15px;
-  padding: ${size.xs}rem ${size.xxs}rem;
-  box-sizing: border-box;
-  border: 1px solid ${({ theme }) => theme.colors.gray300};
-`
-
-const CategoryReports = ({ onChange }) => {
-  const { colors } = useContext(ThemeContext)
-  const dispatch = useDispatch()
+const CategoryReports = () => {
   const todayDate = format(new Date("2022/06/30"), "yyyy-MM-dd")
   const thirtyDaysAgo = format(subDays(new Date("2022/06/30"), 30), "yyyy-MM-dd")
+  //
   const [startDate, setStartDate] = useState(thirtyDaysAgo)
   const [endDate, setEndDate] = useState(todayDate)
-  const [transactionsDoc, setTransactionsDoc] = useState()
-
   //
+  const [cashflowStartDate, setCashflowStartDate] = useState(thirtyDaysAgo)
+  const [cashflowEndDate, setCashflowEndDate] = useState(todayDate)
+  //
+  const [firstMonth, setFirstMonth] = useState(thirtyDaysAgo.substring(0, 7))
+  const [secondMonth, setSecondMonth] = useState(todayDate.substring(0, 7))
+  const [MOMCategory, setMOMCategory] = useState("")
 
-  const { getChartLabels, dailyCategoryObjects, getData, dailyCategoryData } = useCharts(startDate, endDate)
+  const buttonConditionMOM = firstMonth && secondMonth && MOMCategory
+
+  const { getData, dailyCategoryData, getCashflowData, combinedCashflowData, getMOMData, MOMData } =
+    useCharts()
   const { selectedBusinessId } = useSelector(selectUserProfile)
-  const transactionCategories = useSelector((state) => selectTransactionCategories(state, selectedBusinessId))
+  const transactionCategories = useSelector((state) =>
+    selectTransactionCategories(state, selectedBusinessId)
+  )
   const categories = formatCategory(transactionCategories)
   const getTransactionsDoc = useDocument("accounts", selectedBusinessId)
-  // dispatch(getTransactions({ data: getTransactionsDoc.document }))
-  // const transactions = useSelector(selectUserTransactions)
-  const [showCategories, setShowCategories] = useState(categories.map((category) => category.value))
+  const [showCategories] = useState(categories.map((category) => category.value))
+  const categoriesDropDown = formatCategoryDropDown(transactionCategories)
 
   useEffect(() => {
     db.collection("accounts")
@@ -59,7 +59,7 @@ const CategoryReports = ({ onChange }) => {
       .onSnapshot(
         (snapshot) => {
           if (snapshot.data()) {
-            getData(snapshot.data(), transactionCategories, showCategories)
+            getData(snapshot.data(), transactionCategories, showCategories, startDate, endDate)
           }
         },
         (err) => {
@@ -68,55 +68,122 @@ const CategoryReports = ({ onChange }) => {
       )
   }, [])
 
-  const handlePlotChart = () => {
-    //setChartLabels(getChartLabels(startDate, endDate))
-    // console.log(format(new Date(startDate), "yyyy/MM/dd"))
-    getChartLabels(startDate, endDate)
-    getData(getTransactionsDoc.document, transactionCategories, showCategories)
+  const handleCategoryChart = () => {
+    getData(getTransactionsDoc.document, transactionCategories, showCategories, startDate, endDate)
   }
 
-  const handleCheckboxChange = (e) => {
-    if (showCategories.includes(e.target.value)) {
-      const newCategories = showCategories.filter((showcategory) => showcategory !== e.target.value)
-      setShowCategories(newCategories)
-    } else {
-      setShowCategories([...showCategories, e.target.value])
-    }
+  const handleMOMChart = () => {
+    getMOMData(
+      getTransactionsDoc.document,
+      transactionCategories,
+      MOMCategory,
+      firstMonth,
+      secondMonth
+    )
+  }
+
+  const handleCashflowChart = () => {
+    getCashflowData(getTransactionsDoc.document, cashflowStartDate, cashflowEndDate)
   }
 
   return (
     <DivWrapper>
-      <SubTitle>Select the categories you want to generate reports for.</SubTitle>
-      <CustomDivWrapper direction="row" top={1} bottom={2} gap={0.5}>
-        {categories &&
-          categories
-            .filter((category) => category.value)
-            .map((category) => (
-              <Checkbox
-                key={category.value}
-                id={category.value}
-                value={category.value}
-                name="categories"
-                checked={showCategories.includes(category.value)}
-                onChange={handleCheckboxChange}
-              >
-                <Text size={0.7}>{category.text}</Text>
-              </Checkbox>
-            ))}
-      </CustomDivWrapper>
+      {/* <SubTitle>Select the categories you want to generate reports for.</SubTitle> */}
+      <DivWrapper top={2} bottom={2}>
+        <Text bold size={1}>
+          Category Reports
+        </Text>
+        <SplitDiv minWidth={120} gap={1} top={2}>
+          <DateInput
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            size="small"
+          />
+          <DateInput
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+            size="small"
+          />
+          <Button size="small" onClick={handleCategoryChart}>
+            Apply
+          </Button>
+        </SplitDiv>
+        <DivWrapper top={1}>
+          <GraphWrapper top={1}>
+            {dailyCategoryData && <LineChart data={dailyCategoryData} />}
+          </GraphWrapper>
+        </DivWrapper>
+      </DivWrapper>
+
+      <Divider />
+      <DivWrapper top={2} bottom={2}>
+        <Text bold size={1}>
+          Cashflow Reports
+        </Text>
+        <SplitDiv minWidth={120} gap={1} top={2}>
+          <DateInput
+            type="date"
+            value={cashflowStartDate}
+            onChange={(e) => setCashflowStartDate(e.target.value)}
+            size="small"
+          />
+          <DateInput
+            type="date"
+            value={cashflowEndDate}
+            onChange={(e) => setCashflowEndDate(e.target.value)}
+            size="small"
+          />
+          <Button size="small" onClick={handleCashflowChart}>
+            Apply
+          </Button>
+        </SplitDiv>
+        <DivWrapper top={1}>
+          <GraphWrapper top={1}>
+            {combinedCashflowData && <PieChart data={combinedCashflowData} />}
+          </GraphWrapper>
+        </DivWrapper>
+      </DivWrapper>
 
       <Divider />
 
-      <SplitDiv minWidth={200} gap={1} top={1}>
-        <DateInput type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} size="small" />
-        <DateInput type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} size="small" />
-        <Button size="small" onClick={handlePlotChart}>
-          Apply
-        </Button>
-      </SplitDiv>
-      <DivWrapper>
-        <GraphWrapper top={3}>{dailyCategoryData && <LineChart data={dailyCategoryData} />}</GraphWrapper>
-        <SubTitle> Category Reports </SubTitle>
+      <DivWrapper top={2} bottom={2}>
+        <Text bold size={1}>
+          Month-on-Month (MOM) Reports
+        </Text>
+        <SplitDiv minWidth={120} gap={1} top={2}>
+          <DateInput
+            type="month"
+            value={firstMonth}
+            onChange={(e) => setFirstMonth(e.target.value)}
+            size="small"
+          />
+          <DateInput
+            type="month"
+            value={secondMonth}
+            onChange={(e) => setSecondMonth(e.target.value)}
+            size="small"
+          />
+          <Select
+            options={categoriesDropDown}
+            onChange={(e) => setMOMCategory(e.target.value)}
+            value={MOMCategory}
+            size="small"
+          />
+          <ButtonState
+            size="small"
+            loading={false}
+            condition={buttonConditionMOM}
+            loadingText=""
+            onClick={handleMOMChart}
+          >
+            Apply
+          </ButtonState>
+        </SplitDiv>
+        <DivWrapper top={1}>
+          <GraphWrapper top={1}>{combinedCashflowData && <BarChart data={MOMData} />}</GraphWrapper>
+        </DivWrapper>
       </DivWrapper>
     </DivWrapper>
   )
