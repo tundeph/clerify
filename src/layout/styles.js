@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components"
 import { size } from "../layout/theme"
+import moreIcon from "../assets/images/expand-more.svg"
 
 import { Dashboard } from "@styled-icons/material/Dashboard"
 import { EditOff } from "@styled-icons/material-sharp/EditOff"
@@ -9,14 +10,13 @@ import { BarChartFill } from "@styled-icons/bootstrap/BarChartFill"
 import { Settings } from "@styled-icons/ionicons-sharp/Settings"
 import { SignOut } from "@styled-icons/octicons/SignOut"
 import { CloseOutline } from "@styled-icons/evaicons-outline/CloseOutline"
+import { PlusOutline } from "@styled-icons/evaicons-outline/PlusOutline"
 import { Calendar } from "@styled-icons/entypo/Calendar"
 import { AccountTree } from "@styled-icons/material/AccountTree"
 import { DiagonalArrowRightUpOutline } from "styled-icons/evaicons-outline"
 import { DiagonalArrowLeftDownOutline } from "styled-icons/evaicons-outline"
 import { ArrowForwardOutline } from "@styled-icons/evaicons-outline/ArrowForwardOutline"
 import { LoaderAlt } from "styled-icons/boxicons-regular"
-import { Loader3 } from "@styled-icons/remix-fill/Loader3"
-import { DownArrow } from "@styled-icons/boxicons-solid/DownArrow"
 import { ArrowRight } from "@styled-icons/bootstrap/ArrowRight"
 import { CheckmarkCircle } from "@styled-icons/fluentui-system-regular/CheckmarkCircle"
 import { Cabinet } from "@styled-icons/boxicons-regular/Cabinet"
@@ -114,7 +114,11 @@ export const CreditIcon = styled(DiagonalArrowLeftDownOutline)`
   margin-left: 1em;
 `
 export const ArrowForwardIcon = styled(ArrowForwardOutline)`
-  height: 1.2em;
+  ${IconProps}
+`
+
+export const PlusIcon = styled(PlusOutline)`
+  ${IconProps}
 `
 
 export const CloseIcon = styled(CloseOutline)`
@@ -144,32 +148,6 @@ export const CustomCloseIcon = styled(CloseOutline)`
   &:active {
     background-color: ${({ theme }) => theme.colors.gray300};
   }
-`
-export const PageWrapper = styled.div`
-  flex-grow: 1;
-  display: flex;
-  min-height: 100vh;
-  padding: 1rem 2rem;
-`
-
-export const MidWrapper = styled.div`
-  width: ${(props) => props.width || 80}%;
-  margin: 0 auto;
-  padding: 5rem 2rem;
-  box-sizing: border-box;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-`
-
-export const UserWrapper = styled.div`
-  width: 90%;
-  max-width: 900px;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  padding: 3rem 2rem;
-  box-sizing: border-box;
 `
 
 export const Title = styled.span`
@@ -202,39 +180,69 @@ export const FormInput = styled.input`
 `
 
 export const SelectInput = styled.select`
-  height: ${(props) => (props.height ? props.height : size.xxl)}rem;
+  height: ${size.xxl}rem;
   width: 100%;
   border: 1.5px solid ${({ theme }) => theme.colors.gray300};
   border-radius: 50px;
   padding: 0rem 20px;
+  padding: 0rem ${size.xs}rem;
   font-size: ${(props) => (props.fontSize ? props.fontSize : size.xxs)}em;
   font-family: "Beatrice", sans-serif;
   color: ${({ theme }) => theme.colors.secondary};
   box-sizing: border-box;
-  background-color: ${(props) => (props.bgColor ? props.bgColor : ({ theme }) => theme.colors.gray100)};
+  background-color: ${(props) =>
+    props.bgColor ? props.bgColor : ({ theme }) => theme.colors.gray100};
+  // style the dropdown arrow
+  appearance: none;
+  background-image: url(${moreIcon});
+  background-size: 24px;
+  background-repeat: no-repeat;
+  background-position: calc(100% - 8px) center;
 
   &:focus {
     border-color: ${({ theme }) => theme.colors.gray600};
-    background-color: ${(props) => (props.bgColor ? props.bgColor : ({ theme }) => theme.colors.reverse)};
+    background-color: ${(props) =>
+      props.bgColor ? props.bgColor : ({ theme }) => theme.colors.reverse};
     outline: none;
-  }
-`
-
-export const Button = styled.button`
-  ${buttonProps}
-  color: ${({ theme }) => theme.colors.reverse};
-  background-color: ${({ theme }) => theme.colors.primary};
-
-  &:hover {
-    transform: scale(1.02);
-    cursor: pointer;
   }
 
   ${({ size }) =>
     size === "small" &&
     css`
       height: 2.5rem;
-      // padding: 0.1rem, 15px !important;
+      font-size: 0.9em;
+    `}
+
+  ${({ mode }) =>
+    mode === "reverse" &&
+    css`
+      color: ${({ theme }) => theme.colors.gray300};
+      border: 1.5px solid ${({ theme }) => theme.colors.gray600};
+      background-color: ${({ theme }) => theme.colors.foreground};
+
+      &:focus {
+        background-color: ${({ theme }) => theme.colors.foreground};
+        outline: none;
+      }
+    `}
+`
+
+export const Button = styled.button`
+  ${buttonProps}
+  color: ${({ theme }) => theme.colors.reverse};
+  background-color: ${({ theme }) => theme.colors.primary};
+  transition: 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.01);
+    cursor: pointer;
+    box-shadow: 3px 6px 5px ${({ theme }) => theme.colors.gray300};
+  }
+
+  ${({ size }) =>
+    size === "small" &&
+    css`
+      height: 2.5rem;
     `}
 `
 
@@ -244,6 +252,12 @@ export const DisabledButton = styled.button.attrs((props) => ({
   ${buttonProps}
   color: ${({ theme }) => theme.colors.reverse};
   background-color: ${(props) => props.color || (({ theme }) => theme.colors.primary)};
+
+  ${({ size }) =>
+    size === "small" &&
+    css`
+      height: 2.5rem;
+    `}
 `
 
 export const PasswordInput = styled(FormInput)`
@@ -266,6 +280,33 @@ export const DivWrapper = styled.div`
   align-items: ${(props) => props.align || "left"};
   flex-wrap: ${(props) => props.wrap || "nowrap"};
   color: ${null || ((props) => props.color)};
+`
+
+export const PageWrapper = styled(DivWrapper)`
+  flex-grow: 1;
+  display: flex;
+  min-height: 100vh;
+  padding: 1rem 2rem;
+`
+
+export const MidWrapper = styled.div`
+  width: ${(props) => props.width || 80}%;
+  margin: 0 auto;
+  padding: 5rem 2rem;
+  box-sizing: border-box;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+`
+
+export const UserWrapper = styled(DivWrapper)`
+  width: 90%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 3rem 2rem;
+  box-sizing: border-box;
 `
 
 export const Text = styled.span`
@@ -297,10 +338,23 @@ export const KeywordsWrapper = styled.div`
   gap: ${size.xxxs}rem;
   height: 300px;
   background-color: ${({ theme }) => theme.colors.gray100};
-  border-radius: 15px;
+  border-radius: 10px;
   padding: ${size.xs}rem ${size.xxs}rem;
   box-sizing: border-box;
   overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: ${({ theme }) => theme.colors.gray300};
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: ${({ theme }) => theme.colors.gray600};
+  }
 `
 
 export const UploadInput = styled.input`
@@ -340,6 +394,7 @@ export const HalfDiv = styled.div`
 
 export const SplitDiv = styled.div`
   display: grid;
+  width: 100%;
   grid-template-columns: repeat(auto-fit, minmax(${(props) => props.minWidth || "200"}px, 1fr));
   gap: ${((props) => props.gap) || null}rem;
   margin-bottom: ${null || ((props) => props.bottom)}rem;
@@ -357,6 +412,7 @@ export const DateInput = styled.input`
   box-sizing: border-box;
   font-family: "Beatrice", sans-serif;
   color: ${({ theme }) => theme.colors.gray600};
+  outline: none;
 
   &:focus {
     border-color: ${({ theme }) => theme.colors.primary};
@@ -403,4 +459,26 @@ export const UnderFormText = styled(Text)`
   font-size: 0.8rem;
   text-align: right;
   color: ${({ theme }) => theme.colors.secondary};
+`
+
+export const GraphWrapper = styled(DivWrapper)`
+  /* min-height: 300px; */
+  background-color: ${({ theme }) => theme.colors.reverse};
+  border-radius: 15px;
+  padding: ${size.xs}rem ${size.xxs}rem;
+  box-sizing: border-box;
+  border: 1px solid ${({ theme }) => theme.colors.gray300};
+`
+
+export const GrayWrapper = styled(DivWrapper)`
+  background-color: ${({ theme }) => theme.colors.gray100};
+  border-radius: 15px;
+  padding: ${(props) => (props.padding ? props.padding : size.l)}rem;
+  box-sizing: border-box;
+`
+
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 `
