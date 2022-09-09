@@ -10,12 +10,14 @@ import {
   selectBusinessAccounts,
   selectTransactionCategories,
 } from "../../redux/profileSlice"
+import MonoConnect from "@mono.co/connect.js"
+import { MonoSync } from "../../backend/MonoSync"
 
 import { useDocument } from "../../hooks/useDocument"
 import { useFirestore } from "../../hooks/useFirestore"
 
 import { addYears, format, isBefore } from "date-fns"
-import { textSorter, reconcileAccts } from "../../helper"
+import { textSorter, reconcileAccts, LIVE_PUBLIC_KEY } from "../../helper"
 import { syncModalMessages } from "../../helper/defaultData"
 import shortid from "shortid"
 
@@ -23,7 +25,16 @@ import shortid from "shortid"
 import styled, { ThemeContext } from "styled-components"
 import { size } from "../../layout/theme"
 
-import { PageWrapper, UserWrapper, DivWrapper, HalfDiv, Text, DateInput, Title, SubTitle, LoadingIcon } from "../../layout/styles"
+import {
+  PageWrapper,
+  UserWrapper,
+  DivWrapper,
+  Text,
+  DateInput,
+  Title,
+  SubTitle,
+  LoadingIcon,
+} from "../../layout/styles"
 
 import Select from "../../components/Select"
 import Modal from "../../components/Modal"
@@ -40,7 +51,8 @@ const SyncFromOpenBank = () => {
   const { colors } = useContext(ThemeContext)
   const navigate = useNavigate()
   const { addDocumentWithId, updateDocument, response } = useFirestore("accounts")
-  const { selectedBusinessId } = useSelector(selectUserProfile)
+  const updateBusiness = useFirestore("business")
+  const { selectedBusinessId, lastAcctData } = useSelector(selectUserProfile)
   const { document } = useDocument("accounts", selectedBusinessId)
   const syncModalMessage = syncModalMessages(colors)
   const dateNow = new Date()
@@ -75,14 +87,21 @@ const SyncFromOpenBank = () => {
   //
   const business = useSelector(selectUserBusiness)
   const getBusinessAccts = useSelector((state) => selectBusinessAccounts(state, selectedBusinessId))
-  const [businessAccts] = getBusinessAccts.filter((businessAcct) => businessAcct.id === selectedAccount)
-  const transactionCategories = useSelector((state) => selectTransactionCategories(state, selectedBusinessId))
+
+  const [businessAccts] = getBusinessAccts.filter(
+    (businessAcct) => businessAcct.id === selectedAccount
+  )
+  const transactionCategories = useSelector((state) =>
+    selectTransactionCategories(state, selectedBusinessId)
+  )
 
   //
-  const bankAccounts = textSorter([...business[selectedBusinessId].accts], "asc", "acctName").map((acct) => ({
-    value: acct.id,
-    label: acct.acctName,
-  }))
+  const bankAccounts = textSorter([...business[selectedBusinessId].accts], "asc", "acctName").map(
+    (acct) => ({
+      value: acct.id,
+      label: acct.acctName,
+    })
+  )
 
   const sortedBankAccounts = [{ value: "", label: "Select account" }, ...bankAccounts]
 
@@ -119,105 +138,117 @@ const SyncFromOpenBank = () => {
     }
   }
 
-  const handleStartSync = async (e) => {
-    e.preventDefault()
-    dispatch({ type: "PROCESSING_DATA", payload: syncModalMessage.loading })
+  //connect account and get code
+  const monoConnect = React.useMemo(() => {
+    const monoInstance = new MonoConnect({
+      onClose: () => console.log("Widget closed"),
+      onLoad: () => console.log("Widget loaded successfully"),
+      onSuccess: async ({ code }) => {
+        // add code for actions to be taken
+        const transactions = MonoSync(code, selectedAccount)
+        dispatch({ type: "PROCESSING_DATA", payload: syncModalMessage.adding })
 
-    try {
-      const res = await fetch("http://localhost:3000/zenith?_start=0&_end=50")
-      const data = await res.json()
+        const incomingAccounts = transactions.data.reduce((acc, item, index) => {
+          const id = shortid.generate()
+          if (index === transactions.data.length - 1) {
+            item.lastAcct = true
+            updateBusiness.updateDocument(selectedBusinessId, { ...{ lastAcctData: item } })
+          }
+          item.acctName = selectedAccount
+          item.categoryId = ""
+          acc[id] = item
 
-      dispatch({ type: "PROCESSING_DATA", payload: syncModalMessage.adding })
-      // input unique id into every acount transaction adn lastAcct prop to the last accounts
-      const incomingAccounts = data.reduce((acc, item, index) => {
-        const id = shortid.generate()
-        if (index === data.length - 1) {
-          item.lastAcct = true
+          return acc
+        }, {})
+
+        // add data into 'accounts' document
+        const hasLastAcctData = document
+        if (!hasLastAcctData) {
+          await addDocumentWithId(selectedBusinessId, { ...incomingAccounts })
+        } else {
+          const updatedAccts = { ...document[selectedAccount], ...incomingAccounts }
+          await updateDocument(selectedBusinessId, { ...updatedAccts })
         }
-        item.acctName = selectedAccount
-        item.categoryId = ""
-        acc[id] = item
+        if (!response.error) {
+          // 1. update modal with syncModal.reconciling
+          dispatch({ type: "PROCESSING_DATA", payload: syncModalMessage.reconciling })
+          // 2. reconcile accts
+          const reconciledAccts = reconcileAccts(transactionCategories, incomingAccounts)
+          await updateDocument(selectedBusinessId, { ...reconciledAccts })
+          // 3. then navigate to '/reconcile' after
+          navigate("/reconcile")
+        } else {
+          dispatch({ type: "ERROR", payload: syncModalMessage.error })
+        }
 
-        return acc
-      }, {})
+        //end of code of actions
+      },
+      key: LIVE_PUBLIC_KEY,
+    })
 
-      // add data into 'accounts' document
-      const hasLastAcctData = document
-      if (!hasLastAcctData) {
-        await addDocumentWithId(selectedBusinessId, { ...incomingAccounts })
-      } else {
-        const updatedAccts = { ...document[selectedAccount], ...incomingAccounts }
-        await updateDocument(selectedBusinessId, { ...updatedAccts })
-      }
-      if (!response.error) {
-        // 1. update modal with syncModal.reconciling
-        dispatch({ type: "PROCESSING_DATA", payload: syncModalMessage.reconciling })
-        // 2. reconcile accts
-        const reconciledAccts = reconcileAccts(transactionCategories, incomingAccounts)
-        await updateDocument(selectedBusinessId, { ...reconciledAccts })
-        // 3. then navigate to '/reconcile' after
-        navigate("/reconcile")
-      } else {
-        dispatch({ type: "ERROR", payload: syncModalMessage.error })
-      }
-      // await updateDocument()
-    } catch (err) {
-      console.log("Error fetching data: " + err)
-      dispatch({ type: "ERROR", payload: syncModalMessage.error })
-    }
-  }
+    monoInstance.setup()
+
+    return monoInstance
+  }, [])
 
   return (
     <>
       <PageWrapper>
         <UserWrapper>
-          <form onSubmit={handleStartSync}>
-            <DivWrapper bottom={size.xl}>
-              <Title> Import financial records </Title>
-              <SubTitle> Sync your financial records from your bank. </SubTitle>
-            </DivWrapper>
-            <DivWrapper gap={2}>
-              <Select options={sortedBankAccounts} onChange={(e) => setSelectedAccount(e.target.value)} value={selectedAccount} />
-              {businessAccts && !businessAccts.lastAcctData ? (
-                <>
-                  <DivWrapper>
-                    <Text left={1} color={colors.gray600} size={0.8}>
-                      Sync from{" "}
-                      {!businessAccts.lastAcctData && (
-                        <>
-                          as far back as <Text bold> {` ${oneYearBackwards}`} </Text>
-                        </>
-                      )}
-                      :
-                    </Text>
-                    <DateInput type="date" value={startDate} onChange={handleStartDateChange} />
-                  </DivWrapper>
-                  <DivWrapper>
-                    <Text left={1} color={colors.gray600} size={0.8}>
-                      Sync up till:
-                    </Text>
-                    <DateInput type="date" value={endDate} onChange={handleEndDateChange} />
-                  </DivWrapper>
-                </>
-              ) : (
-                <DivWrapper bottom={2}>
+          <DivWrapper bottom={size.xl}>
+            <Title> Import financial records </Title>
+            <SubTitle> Sync your financial records from your bank. </SubTitle>
+          </DivWrapper>
+          <DivWrapper gap={2}>
+            <Select
+              options={sortedBankAccounts}
+              onChange={(e) => setSelectedAccount(e.target.value)}
+              value={selectedAccount}
+            />
+            {businessAccts && !lastAcctData ? (
+              <>
+                <DivWrapper>
                   <Text left={1} color={colors.gray600} size={0.8}>
-                    Sync{" "}
-                    {businessAccts && businessAccts.lastAcctData && (
+                    Sync from{" "}
+                    {!lastAcctData && (
                       <>
-                        from last date <Text bold> {new Date(businessAccts.lastAcctData.transDate).toDateString()} </Text>
+                        as far back as <Text bold> {` ${oneYearBackwards}`} </Text>
                       </>
                     )}
-                    up till:
+                    :
                   </Text>
-                  <DateInput type="date" value={syncDate} onChange={handleSyncDateChange} />
+                  <DateInput type="date" value={startDate} onChange={handleStartDateChange} />
                 </DivWrapper>
-              )}
-              <ButtonState loading={false} condition={buttonCondition}>
-                Sync data
-              </ButtonState>
-            </DivWrapper>
-          </form>
+                <DivWrapper>
+                  <Text left={1} color={colors.gray600} size={0.8}>
+                    Sync up till:
+                  </Text>
+                  <DateInput type="date" value={endDate} onChange={handleEndDateChange} />
+                </DivWrapper>
+              </>
+            ) : (
+              <DivWrapper bottom={2}>
+                <Text left={1} color={colors.gray600} size={0.8}>
+                  Sync{" "}
+                  {businessAccts && lastAcctData && (
+                    <>
+                      from last date{" "}
+                      <Text bold> {new Date(lastAcctData.date).toDateString()} </Text>
+                    </>
+                  )}
+                  up till:
+                </Text>
+                <DateInput type="date" value={syncDate} onChange={handleSyncDateChange} />
+              </DivWrapper>
+            )}
+            <ButtonState
+              loading={false}
+              condition={buttonCondition}
+              onClick={() => monoConnect.open()}
+            >
+              Sync data
+            </ButtonState>
+          </DivWrapper>
         </UserWrapper>
       </PageWrapper>
       {state.status && (
