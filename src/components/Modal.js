@@ -15,7 +15,7 @@ const ModalBackdrop = styled.div`
 const ModalContents = styled.div`
   padding: 30px;
   max-width: 480px;
-  margin: 200px auto;
+  margin: 100px auto;
   border-radius: 10px;
   background-color: #ffffff;
 `
@@ -41,9 +41,9 @@ const ModalBody = styled.div`
   text-align: center;
 `
 
-const Modal = ({ title, children, handleClose, icon }) => {
+const Modal = ({ title, children, handleClose, icon, noBgClose }) => {
   return ReactDOM.createPortal(
-    <ModalBackdrop onClick={handleClose}>
+    <ModalBackdrop onClick={noBgClose ? null : handleClose}>
       <ModalContents>
         <ModalHeader>
           <ModalTitle>
