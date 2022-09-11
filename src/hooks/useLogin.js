@@ -19,14 +19,16 @@ export const useLogin = () => {
       const { uid, displayName, photoURL, email } = res.user
       let business = {}
       let selectedBusinessId = null
+      let hasAccts = {}
       db.collection("business")
         .where("uid", "==", uid)
         .onSnapshot((snapshot) => {
           snapshot.docs.forEach((doc, i) => {
             let id = doc.id
-            const { accts, name, type, selected, categories } = doc.data()
+            const { accts, name, type, selected, categories, lastAcctData } = doc.data()
             if (selected) {
               selectedBusinessId = id
+              hasAccts = lastAcctData
             }
             business[id] = { id, accts, name, type, selected, categories }
           })
@@ -34,6 +36,7 @@ export const useLogin = () => {
             isLoggedIn({
               data: { uid, displayName, photoURL, email, business },
               selectedBusinessId,
+              lastAcctData: hasAccts,
             })
           )
         })
