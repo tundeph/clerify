@@ -1,6 +1,5 @@
-import React, { useState } from "react"
+import React from "react"
 import styled, { css } from "styled-components"
-import { size } from "../layout/theme"
 
 const RadioInput = styled.input`
   appearance: none;
@@ -45,7 +44,14 @@ const RadioButton = ({ labelText, value, checked, onChange }) => {
   return (
     <LabelDiv selected={checked}>
       <Label htmlFor={labelText}>
-        <RadioInput type="radio" id={labelText} value={value} checked={checked} onChange={onChange} /> {labelText}
+        <RadioInput
+          type="radio"
+          id={labelText}
+          value={value}
+          checked={checked}
+          onChange={onChange}
+        />{" "}
+        {labelText}
       </Label>
     </LabelDiv>
   )
