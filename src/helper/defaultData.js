@@ -12,22 +12,22 @@ export const businessType = [
 
 export const businessCategories = [
   { value: "", label: "Select from categories" },
-  { value: "Sales Income", label: "Sales Income" },
-  { value: "Payroll", label: "Payroll" },
-  { value: "Rent or mortgage payments", label: "Rent or mortgage payments" },
-  { value: "Office supplies & expenses", label: "Office supplies & expenses" },
-  { value: "Marketing & Advertising", label: "Marketing & Advertising" },
-  { value: "Meals & Entertainment", label: "Meals & Entertainment" },
-  { value: "Furniture & equipment", label: "Furniture & equipment" },
-  { value: "Website and software expenses", label: "Website and software expenses" },
-  { value: "Employee benefits", label: "Employee benefits" },
-  { value: "Taxes", label: "Taxes" },
-  { value: "Bank charges", label: "Bank charges" },
-  { value: "Training & education", label: "Training & education" },
-  { value: "Professional Services", label: "Professional Services" },
-  { value: "Loan & Interest Payments", label: "Loan & Interest Payments" },
-  { value: "Insurance", label: "Insurance" },
-  { value: "Cost of goods", label: "Cost of goods" },
+  { value: "Sales Income", label: "Sales Income", type: "credit" },
+  { value: "Payroll", label: "Payroll", type: "debit" },
+  { value: "Rent or mortgage payments", label: "Rent or mortgage payments", type: "debit" },
+  { value: "Office supplies & expenses", label: "Office supplies & expenses", type: "debit" },
+  { value: "Marketing & Advertising", label: "Marketing & Advertising", type: "debit" },
+  { value: "Meals & Entertainment", label: "Meals & Entertainment", type: "debit" },
+  { value: "Furniture & equipment", label: "Furniture & equipment", type: "debit" },
+  { value: "Website and software expenses", label: "Website and software expenses", type: "debit" },
+  { value: "Employee benefits", label: "Employee benefits", type: "debit" },
+  { value: "Taxes", label: "Taxes", type: "debit" },
+  { value: "Bank charges", label: "Bank charges", type: "debit" },
+  { value: "Training & education", label: "Training & education", type: "debit" },
+  { value: "Professional Services", label: "Professional Services", type: "debit" },
+  { value: "Loan & Interest Payments", label: "Loan & Interest Payments", type: "debit" },
+  { value: "Insurance", label: "Insurance", type: "debit" },
+  { value: "Cost of goods", label: "Cost of goods", type: "debit" },
 ]
 
 export const syncModalMessages = (colors) => ({
@@ -35,7 +35,8 @@ export const syncModalMessages = (colors) => ({
     title: "Sync in Progress",
     text: (
       <Text justify="center" color={colors.gray600}>
-        Please be patient, your data is being synchronized. Don't close this page, as this may take up to 5 mins.
+        Please be patient, your data is being synchronized. Don't close this page, as this may take
+        up to 5 mins.
       </Text>
     ),
   },
@@ -64,3 +65,33 @@ export const syncModalMessages = (colors) => ({
     ),
   },
 })
+
+export const returnColorOptions = () => {
+  const col = [
+    "#7f0000",
+    "#4a148c",
+    "#5472d3",
+    "#bc5100",
+    "#009624",
+    "#8b6b61",
+    "#ff5bff",
+    "#9575cd",
+    "#c51162",
+    "#b71c1c",
+    "#12005e",
+    "#0d47a1",
+    "#629749",
+    "#f57f17",
+    "#321911",
+    "#5d4037",
+    "#ff6090",
+    "#7c43bd",
+    "#002171",
+    "#33691e",
+    "#00c853",
+    "#9e00c5",
+    "#65499c",
+  ]
+
+  return col[Math.round(Math.random() * (col.length - 1) + 1)]
+}
