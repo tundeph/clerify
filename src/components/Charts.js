@@ -1,6 +1,17 @@
 import React from "react"
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js"
-import { Line } from "react-chartjs-2"
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  ArcElement,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js"
+import { Line, Pie, Bar } from "react-chartjs-2"
 
 export const LineChart = ({ data }) => {
   ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
@@ -29,23 +40,42 @@ export const LineChart = ({ data }) => {
     },
   }
 
-  //   const data = {
-  //     labels,
-  //     datasets: [
-  //       {
-  //         label: "Dataset 1",
-  //         data: [100, 200, 50, 600, 400, 20, 800],
-  //         borderColor: "rgb(255, 99, 132)",
-  //         backgroundColor: "rgba(255, 99, 132, 0.5)",
-  //       },
-  //       {
-  //         label: "Dataset 2",
-  //         data: [10, 2000, 500, 60, 40, 200, 80],
-  //         borderColor: "rgb(53, 162, 235)",
-  //         // backgroundColor: "rgba(53, 162, 235, 0.5)",
-  //       },
-  //     ],
-  //   }
-
   return <Line options={options} data={data} />
+}
+
+export const PieChart = ({ data }) => {
+  ChartJS.register(ArcElement, Tooltip, Legend)
+
+  const options = {
+    cutout: "50%",
+    radius: "70%",
+    plugins: {
+      legend: {
+        position: "bottom",
+        labels: { boxWidth: 10, boxHeight: 4 },
+      },
+    },
+  }
+
+  return <Pie options={options} data={data} />
+}
+
+export const BarChart = ({ data }) => {
+  ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "bottom",
+        labels: { boxWidth: 10, boxHeight: 4 },
+      },
+      title: {
+        display: true,
+        // text: 'Chart.js Bar Chart',
+      },
+    },
+  }
+
+  return <Bar options={options} data={data} />
 }
