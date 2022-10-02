@@ -1,0 +1,378 @@
+{
+  "meta": {
+    "count": 41,
+    "requested_length": 30,
+    "available_length": 361
+  },
+  "data": [
+    {
+      "_id": "6317910aaf6e436bb1d1641c",
+      "type": "debit",
+      "date": "2022-09-02T00:00:00.000Z",
+      "narration": "TRANSFER BETWEEN CUSTOMERS Via GAPSLITE M.p. Md REF: from PHOSTER SOLUTION ENTERPRISES to OWOEYE-PHOSTER OLATUNDE,SEUN",
+      "amount": 10000000,
+      "balance": 144950137,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d16414",
+      "type": "debit",
+      "date": "2022-08-31T00:00:00.000Z",
+      "narration": "TRANSFER BETWEEN CUSTOMERS Via GAPSLITE Office float REF: from PHOSTER SOLUTION ENTERPRISES to OWOEYE-PHOSTER OLATUNDE,SEUN",
+      "amount": 1400000,
+      "balance": 174797846,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d16415",
+      "type": "debit",
+      "date": "2022-08-31T00:00:00.000Z",
+      "narration": "TRANSFER BETWEEN CUSTOMERS Via GAPSLITE Mp REF: from PHOSTER SOLUTION ENTERPRISES to ADEBAYO MARY",
+      "amount": 1500000,
+      "balance": 173297846,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d16416",
+      "type": "debit",
+      "date": "2022-08-31T00:00:00.000Z",
+      "narration": "TRANSFER BETWEEN CUSTOMERS Via GAPSLITE Mp REF: from PHOSTER SOLUTION ENTERPRISES to ADEFEMI, MICHAEL OLUWATOSIN",
+      "amount": 8000000,
+      "balance": 165297846,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d16417",
+      "type": "debit",
+      "date": "2022-08-31T00:00:00.000Z",
+      "narration": "NIBSS Instant Payment Outward via GTWORLD Mp TO MAJEKODUNMI EMMANUEL OLATOYE /./REF:GW f",
+      "amount": 10000000,
+      "balance": 155297846,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d16418",
+      "type": "debit",
+      "date": "2022-08-31T00:00:00.000Z",
+      "narration": "COMMISSION NIP TRANSFER COMMISSION FOR via GTWORLD Mp TO MAJEKODUNMI EMMANUEL OLATOYE ReF:GW",
+      "amount": 5000,
+      "balance": 155292846,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d16419",
+      "type": "debit",
+      "date": "2022-08-31T00:00:00.000Z",
+      "narration": "VALUE ADDED TAX VAT ON NIP TRANSFER FOR",
+      "amount": 375,
+      "balance": 155292471,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d1641a",
+      "type": "debit",
+      "date": "2022-08-31T00:00:00.000Z",
+      "narration": "ACCOUNT MAINTENANCE CHARGE",
+      "amount": 318450,
+      "balance": 154974021,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d1641b",
+      "type": "debit",
+      "date": "2022-08-31T00:00:00.000Z",
+      "narration": "VALUE ADDED TAX",
+      "amount": 23884,
+      "balance": 154950137,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d16411",
+      "type": "debit",
+      "date": "2022-08-22T00:00:00.000Z",
+      "narration": "NIBSS Instant Payment Outward via GTWORLD Power fuel TO WOEYE PHOSTER OLATUNDE /./REF:GW f",
+      "amount": 950000,
+      "balance": 176200533,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d16412",
+      "type": "debit",
+      "date": "2022-08-22T00:00:00.000Z",
+      "narration": "COMMISSION NIP TRANSFER COMMISSION FOR via GTWORLD Power fuel TO WOEYE PHOSTER OLATUNDE ReF:GW",
+      "amount": 2500,
+      "balance": 176198033,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d16413",
+      "type": "debit",
+      "date": "2022-08-22T00:00:00.000Z",
+      "narration": "VALUE ADDED TAX VAT ON NIP TRANSFER FOR",
+      "amount": 187,
+      "balance": 176197846,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d16410",
+      "type": "debit",
+      "date": "2022-08-19T00:00:00.000Z",
+      "narration": "TRANSFER BETWEEN CUSTOMERS Via GAPSLITE Internet REF: from PHOSTER SOLUTION ENTERPRISES to OWOEYE-PHOSTER OLATUNDE,SEUN",
+      "amount": 7550000,
+      "balance": 177150533,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d1640f",
+      "type": "debit",
+      "date": "2022-08-18T00:00:00.000Z",
+      "narration": "TRANSFER BETWEEN CUSTOMERS Via GAPSLITE Training REF: from PHOSTER SOLUTION ENTERPRISES to OWOEYE-PHOSTER OLATUNDE,SEUN",
+      "amount": 5000000,
+      "balance": 184700533,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d1640a",
+      "type": "debit",
+      "date": "2022-08-17T00:00:00.000Z",
+      "narration": "NIBSS Instant Payment Outward via GTWORLD CSS idl TO Brand Man /./REF:GW f",
+      "amount": 1000000,
+      "balance": 412603220,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d1640b",
+      "type": "debit",
+      "date": "2022-08-17T00:00:00.000Z",
+      "narration": "COMMISSION NIP TRANSFER COMMISSION FOR via GTWORLD CSS idl TO Brand Man ReF:GW",
+      "amount": 2500,
+      "balance": 412600720,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d1640c",
+      "type": "debit",
+      "date": "2022-08-17T00:00:00.000Z",
+      "narration": "VALUE ADDED TAX VAT ON NIP TRANSFER FOR",
+      "amount": 187,
+      "balance": 412600533,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d1640d",
+      "type": "debit",
+      "date": "2022-08-17T00:00:00.000Z",
+      "narration": "TRANSFER BETWEEN CUSTOMERS Via GAPSLITE CSS: idl REF: from PHOSTER SOLUTION ENTERPRISES to OLISAKWE, OBINNA JUSTIN",
+      "amount": 2200000,
+      "balance": 410400533,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d1640e",
+      "type": "debit",
+      "date": "2022-08-17T00:00:00.000Z",
+      "narration": "TRANSFER BETWEEN CUSTOMERS Via GAPSLITE Training REF: from PHOSTER SOLUTION ENTERPRISES to OWOEYE-PHOSTER OLATUNDE,SEUN",
+      "amount": 220700000,
+      "balance": 189700533,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d16406",
+      "type": "debit",
+      "date": "2022-08-16T00:00:00.000Z",
+      "narration": "NIBSS Instant Payment Outward via GTWORLD CSS idl TO Brand Man /./REF:GW f",
+      "amount": 1000000,
+      "balance": 419605907,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d16407",
+      "type": "debit",
+      "date": "2022-08-16T00:00:00.000Z",
+      "narration": "COMMISSION NIP TRANSFER COMMISSION FOR via GTWORLD CSS idl TO Brand Man ReF:GW",
+      "amount": 2500,
+      "balance": 419603407,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d16408",
+      "type": "debit",
+      "date": "2022-08-16T00:00:00.000Z",
+      "narration": "VALUE ADDED TAX VAT ON NIP TRANSFER FOR",
+      "amount": 187,
+      "balance": 419603220,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d16409",
+      "type": "debit",
+      "date": "2022-08-16T00:00:00.000Z",
+      "narration": "TRANSFER BETWEEN CUSTOMERS Via GAPSLITE Mp md REF: from PHOSTER SOLUTION ENTERPRISES to OWOEYE-PHOSTER, MOBOLAJI O.",
+      "amount": 6000000,
+      "balance": 413603220,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d163fa",
+      "type": "debit",
+      "date": "2022-08-12T00:00:00.000Z",
+      "narration": "NIBSS Instant Payment Outward via GTWORLD CSS idl giveaway TO Brand Man /./REF:GW f",
+      "amount": 200000,
+      "balance": 424015043,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d163fb",
+      "type": "debit",
+      "date": "2022-08-12T00:00:00.000Z",
+      "narration": "COMMISSION NIP TRANSFER COMMISSION FOR via GTWORLD CSS idl giveaway TO Brand Man ReF:GW",
+      "amount": 1000,
+      "balance": 424014043,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d163fc",
+      "type": "debit",
+      "date": "2022-08-12T00:00:00.000Z",
+      "narration": "VALUE ADDED TAX VAT ON NIP TRANSFER FOR",
+      "amount": 75,
+      "balance": 424013968,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d163fd",
+      "type": "debit",
+      "date": "2022-08-12T00:00:00.000Z",
+      "narration": "NIBSS Instant Payment Outward via GTWORLD Css idl giveaway TO Brand Man /./REF:GW f",
+      "amount": 1000000,
+      "balance": 423013968,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d163fe",
+      "type": "debit",
+      "date": "2022-08-12T00:00:00.000Z",
+      "narration": "COMMISSION NIP TRANSFER COMMISSION FOR via GTWORLD Css idl giveaway TO Brand Man ReF:GW",
+      "amount": 2500,
+      "balance": 423011468,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d163ff",
+      "type": "debit",
+      "date": "2022-08-12T00:00:00.000Z",
+      "narration": "VALUE ADDED TAX VAT ON NIP TRANSFER FOR",
+      "amount": 187,
+      "balance": 423011280.99999994,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d16400",
+      "type": "debit",
+      "date": "2022-08-12T00:00:00.000Z",
+      "narration": "NIBSS Instant Payment Outward via GTWORLD Office float meals TO WOEYE PHOSTER OLATUNDE /./REF:GW f",
+      "amount": 1350000,
+      "balance": 421661280.99999994,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d16401",
+      "type": "debit",
+      "date": "2022-08-12T00:00:00.000Z",
+      "narration": "COMMISSION NIP TRANSFER COMMISSION FOR via GTWORLD Office float meals TO WOEYE PHOSTER OLATUNDE ReF:GW",
+      "amount": 2500,
+      "balance": 421658780.99999994,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d16402",
+      "type": "debit",
+      "date": "2022-08-12T00:00:00.000Z",
+      "narration": "VALUE ADDED TAX VAT ON NIP TRANSFER FOR",
+      "amount": 187,
+      "balance": 421658594.00000006,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d16403",
+      "type": "debit",
+      "date": "2022-08-12T00:00:00.000Z",
+      "narration": "NIBSS Instant Payment Outward via GTWORLD CSS idl giveaway TO Brand Man /./REF:GW f",
+      "amount": 1050000,
+      "balance": 420608594.00000006,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d16404",
+      "type": "debit",
+      "date": "2022-08-12T00:00:00.000Z",
+      "narration": "COMMISSION NIP TRANSFER COMMISSION FOR via GTWORLD CSS idl giveaway TO Brand Man ReF:GW",
+      "amount": 2500,
+      "balance": 420606094.00000006,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d16405",
+      "type": "debit",
+      "date": "2022-08-12T00:00:00.000Z",
+      "narration": "VALUE ADDED TAX VAT ON NIP TRANSFER FOR",
+      "amount": 187,
+      "balance": 420605907,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d163f7",
+      "type": "debit",
+      "date": "2022-08-11T00:00:00.000Z",
+      "narration": "TRANSFER BETWEEN CUSTOMERS Via GAPSLITE Office equipment REF: from PHOSTER SOLUTION ENTERPRISES to OWOEYE-PHOSTER OLATUNDE,SEUN",
+      "amount": 640000,
+      "balance": 466315043,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d163f8",
+      "type": "debit",
+      "date": "2022-08-11T00:00:00.000Z",
+      "narration": "TRANSFER BETWEEN CUSTOMERS Via GAPSLITE CSS: idl REF: from PHOSTER SOLUTION ENTERPRISES to ABE TIMOTHY",
+      "amount": 1000000,
+      "balance": 465315043,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d163f9",
+      "type": "debit",
+      "date": "2022-08-11T00:00:00.000Z",
+      "narration": "TRANSFER BETWEEN CUSTOMERS Via GAPSLITE CSS: idl REF: from PHOSTER SOLUTION ENTERPRISES to OWOEYE-PHOSTER OLATUNDE,SEUN",
+      "amount": 41100000,
+      "balance": 424215043,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d163f5",
+      "type": "credit",
+      "date": "2022-08-10T00:00:00.000Z",
+      "narration": "TRANSFER BETWEEN CUSTOMERS via Internet Banking mlrt from OWOEYE-PHOSTER OLATUNDE,SEUN to PHOSTER SOLUTION ENTERPRISES",
+      "amount": 100000000,
+      "balance": 466960043,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d163f6",
+      "type": "debit",
+      "date": "2022-08-10T00:00:00.000Z",
+      "narration": "STAMP DUTY CHARGE STAMP DUTY CHARGE - //",
+      "amount": 5000,
+      "balance": 466955043,
+      "currency": "NGN"
+    },
+    {
+      "_id": "6317910aaf6e436bb1d163f4",
+      "type": "debit",
+      "date": "2022-08-08T00:00:00.000Z",
+      "narration": "TRANSFER BETWEEN CUSTOMERS Via GAPSLITE Mp md REF: from PHOSTER SOLUTION ENTERPRISES to OWOEYE-PHOSTER OLATUNDE,SEUN",
+      "amount": 5000000,
+      "balance": 366960043,
+      "currency": "NGN"
+    }
+  ]
+}
