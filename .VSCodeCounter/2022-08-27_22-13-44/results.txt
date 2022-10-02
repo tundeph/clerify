@@ -1,0 +1,116 @@
+Date : 2022-08-27 22:13:44
+Directory : /Users/tundephoster/AppProjects/clerify
+Total : 70 files,  54335 codes, 224 comments, 603 blanks, all 55162 lines
+
+Languages
++----------------+------------+------------+------------+------------+------------+
+| language       | files      | code       | comment    | blank      | total      |
++----------------+------------+------------+------------+------------+------------+
+| JSON           |         10 |     50,938 |         13 |          9 |     50,960 |
+| JavaScript     |         53 |      3,305 |        187 |        556 |      4,048 |
+| Markdown       |          1 |         38 |          0 |         33 |         71 |
+| HTML           |          1 |         20 |         23 |          1 |         44 |
+| Firebase Rules |          2 |         17 |          0 |          1 |         18 |
+| CSS            |          1 |         12 |          1 |          2 |         15 |
+| XML            |          2 |          5 |          0 |          1 |          6 |
++----------------+------------+------------+------------+------------+------------+
+
+Directories
++-------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                          | files      | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                             |         70 |     54,335 |        224 |        603 |     55,162 |
+| backend                                                                       |          4 |      1,487 |          5 |         12 |      1,504 |
+| backend/routes                                                                |          1 |          9 |          0 |          4 |         13 |
+| public                                                                        |          2 |         40 |         23 |          3 |         66 |
+| src                                                                           |         54 |      3,305 |        183 |        549 |      4,037 |
+| src/assets                                                                    |          2 |          5 |          0 |          1 |          6 |
+| src/assets/images                                                             |          2 |          5 |          0 |          1 |          6 |
+| src/components                                                                |         15 |        524 |          3 |         99 |        626 |
+| src/firebase                                                                  |          1 |         16 |          3 |          6 |         25 |
+| src/helper                                                                    |          2 |        200 |         37 |         28 |        265 |
+| src/hooks                                                                     |          8 |        514 |         68 |        110 |        692 |
+| src/layout                                                                    |          4 |        544 |          6 |         85 |        635 |
+| src/pages                                                                     |         16 |      1,410 |         63 |        201 |      1,674 |
+| src/pages/import                                                              |          3 |        304 |         15 |         46 |        365 |
+| src/pages/reports                                                             |          3 |        197 |         10 |         33 |        240 |
+| src/pages/settings                                                            |          1 |         25 |          0 |          5 |         30 |
+| src/redux                                                                     |          4 |         66 |          2 |         15 |         83 |
++-------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| filename                                                                      | language       | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| /Users/tundephoster/AppProjects/clerify/README.md                             | Markdown       |         38 |          0 |         33 |         71 |
+| /Users/tundephoster/AppProjects/clerify/backend/package-lock.json             | JSON           |      1,451 |          0 |          1 |      1,452 |
+| /Users/tundephoster/AppProjects/clerify/backend/package.json                  | JSON           |         19 |          0 |          1 |         20 |
+| /Users/tundephoster/AppProjects/clerify/backend/routes/bank-sync.js           | JavaScript     |          9 |          0 |          4 |         13 |
+| /Users/tundephoster/AppProjects/clerify/backend/server.js                     | JavaScript     |          8 |          5 |          6 |         19 |
+| /Users/tundephoster/AppProjects/clerify/bank-phoster.json                     | JSON           |         19 |          0 |          0 |         19 |
+| /Users/tundephoster/AppProjects/clerify/carpaddy.json                         | JSON           |        378 |          0 |          1 |        379 |
+| /Users/tundephoster/AppProjects/clerify/firebase.json                         | JSON           |         11 |         13 |          0 |         24 |
+| /Users/tundephoster/AppProjects/clerify/firestore.indexes.json                | JSON           |          4 |          0 |          1 |          5 |
+| /Users/tundephoster/AppProjects/clerify/firestore.rules                       | Firebase Rules |          9 |          0 |          0 |          9 |
+| /Users/tundephoster/AppProjects/clerify/package-lock.json                     | JSON           |     42,512 |          0 |          1 |     42,513 |
+| /Users/tundephoster/AppProjects/clerify/package.json                          | JSON           |         49 |          0 |          1 |         50 |
+| /Users/tundephoster/AppProjects/clerify/phoster.json                          | JSON           |      6,475 |          0 |          1 |      6,476 |
+| /Users/tundephoster/AppProjects/clerify/public/index.html                     | HTML           |         20 |         23 |          1 |         44 |
+| /Users/tundephoster/AppProjects/clerify/public/manifest.json                  | JSON           |         20 |          0 |          2 |         22 |
+| /Users/tundephoster/AppProjects/clerify/src/assets/images/expand-more.svg     | XML            |          2 |          0 |          0 |          2 |
+| /Users/tundephoster/AppProjects/clerify/src/assets/images/plus.svg            | XML            |          3 |          0 |          1 |          4 |
+| /Users/tundephoster/AppProjects/clerify/src/components/AddMore.js             | JavaScript     |         33 |          0 |          6 |         39 |
+| /Users/tundephoster/AppProjects/clerify/src/components/ButtonState.js         | JavaScript     |         28 |          0 |          4 |         32 |
+| /Users/tundephoster/AppProjects/clerify/src/components/Charts.js              | JavaScript     |         70 |          2 |         10 |         82 |
+| /Users/tundephoster/AppProjects/clerify/src/components/Checkbox.js            | JavaScript     |         55 |          0 |          9 |         64 |
+| /Users/tundephoster/AppProjects/clerify/src/components/CustomNavLink.js       | JavaScript     |         38 |          0 |          9 |         47 |
+| /Users/tundephoster/AppProjects/clerify/src/components/Keyword.js             | JavaScript     |         24 |          0 |          5 |         29 |
+| /Users/tundephoster/AppProjects/clerify/src/components/Logo.js                | JavaScript     |         22 |          0 |          6 |         28 |
+| /Users/tundephoster/AppProjects/clerify/src/components/Modal.js               | JavaScript     |         52 |          1 |          9 |         62 |
+| /Users/tundephoster/AppProjects/clerify/src/components/NoTransactions.js      | JavaScript     |         16 |          0 |          5 |         21 |
+| /Users/tundephoster/AppProjects/clerify/src/components/RadioButton.js         | JavaScript     |         47 |          0 |          8 |         55 |
+| /Users/tundephoster/AppProjects/clerify/src/components/RadioInput.js          | JavaScript     |         11 |          0 |          3 |         14 |
+| /Users/tundephoster/AppProjects/clerify/src/components/ReportsTable.js        | JavaScript     |         20 |          0 |          5 |         25 |
+| /Users/tundephoster/AppProjects/clerify/src/components/SectionDivider.js      | JavaScript     |         28 |          0 |          6 |         34 |
+| /Users/tundephoster/AppProjects/clerify/src/components/Select.js              | JavaScript     |         30 |          0 |          5 |         35 |
+| /Users/tundephoster/AppProjects/clerify/src/components/TabDiv.js              | JavaScript     |         50 |          0 |          9 |         59 |
+| /Users/tundephoster/AppProjects/clerify/src/firebase/config.js                | JavaScript     |         16 |          3 |          6 |         25 |
+| /Users/tundephoster/AppProjects/clerify/src/helper/defaultData.js             | JavaScript     |         63 |          0 |          4 |         67 |
+| /Users/tundephoster/AppProjects/clerify/src/helper/index.js                   | JavaScript     |        137 |         37 |         24 |        198 |
+| /Users/tundephoster/AppProjects/clerify/src/hooks/useAuth.js                  | JavaScript     |         34 |          2 |          5 |         41 |
+| /Users/tundephoster/AppProjects/clerify/src/hooks/useCharts.js                | JavaScript     |        220 |         40 |         45 |        305 |
+| /Users/tundephoster/AppProjects/clerify/src/hooks/useCollection.js            | JavaScript     |         33 |          6 |          9 |         48 |
+| /Users/tundephoster/AppProjects/clerify/src/hooks/useDocument.js              | JavaScript     |         25 |          2 |          6 |         33 |
+| /Users/tundephoster/AppProjects/clerify/src/hooks/useFirestore.js             | JavaScript     |         68 |          5 |         16 |         89 |
+| /Users/tundephoster/AppProjects/clerify/src/hooks/useLogin.js                 | JavaScript     |         64 |          9 |         12 |         85 |
+| /Users/tundephoster/AppProjects/clerify/src/hooks/useLogout.js                | JavaScript     |         32 |          1 |          7 |         40 |
+| /Users/tundephoster/AppProjects/clerify/src/hooks/useSignup.js                | JavaScript     |         38 |          3 |         10 |         51 |
+| /Users/tundephoster/AppProjects/clerify/src/index.css                         | CSS            |         12 |          1 |          2 |         15 |
+| /Users/tundephoster/AppProjects/clerify/src/index.js                          | JavaScript     |         14 |          0 |          2 |         16 |
+| /Users/tundephoster/AppProjects/clerify/src/layout/App.js                     | JavaScript     |        106 |          4 |         13 |        123 |
+| /Users/tundephoster/AppProjects/clerify/src/layout/GlobalStyles.js            | JavaScript     |         23 |          1 |          8 |         32 |
+| /Users/tundephoster/AppProjects/clerify/src/layout/styles.js                  | JavaScript     |        380 |          1 |         60 |        441 |
+| /Users/tundephoster/AppProjects/clerify/src/layout/theme.js                   | JavaScript     |         35 |          0 |          4 |         39 |
+| /Users/tundephoster/AppProjects/clerify/src/pages/AddBusiness.js              | JavaScript     |        113 |          1 |         10 |        124 |
+| /Users/tundephoster/AppProjects/clerify/src/pages/Categorise.js               | JavaScript     |        166 |          1 |         15 |        182 |
+| /Users/tundephoster/AppProjects/clerify/src/pages/Dashboard.js                | JavaScript     |          5 |          0 |          3 |          8 |
+| /Users/tundephoster/AppProjects/clerify/src/pages/KeywordsEdit.js             | JavaScript     |        114 |          0 |         17 |        131 |
+| /Users/tundephoster/AppProjects/clerify/src/pages/Landing.js                  | JavaScript     |         13 |          0 |          4 |         17 |
+| /Users/tundephoster/AppProjects/clerify/src/pages/Reconcile.js                | JavaScript     |        204 |         17 |         25 |        246 |
+| /Users/tundephoster/AppProjects/clerify/src/pages/Sidebar.js                  | JavaScript     |        103 |         18 |         18 |        139 |
+| /Users/tundephoster/AppProjects/clerify/src/pages/Signin.js                   | JavaScript     |        101 |          1 |         15 |        117 |
+| /Users/tundephoster/AppProjects/clerify/src/pages/Signup.js                   | JavaScript     |         65 |          0 |         10 |         75 |
+| /Users/tundephoster/AppProjects/clerify/src/pages/import/ImportAccounts.js    | JavaScript     |         71 |          3 |         15 |         89 |
+| /Users/tundephoster/AppProjects/clerify/src/pages/import/SyncFromOpenBank.js  | JavaScript     |        202 |         12 |         26 |        240 |
+| /Users/tundephoster/AppProjects/clerify/src/pages/import/UploadFromDevice.js  | JavaScript     |         31 |          0 |          5 |         36 |
+| /Users/tundephoster/AppProjects/clerify/src/pages/reports/CategoryReports.js  | JavaScript     |        125 |          8 |         17 |        150 |
+| /Users/tundephoster/AppProjects/clerify/src/pages/reports/FinancialReports.js | JavaScript     |         47 |          2 |         11 |         60 |
+| /Users/tundephoster/AppProjects/clerify/src/pages/reports/Reports.js          | JavaScript     |         25 |          0 |          5 |         30 |
+| /Users/tundephoster/AppProjects/clerify/src/pages/settings/Settings.js        | JavaScript     |         25 |          0 |          5 |         30 |
+| /Users/tundephoster/AppProjects/clerify/src/redux/accountSlice.js             | JavaScript     |         23 |          2 |          6 |         31 |
+| /Users/tundephoster/AppProjects/clerify/src/redux/profileActions.js           | JavaScript     |          1 |          0 |          1 |          2 |
+| /Users/tundephoster/AppProjects/clerify/src/redux/profileSlice.js             | JavaScript     |         33 |          0 |          6 |         39 |
+| /Users/tundephoster/AppProjects/clerify/src/redux/store.js                    | JavaScript     |          9 |          0 |          2 |         11 |
+| /Users/tundephoster/AppProjects/clerify/storage.rules                         | Firebase Rules |          8 |          0 |          1 |          9 |
+| Total                                                                         |                |     54,335 |        224 |        603 |     55,162 |
++-------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
