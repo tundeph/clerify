@@ -131,10 +131,10 @@ const SyncFromOpenBank = () => {
   }
 
   const handleSyncDateChange = (e) => {
-    if (new Date(e.target.value) > businessAccts.lastAcctData.transDate) {
+    if (new Date(e.target.value) > new Date(lastAcctData.date)) {
       setSyncDate(e.target.value)
     } else {
-      setSyncDate(format(new Date(businessAccts.lastAcctData.transDate), "yyyy-MM-dd"))
+      setSyncDate(format(new Date(lastAcctData.date), "yyyy-MM-dd"))
     }
   }
 
