@@ -1,7 +1,7 @@
 // NEEDED - Error handling if useeffect data fails to render a modal or something
 
 import React, { useState, useEffect } from "react"
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import { AppRoutes } from "../routes"
 
 import { useSelector, useDispatch } from "react-redux"
 import {
@@ -30,23 +30,6 @@ import {
 } from "../layout/styles"
 import Modal from "../components/Modal"
 import AddBusinessForm from "../pages/addbusiness/AddBusinessForm"
-
-//pages
-import Home from "../pages/Home"
-import Signup from "../pages/Signup"
-import Signin from "../pages/Signin"
-import Dashboard from "../pages/Dashboard"
-import AddBusiness from "../pages/addbusiness/AddBusiness"
-import CategorySettings from "../pages/CategorySettings"
-import Sidebar from "../pages/Sidebar"
-import KeywordsSettings from "../pages/KeywordsSettings"
-import SyncFromOpenBank from "../pages/import/SyncFromOpenBank"
-import Categorise from "../pages/Categorise"
-import Reports from "../pages/reports/Reports"
-import CategoryReports from "../pages/reports/CategoryReports"
-import FinancialReports from "../pages/reports/FinancialReports"
-import Settings from "../pages/settings/Settings"
-import MonoSync from "../backend/Sync1"
 
 const AppWrapper = styled.div`
 	display: flex;
@@ -201,100 +184,11 @@ const App = () => {
 			<GlobalStyles />
 			{authIsReady && (
 				<AppWrapper>
-					<BrowserRouter>
-						{hasBusiness(user) && (
-							<Sidebar
-								business={user.business}
-								onChange={(e) => handleChangeBusiness(e)}
-							/>
-						)}
-						<Routes>
-							<Route
-								path="/"
-								element={!user ? <Home /> : <Navigate to="/dashboard" />}
-							/>
-							<Route
-								path="/dashboard"
-								element={
-									hasBusiness(user) ? <Dashboard /> : <Navigate to="/signin" />
-								}
-							/>
-							<Route
-								path="/signup"
-								element={!user ? <Signup /> : <Navigate replace to="/" />}
-							/>
-							<Route
-								path="/signin"
-								element={!user ? <Signin /> : <Navigate to="/add-business" />}
-							/>
-							<Route
-								path="/add-business"
-								element={
-									!hasBusiness(user) ? (
-										<AddBusiness />
-									) : (
-										<Navigate replace to="/dashboard" />
-									)
-								}
-							/>
-							<Route
-								path="/sync-accounts"
-								element={
-									user ? (
-										<SyncFromOpenBank />
-									) : (
-										<Navigate replace to="/signin" />
-									)
-								}
-							/>
-							<Route
-								path="/reconcile"
-								element={
-									user ? <Categorise /> : <Navigate replace to="/signin" />
-								}
-							/>
-							<Route
-								path="/reports"
-								element={user ? <Reports /> : <Navigate replace to="/signin" />}
-							>
-								<Route index element={<CategoryReports />} />
-								<Route
-									path="/reports/financial"
-									element={
-										user ? (
-											<FinancialReports />
-										) : (
-											<Navigate replace to="/signin" />
-										)
-									}
-								/>
-							</Route>
-							<Route
-								path="/settings"
-								element={
-									user ? <Settings /> : <Navigate replace to="/signin" />
-								}
-							>
-								<Route index element={<CategorySettings />} />
-								<Route
-									path="/settings/keywords"
-									element={
-										user ? (
-											<KeywordsSettings />
-										) : (
-											<Navigate replace to="/signin" />
-										)
-									}
-								/>
-								<Route
-									path="/settings/accounts"
-									element={
-										user ? <AddBusiness /> : <Navigate replace to="/signin" />
-									}
-								/>
-							</Route>
-						</Routes>
-					</BrowserRouter>
+					<AppRoutes
+						user={user}
+						hasBusiness={hasBusiness}
+						handleChangeBusiness={handleChangeBusiness}
+					/>
 
 					{addModal.status && (
 						<Modal
@@ -317,12 +211,6 @@ const App = () => {
 									/>
 									<Divider gap={size.m} />
 									<DivWrapper>
-										{/* {handleButtonState(
-                      response.isPending,
-                      "Loading",
-                      "Add business",
-                      buttonCondition
-                    )} */}
 										<Button> Add business</Button>
 									</DivWrapper>
 								</Form>
