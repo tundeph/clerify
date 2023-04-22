@@ -3,9 +3,9 @@ import { useSelector } from "react-redux"
 import { selectUserProfile } from "../redux/profileSlice"
 
 import { format, subDays } from "date-fns"
-import RecentTransactions from "../components/RecentTransactions"
+import RecentTransactions from "../components/recent-transactions"
 import { useCharts } from "../hooks/useCharts"
-import { PieChart, BarChart } from "../components/Charts"
+import { PieChart, BarChart } from "../components/charts"
 import { size } from "../layout/theme"
 import {
 	PageWrapper,
