@@ -9,7 +9,7 @@ import {
 	Divider,
 } from "../../layout/styles"
 
-import CustomNavLink from "../../components/CustomNavLink"
+import CustomNavLink from "../../components/custom-navlink"
 
 const Reports = () => {
 	return (
