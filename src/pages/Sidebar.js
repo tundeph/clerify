@@ -41,10 +41,10 @@ const NavProps = css`
 	gap: 8px;
 	text-decoration: none;
 	color: ${({ theme }) => theme.colors.gray300};
-	font-size: 0.9rem;
+	font-size: 0.85rem;
 	border-radius: 4px;
 	padding: 8px;
-	margin-bottom: 2px;
+	margin: 0px 0px 2px 12px;
 	background-color: ${({ theme }) => theme.colors.foreground};
 
 	&:hover {
@@ -93,26 +93,30 @@ const Sidebar = ({ business, onChange }) => {
 						mode="reverse"
 					/>
 				</DivWrapper>
-				<SubTitle>Home </SubTitle>
-				<Nav to="/dashboard">
-					<DashboardIcon /> Dashboard
-				</Nav>
-				<SubTitle>Synchronize </SubTitle>
-				<Nav to="/sync-accounts">
-					<ImportAccountsIcon /> Sync Accounts
-				</Nav>
-				<SubTitle>Categorize </SubTitle>
-				<Nav to="/reconcile">
+				<SubTitle>
+					<DashboardIcon /> Home
+				</SubTitle>
+				<Nav to="/dashboard">Dashboard</Nav>
+				<SubTitle>
+					<ImportAccountsIcon /> Synchronize
+				</SubTitle>
+				<Nav to="/sync-accounts">Sync Accounts</Nav>
+				<SubTitle>
 					<ReconcileIcon /> Categorize
-				</Nav>
-				<SubTitle>Reports </SubTitle>
-				<Nav to="/reports">
+				</SubTitle>
+				<Nav to="/reconcile">Categorize Transactions</Nav>
+				<Nav to="/reconcile">Edit Transactions</Nav>
+				<SubTitle>
 					<ReportsIcon /> Reports
-				</Nav>
-				<SubTitle>Settings </SubTitle>
-				<Nav to="/settings">
+				</SubTitle>
+				<Nav to="/reports">Visual Reports</Nav>
+				<Nav to="/reports/financial">Financial Reports</Nav>
+				<SubTitle>
 					<SettingsIcon /> Settings
-				</Nav>
+				</SubTitle>
+				<Nav to="/settings">Add account</Nav>
+				<Nav to="/settings">Edit account</Nav>
+				<Nav to="/settings">Change Password</Nav>
 				<Nav to="/signin" onClick={logout}>
 					<SignOutIcon /> Sign out
 				</Nav>
