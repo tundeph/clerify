@@ -28,12 +28,14 @@ import {
 	LoadingIcon,
 	Text,
 } from "../layout/styles"
-import Modal from "../components/Modal"
-import AddBusinessForm from "../pages/addbusiness/AddBusinessForm"
+import Modal from "../components/modal"
+import AddBusinessForm from "../pages/add-business/add-business-form"
 
 const AppWrapper = styled.div`
+	position: relative;
 	display: flex;
 	flex-direction: row;
+	height: 100%;
 `
 
 const App = () => {
