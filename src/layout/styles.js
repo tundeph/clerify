@@ -164,7 +164,7 @@ export const FormInput = styled.input`
 	height: ${(props) => (props.height ? props.height : size.xxl)}rem;
 	width: 100%;
 	border: 1px solid ${({ theme }) => theme.colors.gray300};
-	border-radius: 50px;
+	border-radius: ${size["2xxl"]}px;
 	padding: 0.5rem 2rem;
 	font-size: ${(props) => props.fontSize || size.xxs}em;
 	font-family: "Beatrice", sans-serif;
@@ -183,7 +183,7 @@ export const SelectInput = styled.select`
 	height: ${size.xxl}rem;
 	width: 100%;
 	border: 1.5px solid ${({ theme }) => theme.colors.gray300};
-	border-radius: 50px;
+	border-radius: ${size["2xxl"]}px;
 	padding: 0rem 20px;
 	padding: 0rem ${size.xs}rem;
 	font-size: ${(props) => (props.fontSize ? props.fontSize : size.xxs)}em;
@@ -269,6 +269,7 @@ export const PasswordInput = styled(FormInput)`
 `
 
 export const DivWrapper = styled.div`
+	position: relative;
 	display: flex;
 	min-width: ${null || ((props) => props.width)}rem;
 	flex-direction: ${(props) => props.direction || "column"};
@@ -284,10 +285,12 @@ export const DivWrapper = styled.div`
 `
 
 export const PageWrapper = styled(DivWrapper)`
+	position: relative;
 	flex-grow: 1;
 	display: flex;
 	min-height: 100vh;
 	padding: 1rem 2rem;
+	/* z-index: -2; */
 `
 
 export const MidWrapper = styled.div`
@@ -362,7 +365,7 @@ export const KeywordsWrapper = styled.div`
 export const UploadInput = styled.input`
 	height: ${(props) => (props.height ? props.height : size.xxl)}rem;
 	background-color: ${({ theme }) => theme.colors.gray100};
-	border-radius: 100px;
+	border-radius: ${size["2xxl"]}px;
 	border: 1.5px solid ${({ theme }) => theme.colors.secondary};
 	padding: ${size.xxs}rem ${size.xs}rem;
 	box-sizing: border-box;
@@ -411,7 +414,7 @@ export const SplitDiv = styled.div`
 export const DateInput = styled.input`
 	height: ${size.xxl}rem;
 	background-color: ${({ theme }) => theme.colors.gray100};
-	border-radius: 100px;
+	border-radius: ${size["2xxl"]}px;
 	border: 1.5px solid ${({ theme }) => theme.colors.gray300};
 	padding: ${size.xxs}rem ${size.xs}rem;
 	box-sizing: border-box;
