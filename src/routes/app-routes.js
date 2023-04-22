@@ -1,6 +1,7 @@
 import React from "react"
+import PropTypes from "prop-types"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
-import { ProtectedRoute } from "./protected-route"
+import { ProtectedRoute, renderProtectedRoutes } from "./protected-route"
 
 import Home from "../pages/Home"
 import Signup from "../pages/Signup"
@@ -16,7 +17,18 @@ import Reports from "../pages/reports/Reports"
 import CategoryReports from "../pages/reports/CategoryReports"
 import FinancialReports from "../pages/reports/FinancialReports"
 import Settings from "../pages/settings/Settings"
-import MonoSync from "../backend/Sync1"
+// import MonoSync from "../backend/Sync1"
+
+const routes = [
+	{ path: "/", Element: Home, altPath: "/dashboard" },
+	{ path: "/add-business", Element: AddBusiness },
+	{ path: "/signup", Element: Signup, altPath: "/" },
+	{ path: "/sync-accounts", Element: SyncFromOpenBank },
+	{ path: "/reconcile", Element: Categorise },
+	{ path: "/reports", Element: Reports },
+	{ path: "/reports/visual", Element: CategoryReports },
+	{ path: "/reports/financial", Element: FinancialReports },
+]
 
 export const AppRoutes = ({ user, hasBusiness, handleChangeBusiness }) => {
 	return (
@@ -29,65 +41,23 @@ export const AppRoutes = ({ user, hasBusiness, handleChangeBusiness }) => {
 			)}
 			<Routes>
 				<Route
-					path="/"
-					element={!user ? <Home /> : <Navigate to="/dashboard" />}
-				/>
-				<Route
 					path="/dashboard"
 					element={
 						hasBusiness(user) ? <Dashboard /> : <Navigate to="/signin" />
 					}
 				/>
 				<Route
-					path="/signup"
-					element={!user ? <Signup /> : <Navigate replace to="/" />}
-				/>
-				<Route
 					path="/signin"
-					element={!user ? <Signin /> : <Navigate to="/add-business" />}
-				/>
-				<Route
-					path="/add-business"
 					element={
-						!hasBusiness(user) ? (
-							<AddBusiness />
+						!user ? (
+							<Signin />
 						) : (
-							<Navigate replace to="/dashboard" />
+							<Navigate
+								to={!hasBusiness(user) ? "/add-business" : "/dashboard"}
+							/>
 						)
 					}
 				/>
-				<Route
-					path="/sync-accounts"
-					element={
-						user ? <SyncFromOpenBank /> : <Navigate replace to="/signin" />
-					}
-				/>
-				<Route
-					path="/reconcile"
-					element={
-						<ProtectedRoute>
-							<Categorise />
-						</ProtectedRoute>
-					}
-				/>
-				<Route
-					path="/reports"
-					element={
-						<ProtectedRoute>
-							<Reports />
-						</ProtectedRoute>
-					}
-				>
-					<Route index element={<CategoryReports />} />
-					<Route
-						path="/reports/financial"
-						element={
-							<ProtectedRoute>
-								<FinancialReports />
-							</ProtectedRoute>
-						}
-					/>
-				</Route>
 				<Route
 					path="/settings"
 					element={
@@ -114,7 +84,14 @@ export const AppRoutes = ({ user, hasBusiness, handleChangeBusiness }) => {
 						}
 					/>
 				</Route>
+				{renderProtectedRoutes(routes)}
 			</Routes>
 		</BrowserRouter>
 	)
+}
+
+AppRoutes.propTypes = {
+	user: PropTypes.shape({
+		business: PropTypes.string,
+	}),
 }
