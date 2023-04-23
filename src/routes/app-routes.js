@@ -3,20 +3,23 @@ import PropTypes from "prop-types"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import { ProtectedRoute, renderProtectedRoutes } from "./protected-route"
 
-import Home from "../pages/Home"
-import Signup from "../pages/Signup"
-import Signin from "../pages/Signin"
-import Dashboard from "../pages/Dashboard"
-import AddBusiness from "../pages/addbusiness/AddBusiness"
-import CategorySettings from "../pages/CategorySettings"
-import Sidebar from "../pages/Sidebar"
-import KeywordsSettings from "../pages/KeywordsSettings"
-import SyncFromOpenBank from "../pages/import/SyncFromOpenBank"
-import Categorise from "../pages/Categorise"
-import Reports from "../pages/reports/Reports"
-import CategoryReports from "../pages/reports/CategoryReports"
-import FinancialReports from "../pages/reports/FinancialReports"
-import Settings from "../pages/settings/Settings"
+import Home from "../pages/home"
+import Signup from "../pages/signup"
+import Signin from "../pages/signin"
+import Dashboard from "../pages/dashboard"
+import AddBusiness from "../pages/add-business/add-business"
+import CategorySettings from "../pages/category-settings"
+import Sidebar from "../pages/sidebar"
+import KeywordsSettings from "../pages/keywords-settings"
+import SyncFromOpenBank from "../pages/import/sync-from-open-bank"
+import Categorise from "../pages/categorise"
+import Reports from "../pages/reports/reports"
+import CategoryReports from "../pages/reports/category-reports"
+import FinancialReports from "../pages/reports/financial-reports"
+import CashflowReports from "../pages/reports/cashflow-reports"
+import VisualReports from "../pages/reports/visual-reports"
+import MomReports from "../pages/reports/mom-reports"
+import Settings from "../pages/settings/settings"
 // import MonoSync from "../backend/Sync1"
 
 const routes = [
@@ -26,7 +29,18 @@ const routes = [
 	{ path: "/sync-accounts", Element: SyncFromOpenBank },
 	{ path: "/reconcile", Element: Categorise },
 	{ path: "/reports", Element: Reports },
-	{ path: "/reports/visual", Element: CategoryReports },
+	{
+		path: "/reports/visual",
+		Element: VisualReports,
+		subPath: [
+			{
+				path: "/category",
+				Element: CategoryReports,
+			},
+			{ path: "/cashflow", Element: CashflowReports },
+			{ path: "/mom", Element: MomReports },
+		],
+	},
 	{ path: "/reports/financial", Element: FinancialReports },
 ]
 
@@ -92,6 +106,6 @@ export const AppRoutes = ({ user, hasBusiness, handleChangeBusiness }) => {
 
 AppRoutes.propTypes = {
 	user: PropTypes.shape({
-		business: PropTypes.string,
+		business: PropTypes.object,
 	}),
 }
