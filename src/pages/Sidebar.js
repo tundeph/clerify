@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { NavLink } from "react-router-dom"
 import styled, { css } from "styled-components"
 import { useLogout } from "../hooks/useLogout"
@@ -13,12 +13,12 @@ import {
 	SettingsIcon,
 	SignOutIcon,
 } from "../layout/styles"
-import Logo from "../components/Logo"
-import Select from "../components/Select"
+import Logo from "../components/logo"
+import Select from "../components/select"
 
 const WIDTH = "300"
 
-const SideBar = styled(PageWrapper)`
+const SideBar = styled.div`
 	display: flex;
 	flex-direction: "row";
 	background-color: ${({ theme }) => theme.colors.foreground};
@@ -28,11 +28,29 @@ const SideBar = styled(PageWrapper)`
 	min-width: ${WIDTH}px;
 	padding: ${WIDTH / 6}px ${WIDTH / 6}px;
 	box-sizing: border-box;
+	overflow-y: hidden;
+	position: relative;
+	z-index: auto;
 `
 
 const SidebarContent = styled(DivWrapper)`
-	position: fixed;
 	min-width: ${WIDTH - WIDTH / 3}px;
+	z-index: 1;
+	position: fixed;
+`
+
+const SubMenu = styled.div`
+	position: fixed;
+	width: 300px;
+	background-color: #fff;
+	top: 0;
+	left: ${({ show }) => (show ? "300px" : "-3000px")};
+	right: 200px;
+	height: 100%;
+	overflow-y: hidden;
+	padding: 64px 24px 24px 24px;
+	transition: all 1s ease-out;
+	z-index: -1;
 `
 
 const NavProps = css`
@@ -63,7 +81,6 @@ const Nav = styled(NavLink)`
 const SubTitle = styled.span`
 	margin-top: 15px;
 	width: 100%;
-	/* border-bottom: 1px solid white; */
 	filter: invert(50%);
 	font-family: "Beatrice-Bold", sans-serif;
 	color: ${({ theme }) => theme.colors.background};
@@ -71,6 +88,8 @@ const SubTitle = styled.span`
 
 const Sidebar = ({ business, onChange }) => {
 	const { logout } = useLogout()
+
+	const [showSubmenu, setShowSubmenu] = useState(false)
 
 	const data = Object.entries(business).map((bus) => ({
 		value: bus[0],
@@ -81,6 +100,7 @@ const Sidebar = ({ business, onChange }) => {
 
 	return (
 		<SideBar>
+			<SubMenu show={showSubmenu}> Submenu </SubMenu>
 			<SidebarContent>
 				<DivWrapper bottom={2}>
 					<Logo reverse />
@@ -100,23 +120,25 @@ const Sidebar = ({ business, onChange }) => {
 				<SubTitle>
 					<ImportAccountsIcon /> Synchronize
 				</SubTitle>
-				<Nav to="/sync-accounts">Sync Accounts</Nav>
+				<Nav to="/sync-accounts">Sync accounts</Nav>
 				<SubTitle>
-					<ReconcileIcon /> Categorize
+					<ReconcileIcon /> Transactions
 				</SubTitle>
-				<Nav to="/reconcile">Categorize Transactions</Nav>
-				<Nav to="/reconcile">Edit Transactions</Nav>
+				<Nav to="/reconcile">Categorize </Nav>
+				<Nav to="/reconcile">Edit transation</Nav>
 				<SubTitle>
 					<ReportsIcon /> Reports
 				</SubTitle>
-				<Nav to="/reports">Visual Reports</Nav>
-				<Nav to="/reports/financial">Financial Reports</Nav>
+				<Nav to="/reports/visual">Visual reports</Nav>
+				<Nav to="/reports/financial">Financial reports</Nav>
 				<SubTitle>
 					<SettingsIcon /> Settings
 				</SubTitle>
+				{/* <Nav onClick={() => setShowSubmenu(!showSubmenu)}>Add account</Nav> */}
 				<Nav to="/settings">Add account</Nav>
 				<Nav to="/settings">Edit account</Nav>
 				<Nav to="/settings">Change Password</Nav>
+				<Nav to="/settings">Change Password</Nav>ß
 				<Nav to="/signin" onClick={logout}>
 					<SignOutIcon /> Sign out
 				</Nav>
