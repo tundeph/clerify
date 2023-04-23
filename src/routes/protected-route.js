@@ -19,15 +19,49 @@ export const renderProtectedRoutes = (routes) => {
 		const { path, Element } = route
 
 		return (
-			<Route
-				key={index}
-				path={route.path}
-				element={
-					<ProtectedRoute altPath={route.altPath ? route.altPath : null}>
-						<Element />
-					</ProtectedRoute>
-				}
-			/>
+			<>
+				{route.subPath ? (
+					<Route
+						key={index}
+						path={path}
+						element={
+							<ProtectedRoute altPath={route.altPath ? route.altPath : null}>
+								<Element />
+							</ProtectedRoute>
+						}
+					>
+						{route.subPath.map((subRoute, subIndex) => {
+							const { Element } = subRoute
+							console.log(subIndex)
+							return (
+								<Route
+									key={subIndex}
+									{...(subIndex === 0
+										? { index: "true" }
+										: { path: `${path}${subRoute.path}` })}
+									element={
+										<ProtectedRoute
+											altPath={subRoute.altPath ? subRoute.altPath : null}
+										>
+											<Element />
+										</ProtectedRoute>
+									}
+								/>
+							)
+						})}
+					</Route>
+				) : (
+					<Route
+						key={index}
+						path={route.path}
+						element={
+							<ProtectedRoute altPath={route.altPath ? route.altPath : null}>
+								<Element />
+							</ProtectedRoute>
+						}
+					/>
+				)}
+			</>
 		)
 	})
 
