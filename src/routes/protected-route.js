@@ -26,13 +26,13 @@ export const renderProtectedRoutes = (routes) => {
 						path={path}
 						element={
 							<ProtectedRoute altPath={route.altPath ? route.altPath : null}>
-								<Element />
+								<Element key={index} />
 							</ProtectedRoute>
 						}
 					>
 						{route.subPath.map((subRoute, subIndex) => {
 							const { Element } = subRoute
-							console.log(subIndex)
+
 							return (
 								<Route
 									key={subIndex}
@@ -43,7 +43,7 @@ export const renderProtectedRoutes = (routes) => {
 										<ProtectedRoute
 											altPath={subRoute.altPath ? subRoute.altPath : null}
 										>
-											<Element />
+											<Element key={subIndex} />
 										</ProtectedRoute>
 									}
 								/>
@@ -56,7 +56,7 @@ export const renderProtectedRoutes = (routes) => {
 						path={route.path}
 						element={
 							<ProtectedRoute altPath={route.altPath ? route.altPath : null}>
-								<Element />
+								<Element key={index} />
 							</ProtectedRoute>
 						}
 					/>
