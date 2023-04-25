@@ -12,7 +12,8 @@ import CategorySettings from "../pages/category-settings"
 import Sidebar from "../pages/sidebar"
 import KeywordsSettings from "../pages/keywords-settings"
 import SyncFromOpenBank from "../pages/import/sync-from-open-bank"
-import Categorise from "../pages/categorise"
+import CategoriseTransaction from "../pages/categorise"
+import EditTransaction from "../pages/edit-transaction"
 import Reports from "../pages/reports/reports"
 import CategoryReports from "../pages/reports/category-reports"
 import FinancialReports from "../pages/reports/financial-reports"
@@ -27,14 +28,15 @@ const routes = [
 	{ path: "/add-business", Element: AddBusiness },
 	{ path: "/signup", Element: Signup, altPath: "/" },
 	{ path: "/sync-accounts", Element: SyncFromOpenBank },
-	{ path: "/reconcile", Element: Categorise },
+	{ path: "/reconcile", Element: CategoriseTransaction },
+	{ path: "/edit-transaction", Element: EditTransaction },
 	{ path: "/reports", Element: Reports },
 	{
 		path: "/reports/visual",
 		Element: VisualReports,
 		subPath: [
 			{
-				path: "/category",
+				path: "",
 				Element: CategoryReports,
 			},
 			{ path: "/cashflow", Element: CashflowReports },
@@ -42,6 +44,15 @@ const routes = [
 		],
 	},
 	{ path: "/reports/financial", Element: FinancialReports },
+	{
+		path: "/settings",
+		Element: Settings,
+		subPath: [
+			{ path: "", Element: CategorySettings },
+			{ path: "/keywords", Element: KeywordsSettings },
+			{ path: "/accounts", Element: AddBusiness },
+		],
+	},
 ]
 
 export const AppRoutes = ({ user, hasBusiness, handleChangeBusiness }) => {
@@ -72,32 +83,7 @@ export const AppRoutes = ({ user, hasBusiness, handleChangeBusiness }) => {
 						)
 					}
 				/>
-				<Route
-					path="/settings"
-					element={
-						<ProtectedRoute>
-							<Settings />
-						</ProtectedRoute>
-					}
-				>
-					<Route index element={<CategorySettings />} />
-					<Route
-						path="/settings/keywords"
-						element={
-							<ProtectedRoute>
-								<KeywordsSettings />
-							</ProtectedRoute>
-						}
-					/>
-					<Route
-						path="/settings/accounts"
-						element={
-							<ProtectedRoute>
-								<AddBusiness />
-							</ProtectedRoute>
-						}
-					/>
-				</Route>
+
 				{renderProtectedRoutes(routes)}
 			</Routes>
 		</BrowserRouter>
