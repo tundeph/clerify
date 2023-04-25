@@ -125,7 +125,7 @@ const Sidebar = ({ business, onChange }) => {
 					<ReconcileIcon /> Transactions
 				</SubTitle>
 				<Nav to="/reconcile">Categorize </Nav>
-				<Nav to="/reconcile">Edit transation</Nav>
+				<Nav to="/edit-transaction">Edit transation</Nav>
 				<SubTitle>
 					<ReportsIcon /> Reports
 				</SubTitle>
