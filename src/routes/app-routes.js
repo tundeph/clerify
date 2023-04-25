@@ -13,14 +13,19 @@ import Sidebar from "../pages/sidebar"
 import KeywordsSettings from "../pages/keywords-settings"
 import SyncFromOpenBank from "../pages/import/sync-from-open-bank"
 import CategoriseTransaction from "../pages/categorise"
-import EditTransaction from "../pages/edit-transaction"
+import TransactionSettings from "../pages/transaction-settings"
 import Reports from "../pages/reports/reports"
 import CategoryReports from "../pages/reports/category-reports"
 import FinancialReports from "../pages/reports/financial-reports"
 import CashflowReports from "../pages/reports/cashflow-reports"
 import VisualReports from "../pages/reports/visual-reports"
 import MomReports from "../pages/reports/mom-reports"
-import Settings from "../pages/settings/settings"
+import AccountSettings from "../pages/settings/account-settings"
+import AdminSettings from "../pages/settings/admin-settings"
+import EditAccount from "../pages/settings/edit-account"
+import AddAccount from "../pages/settings/add-account"
+import AddUserAccount from "../pages/settings/add-user-account"
+import DeleteUserAccount from "../pages/settings/delete-user-account"
 // import MonoSync from "../backend/Sync1"
 
 const routes = [
@@ -29,7 +34,18 @@ const routes = [
 	{ path: "/signup", Element: Signup, altPath: "/" },
 	{ path: "/sync-accounts", Element: SyncFromOpenBank },
 	{ path: "/reconcile", Element: CategoriseTransaction },
-	{ path: "/edit-transaction", Element: EditTransaction },
+	{
+		path: "/transaction-settings",
+		Element: TransactionSettings,
+		subPath: [
+			{
+				path: "",
+				Element: TransactionSettings,
+			},
+			{ path: "/category", Element: CategorySettings },
+			{ path: "/keywords", Element: KeywordsSettings },
+		],
+	},
 	{ path: "/reports", Element: Reports },
 	{
 		path: "/reports/visual",
@@ -45,12 +61,20 @@ const routes = [
 	},
 	{ path: "/reports/financial", Element: FinancialReports },
 	{
-		path: "/settings",
-		Element: Settings,
+		path: "/account-settings",
+		Element: AccountSettings,
 		subPath: [
-			{ path: "", Element: CategorySettings },
-			{ path: "/keywords", Element: KeywordsSettings },
-			{ path: "/accounts", Element: AddBusiness },
+			{ path: "", Element: EditAccount },
+			{ path: "/add-user", Element: AddAccount },
+		],
+	},
+	{
+		path: "/admin-settings",
+		Element: AdminSettings,
+		subPath: [
+			{ path: "", Element: AddUserAccount },
+			{ path: "/delete", Element: DeleteUserAccount },
+			{ path: "/add-business", Element: AddBusiness },
 		],
 	},
 ]
