@@ -125,7 +125,7 @@ const Sidebar = ({ business, onChange }) => {
 					<ReconcileIcon /> Transactions
 				</SubTitle>
 				<Nav to="/reconcile">Categorize </Nav>
-				<Nav to="/edit-transaction">Edit transation</Nav>
+				<Nav to="/transaction-settings">Transation settings</Nav>
 				<SubTitle>
 					<ReportsIcon /> Reports
 				</SubTitle>
@@ -135,10 +135,8 @@ const Sidebar = ({ business, onChange }) => {
 					<SettingsIcon /> Settings
 				</SubTitle>
 				{/* <Nav onClick={() => setShowSubmenu(!showSubmenu)}>Add account</Nav> */}
-				<Nav to="/settings">Add account</Nav>
-				<Nav to="/settings">Edit account</Nav>
-				<Nav to="/settings">Change Password</Nav>
-				<Nav to="/settings">Change Password</Nav>ß
+				<Nav to="/account-settings">Account settings</Nav>
+				<Nav to="/admin-settings">Admin settings </Nav>
 				<Nav to="/signin" onClick={logout}>
 					<SignOutIcon /> Sign out
 				</Nav>
