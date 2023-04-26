@@ -23,7 +23,7 @@ import {
 import CustomNavLink from "../../components/custom-navlink"
 import { LineChart, PieChart, BarChart } from "../../components/charts"
 
-const VisualReports = () => {
+export const VisualReports = () => {
 	const todayDate = format(new Date("2022/06/30"), "yyyy-MM-dd")
 	const thirtyDaysAgo = format(
 		subDays(new Date("2022/06/30"), 30),
@@ -100,5 +100,3 @@ const VisualReports = () => {
 		</PageWrapper>
 	)
 }
-
-export default VisualReports

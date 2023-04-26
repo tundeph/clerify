@@ -1,7 +1,5 @@
 import React from "react"
 
-const DeleteUserAccount = () => {
+export const DeleteUserAccount = () => {
 	return <div>DeleteUserAccount</div>
 }
-
-export default DeleteUserAccount

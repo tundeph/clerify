@@ -21,7 +21,7 @@ import ButtonState from "../../components/button-state"
 import { formatCategory } from "../../helper"
 import ReportsTable from "../../components/reports-table"
 
-const FinancialReports = () => {
+export const FinancialReports = () => {
 	const todayDate = format(new Date("2022/06/30"), "yyyy-MM-dd")
 	const thirtyDaysAgo = format(
 		subDays(new Date("2022/06/30"), 30),
@@ -96,5 +96,3 @@ const FinancialReports = () => {
 		</PageWrapper>
 	)
 }
-
-export default FinancialReports

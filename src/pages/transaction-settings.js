@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom"
 import { PageWrapper, UserWrapper, DivWrapper, Title } from "../layout/styles"
 import { size } from "../layout/theme"
 
-const TransactionSettings = () => {
+export const TransactionSettings = () => {
 	console.log("here here ooo")
 	return (
 		<>
@@ -19,5 +19,3 @@ const TransactionSettings = () => {
 		</>
 	)
 }
-
-export default TransactionSettings

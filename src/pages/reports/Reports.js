@@ -11,7 +11,7 @@ import {
 
 import CustomNavLink from "../../components/custom-navlink"
 
-const Reports = () => {
+export const Reports = () => {
 	return (
 		<PageWrapper>
 			<UserWrapper>
@@ -33,5 +33,3 @@ const Reports = () => {
 		</PageWrapper>
 	)
 }
-
-export default Reports

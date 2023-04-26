@@ -22,7 +22,7 @@ const CustomMidWrapper = styled(MidWrapper)`
 	gap: 1.5rem;
 `
 
-const Signup = () => {
+export const Signup = () => {
 	const { colors } = useContext(ThemeContext)
 
 	const [name, setName] = useState("")
@@ -86,5 +86,3 @@ const Signup = () => {
 		</PageWrapper>
 	)
 }
-
-export default Signup

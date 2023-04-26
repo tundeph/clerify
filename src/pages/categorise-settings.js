@@ -28,7 +28,7 @@ import ButtonState from "../components/button-state"
 import RadioButton from "../components/radio-button"
 import SectionDivider from "../components/section-divider"
 
-const CategoriseSettings = () => {
+export const CategoriseSettings = () => {
 	const { colors } = useContext(ThemeContext)
 	const { updateDocument, response } = useFirestore("business")
 	const { selectedBusinessId } = useSelector(selectUserProfile)
@@ -212,5 +212,3 @@ const CategoriseSettings = () => {
 		</>
 	)
 }
-
-export default CategoriseSettings

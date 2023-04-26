@@ -3,33 +3,33 @@ import PropTypes from "prop-types"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import { ProtectedRoute, renderProtectedRoutes } from "./protected-route"
 
-import Home from "../pages/home"
-import Signup from "../pages/signup"
-import Signin from "../pages/signin"
-import Dashboard from "../pages/dashboard"
-import AddBusiness from "../pages/add-business/add-business"
-import CategorySettings from "../pages/category-settings"
-import Sidebar from "../pages/sidebar"
-import KeywordsSettings from "../pages/keywords-settings"
-import SyncFromOpenBank from "../pages/import/sync-from-open-bank"
-import CategoriseTransaction from "../pages/categorise"
-import TransactionSettings from "../pages/transaction-settings"
-import Reports from "../pages/reports/reports"
-import CategoryReports from "../pages/reports/category-reports"
-import FinancialReports from "../pages/reports/financial-reports"
-import CashflowReports from "../pages/reports/cashflow-reports"
-import VisualReports from "../pages/reports/visual-reports"
-import MomReports from "../pages/reports/mom-reports"
-import AccountSettings from "../pages/settings/account-settings"
-import AdminSettings from "../pages/settings/admin-settings"
-import EditAccount from "../pages/settings/edit-account"
-import AddAccount from "../pages/settings/add-account"
-import AddUserAccount from "../pages/settings/add-user-account"
-import DeleteUserAccount from "../pages/settings/delete-user-account"
-// import MonoSync from "../backend/Sync1"
+import {
+	Home,
+	Signup,
+	Signin,
+	Dashboard,
+	AddBusiness,
+	CategoriseSettings,
+	Sidebar,
+	KeywordsSettings,
+	SyncFromOpenBank,
+	CategoriseTransaction,
+	TransactionSettings,
+	Reports,
+	CategoryReports,
+	FinancialReports,
+	CashflowReports,
+	VisualReports,
+	MomReports,
+	AccountSettings,
+	AdminSettings,
+	EditAccount,
+	AddAccount,
+	AddUserAccount,
+	DeleteUserAccount,
+} from "../pages"
 
 const routes = [
-	{ path: "/", Element: Home, altPath: "/dashboard" },
 	{ path: "/add-business", Element: AddBusiness },
 	{ path: "/signup", Element: Signup, altPath: "/" },
 	{ path: "/sync-accounts", Element: SyncFromOpenBank },
@@ -42,7 +42,7 @@ const routes = [
 				path: "",
 				Element: TransactionSettings,
 			},
-			{ path: "/category", Element: CategorySettings },
+			{ path: "/category", Element: CategoriseSettings },
 			{ path: "/keywords", Element: KeywordsSettings },
 		],
 	},
@@ -89,6 +89,10 @@ export const AppRoutes = ({ user, hasBusiness, handleChangeBusiness }) => {
 				/>
 			)}
 			<Routes>
+				<Route
+					path="/"
+					element={!user ? <Home /> : <Navigate to="/dashboard" />}
+				/>
 				<Route
 					path="/dashboard"
 					element={

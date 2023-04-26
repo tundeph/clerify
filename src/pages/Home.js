@@ -33,7 +33,7 @@ const StyledLink = styled(Link)`
 	text-align: right;
 `
 
-const Home = () => {
+export const Home = () => {
 	const navigate = useNavigate()
 
 	return (
@@ -99,5 +99,3 @@ const Home = () => {
 		</PageWrapper>
 	)
 }
-
-export default Home

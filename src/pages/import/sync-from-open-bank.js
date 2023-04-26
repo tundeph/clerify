@@ -47,7 +47,7 @@ export const CustomText = styled(Text)`
 	box-sizing: border-box;
 `
 
-const SyncFromOpenBank = () => {
+export const SyncFromOpenBank = () => {
 	const { colors } = useContext(ThemeContext)
 	const navigate = useNavigate()
 	const { addDocumentWithId, updateDocument, response } =
@@ -307,5 +307,3 @@ const SyncFromOpenBank = () => {
 		</>
 	)
 }
-
-export default SyncFromOpenBank

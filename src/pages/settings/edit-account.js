@@ -1,7 +1,5 @@
 import React from "react"
 
-const EditAccount = () => {
+export const EditAccount = () => {
 	return <div>EditAccount</div>
 }
-
-export default EditAccount

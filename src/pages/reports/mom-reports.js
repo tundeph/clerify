@@ -1,7 +1,5 @@
 import React from "react"
 
-const MomReports = () => {
+export const MomReports = () => {
 	return <div>MomReports</div>
 }
-
-export default MomReports

@@ -41,7 +41,7 @@ const CustomSplitWrapper = styled(DivWrapper)`
 	grid-template-columns: 1fr 100px;
 `
 
-const KeywordsSettings = () => {
+export const KeywordsSettings = () => {
 	const [category, setCategory] = useState("")
 	const [keyword, setKeyword] = useState("")
 	const [deleteModal, setDeleteModal] = useState({ status: false, keyword })
@@ -159,5 +159,3 @@ const KeywordsSettings = () => {
 		</>
 	)
 }
-
-export default KeywordsSettings

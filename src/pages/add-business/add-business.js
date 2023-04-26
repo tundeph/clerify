@@ -30,7 +30,7 @@ const CustomMidWrapper = styled(MidWrapper)`
 	min-width: 500px;
 `
 
-const AddBusiness = () => {
+export const AddBusiness = () => {
 	const { colors } = useContext(ThemeContext)
 	const { user } = useSelector(selectUserProfile)
 	const navigate = useNavigate()
@@ -173,5 +173,3 @@ const AddBusiness = () => {
 		</PageWrapper>
 	)
 }
-
-export default AddBusiness

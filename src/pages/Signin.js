@@ -23,7 +23,7 @@ const CustomMidWrapper = styled(MidWrapper)`
 	gap: 1.5rem;
 `
 
-const Signin = () => {
+export const Signin = () => {
 	const { colors } = useContext(ThemeContext)
 	const { error, isPending, login, resetPassword } = useLogin()
 
@@ -119,5 +119,3 @@ const Signin = () => {
 		</>
 	)
 }
-
-export default Signin

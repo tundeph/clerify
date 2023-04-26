@@ -63,7 +63,7 @@ const CustomButton = styled(ButtonState)`
 	padding: ${size.s}rem ${size.s}rem;
 `
 
-const CategoriseTransaction = () => {
+export const CategoriseTransaction = () => {
 	const { colors } = useContext(ThemeContext)
 	const { selectedBusinessId } = useSelector(selectUserProfile)
 	const [category, setCategory] = useState()
@@ -307,5 +307,3 @@ const CategoriseTransaction = () => {
 		</>
 	)
 }
-
-export default CategoriseTransaction

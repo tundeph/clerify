@@ -86,7 +86,7 @@ const SubTitle = styled.span`
 	color: ${({ theme }) => theme.colors.background};
 `
 
-const Sidebar = ({ business, onChange }) => {
+export const Sidebar = ({ business, onChange }) => {
 	const { logout } = useLogout()
 
 	const [showSubmenu, setShowSubmenu] = useState(false)
@@ -144,5 +144,3 @@ const Sidebar = ({ business, onChange }) => {
 		</SideBar>
 	)
 }
-
-export default Sidebar

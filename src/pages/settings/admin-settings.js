@@ -11,7 +11,7 @@ import {
 
 import CustomNavLink from "../../components/custom-navlink"
 
-const AdminSettings = () => {
+export const AdminSettings = () => {
 	return (
 		<PageWrapper>
 			<UserWrapper>
@@ -38,5 +38,3 @@ const AdminSettings = () => {
 		</PageWrapper>
 	)
 }
-
-export default AdminSettings

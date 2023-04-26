@@ -20,7 +20,7 @@ import {
 } from "../layout/styles"
 import { db } from "../firebase/config"
 
-const Dashboard = () => {
+export const Dashboard = () => {
 	const endDate = format(new Date("2022/06/30"), "yyyy-MM-dd")
 	const startDate = format(subDays(new Date("2022/06/30"), 30), "yyyy-MM-dd")
 	const { getCashflowData, dailyCashflowData, combinedCashflowData } =
@@ -70,5 +70,3 @@ const Dashboard = () => {
 		</PageWrapper>
 	)
 }
-
-export default Dashboard

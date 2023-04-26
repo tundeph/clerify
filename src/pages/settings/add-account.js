@@ -1,7 +1,5 @@
 import React from "react"
 
-const AddAccount = () => {
+export const AddAccount = () => {
 	return <div>AddAccount</div>
 }
-
-export default AddAccount
