@@ -5,7 +5,7 @@ import { useSelector } from "react-redux"
 import {
 	selectUserProfile,
 	selectTransactionCategories,
-} from "../redux/profileSlice"
+} from "../services/profile-slice"
 import { useFirestore } from "../hooks/useFirestore"
 import { useDocument } from "../hooks/useDocument"
 import { formatCategoryDropDown, formatUpdatedCategories } from "../helper"

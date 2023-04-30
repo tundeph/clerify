@@ -1,21 +1,26 @@
 import React from "react"
 import { Route, Navigate, useLocation } from "react-router-dom"
-import { useSelector } from "react-redux"
-import { selectUserProfile } from "../redux/profileSlice"
+// import { useSelector } from "react-redux"
+// import { selectUserProfile } from "../services/profile-slice"
+// import { useProfileQuery } from "../services/profile-slice2"
 
-export const ProtectedRoute = ({ children, altPath = "/signin" }) => {
-	const { user } = useSelector(selectUserProfile)
+export const ProtectedRoute = ({ user, altPath = "/signin", children }) => {
+	// const { data } = useProfileQuery()
+	// const { user } = data
+	console.log("routes user", user)
+	// const { user } = useSelector(selectUserProfile)
 	let location = useLocation()
-
+	console.log("location", location)
 	if (!user) {
-		return <Navigate to={altPath} state={{ from: location }} replace />
+		// return <Navigate to={altPath} state={{ from: location }} replace />
+		return <Navigate to={altPath} replace />
 	}
 
 	return children
 }
 
-export const renderProtectedRoutes = (routes) => {
-	const m = routes.map((route, index) => {
+export const renderProtectedRoutes = (routes, user) => {
+	const protectedRoutes = routes.map((route, index) => {
 		const { path, Element } = route
 
 		return (
@@ -25,7 +30,10 @@ export const renderProtectedRoutes = (routes) => {
 						key={index}
 						path={path}
 						element={
-							<ProtectedRoute altPath={route.altPath ? route.altPath : null}>
+							<ProtectedRoute
+								user={user}
+								altPath={route.altPath ? route.altPath : null}
+							>
 								<Element key={index} />
 							</ProtectedRoute>
 						}
@@ -41,6 +49,7 @@ export const renderProtectedRoutes = (routes) => {
 										: { path: `${path}${subRoute.path}` })}
 									element={
 										<ProtectedRoute
+											user={user}
 											altPath={subRoute.altPath ? subRoute.altPath : null}
 										>
 											<Element key={subIndex} />
@@ -55,7 +64,10 @@ export const renderProtectedRoutes = (routes) => {
 						key={index}
 						path={route.path}
 						element={
-							<ProtectedRoute altPath={route.altPath ? route.altPath : null}>
+							<ProtectedRoute
+								user={user}
+								altPath={route.altPath ? route.altPath : null}
+							>
 								<Element key={index} />
 							</ProtectedRoute>
 						}
@@ -65,5 +77,5 @@ export const renderProtectedRoutes = (routes) => {
 		)
 	})
 
-	return m
+	return protectedRoutes
 }

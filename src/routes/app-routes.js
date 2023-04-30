@@ -31,6 +31,7 @@ import {
 
 const routes = [
 	{ path: "/add-business", Element: AddBusiness },
+	// { path: "/dashboard", Element: Dashboard },
 	{ path: "/signup", Element: Signup, altPath: "/" },
 	{ path: "/sync-accounts", Element: SyncFromOpenBank },
 	{ path: "/reconcile", Element: CategoriseTransaction },
@@ -101,6 +102,10 @@ export const AppRoutes = ({ user, hasBusiness, handleChangeBusiness }) => {
 				/>
 				<Route
 					path="/signin"
+					element={!user ? <Signin /> : <Navigate to="/dashboard" />}
+				/>
+				{/* <Route
+					path="/signin"
 					element={
 						!user ? (
 							<Signin />
@@ -110,9 +115,9 @@ export const AppRoutes = ({ user, hasBusiness, handleChangeBusiness }) => {
 							/>
 						)
 					}
-				/>
+				/> */}
 
-				{renderProtectedRoutes(routes)}
+				{renderProtectedRoutes(routes, user)}
 			</Routes>
 		</BrowserRouter>
 	)

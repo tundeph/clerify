@@ -1,10 +1,11 @@
 import React, { useState } from "react"
-import { useSelector } from "react-redux"
-import {
-	selectUserProfile,
-	selectTransactionCategories,
-} from "../../redux/profileSlice"
-import { useCharts } from "../../hooks/useCharts"
+import { useProfileQuery } from "@services/profile-slice2"
+// import { useSelector } from "react-redux"
+// import {
+// 	selectUserProfile,
+// 	selectTransactionCategories,
+// } from "../../services/profile-slice"
+import { renderCharts } from "../../hooks/useCharts"
 import { useDocument } from "../../hooks/useDocument"
 
 import { format, subDays } from "date-fns"
@@ -22,19 +23,24 @@ import { formatCategory } from "../../helper"
 import ReportsTable from "../../components/reports-table"
 
 export const FinancialReports = () => {
+	const {
+		data: { user, selectedBusinessId },
+	} = useProfileQuery()
+
 	const todayDate = format(new Date("2022/06/30"), "yyyy-MM-dd")
 	const thirtyDaysAgo = format(
 		subDays(new Date("2022/06/30"), 30),
 		"yyyy-MM-dd"
 	)
 
-	const { selectedBusinessId } = useSelector(selectUserProfile)
+	// const { selectedBusinessId } = useSelector(selectUserProfile)
+	const transactionCategories = user.business[selectedBusinessId].categories
 	const getTransactionsDoc = useDocument("accounts", selectedBusinessId)
-	const transactionCategories = useSelector((state) =>
-		selectTransactionCategories(state, selectedBusinessId)
-	)
+	// const transactionCategories = useSelector((state) =>
+	// 	selectTransactionCategories(state, selectedBusinessId)
+	// )
 	const categories = formatCategory(transactionCategories)
-	const { getData, dailyCategoryData } = useCharts()
+	const { getData, dailyCategoryData } = renderCharts()
 	//
 	const [startDate, setStartDate] = useState(thirtyDaysAgo)
 	const [endDate, setEndDate] = useState(todayDate)

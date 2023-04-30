@@ -5,15 +5,16 @@
 //if number of days is more than 30, monthly chart is spooled, if more then 365 days, yearly chart
 
 import React, { useState, useEffect } from "react"
-import { useSelector } from "react-redux"
-import {
-	selectUserProfile,
-	selectTransactionCategories,
-} from "../../redux/profileSlice"
+import { useProfileQuery } from "@services/profile-slice2"
+// import { useSelector } from "react-redux"
+// import {
+// 	selectUserProfile,
+// 	selectTransactionCategories,
+// } from "../../services/profile-slice"
 import { useDocument } from "../../hooks/useDocument"
 import { formatCategory, formatCategoryDropDown } from "../../helper"
 import { format, subDays } from "date-fns"
-import { useCharts } from "../../hooks/useCharts"
+import { renderCharts } from "../../hooks/useCharts"
 import { db } from "../../firebase/config"
 
 import Select from "../../components/select"
@@ -32,6 +33,10 @@ import { LineChart, PieChart, BarChart } from "../../components/charts"
 import ButtonState from "../../components/button-state"
 
 export const CategoryReports = () => {
+	const {
+		data: { user, selectedBusinessId },
+	} = useProfileQuery()
+
 	const todayDate = format(new Date("2022/06/30"), "yyyy-MM-dd")
 	const thirtyDaysAgo = format(
 		subDays(new Date("2022/06/30"), 30),
@@ -57,11 +62,14 @@ export const CategoryReports = () => {
 		combinedCashflowData,
 		getMOMData,
 		MOMData,
-	} = useCharts()
-	const { selectedBusinessId } = useSelector(selectUserProfile)
-	const transactionCategories = useSelector((state) =>
-		selectTransactionCategories(state, selectedBusinessId)
-	)
+	} = renderCharts()
+
+	const transactionCategories = user.business[selectedBusinessId].categories
+
+	// const { selectedBusinessId } = useSelector(selectUserProfile)
+	// const transactionCategories = useSelector((state) =>
+	// 	selectTransactionCategories(state, selectedBusinessId)
+	// )
 	const categories = formatCategory(transactionCategories)
 	const getTransactionsDoc = useDocument("accounts", selectedBusinessId)
 	const [showCategories] = useState(
@@ -75,13 +83,15 @@ export const CategoryReports = () => {
 			.onSnapshot(
 				(snapshot) => {
 					if (snapshot.data()) {
-						getData(
-							snapshot.data(),
-							transactionCategories,
-							showCategories,
-							startDate,
-							endDate
-						)
+						// getData(
+						// 	snapshot.data(),
+						// 	transactionCategories,
+						// 	showCategories,
+						// 	startDate,
+						// 	endDate
+						// )
+
+						getCashflowData(snapshot.data(), startDate, endDate)
 					}
 				},
 				(err) => {
