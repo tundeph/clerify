@@ -9,10 +9,9 @@ const initialState = {
 }
 
 export const authApi = api.injectEndpoints({
-	// refetchOnMountOrArgChange: true,
 	endpoints: (build) => ({
 		profile: build.query({
-			queryFn: async ({ filters: {} }, { getState }) => {
+			queryFn: async () => {
 				try {
 					let result
 					result = await new Promise((resolve, reject) =>
@@ -28,7 +27,6 @@ export const authApi = api.injectEndpoints({
 							}
 						})
 					)
-					console.log("resulttt", result)
 					return { data: result }
 				} catch (error) {
 					return { error: { error } }
@@ -36,7 +34,9 @@ export const authApi = api.injectEndpoints({
 			},
 
 			providesTags: ["Profile"],
-			// refetchOnMountOrArgChange: true,
+			async onQueryStarted(_, { getState }) {
+				// console.log("getState()", getState())
+			},
 		}),
 		logOut: build.query({
 			queryFn: async () => {
@@ -44,7 +44,6 @@ export const authApi = api.injectEndpoints({
 					let result
 					result = await new Promise((resolve, reject) => {
 						authService.signOut()
-						console.log({ ...initialState, authIsReady: true })
 						resolve({ ...initialState, authIsReady: true })
 					})
 					return { data: result }

@@ -3,7 +3,8 @@ import { useLogin } from "../hooks/useLogin"
 import { handleButtonState } from "../helper"
 
 import { authService } from "../firebase/config"
-import { useNavigate } from "react-router-dom"
+import { redirect, useNavigate } from "react-router-dom"
+import { useProfileQuery } from "../services/profile-slice2"
 
 //styles
 import Logo from "../components/logo"
@@ -27,18 +28,19 @@ const CustomMidWrapper = styled(MidWrapper)`
 `
 
 export const Signin = () => {
+	const { error, isLoading, refetch } = useProfileQuery()
 	const { colors } = useContext(ThemeContext)
 	// const { error, isPending, login, resetPassword } = useLogin()
 	const navigate = useNavigate()
 
-	const [error, setError] = useState("")
+	// const [error, setError] = useState("")
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
 	const [resetModal, setResetModal] = useState({ status: false, text: "" })
 
 	const buttonCondition = email.length > 5 && password.length > 5
 	// const buttonPending = isPending && buttonCondition
-	const buttonPending = error & buttonCondition
+	const buttonPending = isLoading & buttonCondition
 
 	const handleResetPassword = (e) => {
 		e.preventDefault()
@@ -63,14 +65,21 @@ export const Signin = () => {
 		// login(email, password)
 		try {
 			const res = await authService.signInWithEmailAndPassword(email, password)
-			console.log("sign in res user", res)
+
 			if (res.user) {
-				navigate("/dashboard")
+				// console.log("sign in res user", res.user)
+				// console.log("redirectttt", redirect("/"))
+				// console.log("redirectttt", navigate("/"))
+				// navigate("/dashboard")
+				// return redirect("/")
+				refetch()
 			} else {
 				navigate("/signup")
 			}
 		} catch (err) {
-			setError(err)
+			// setError(err)
+			console.log(err)
+			return { error: err.message }
 		}
 	}
 

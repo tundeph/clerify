@@ -1,39 +1,31 @@
 import React from "react"
 import { Route, Navigate, useLocation } from "react-router-dom"
-// import { useSelector } from "react-redux"
-// import { selectUserProfile } from "../services/profile-slice"
-// import { useProfileQuery } from "../services/profile-slice2"
+import { useProfileQuery } from "../services/profile-slice2"
 
-export const ProtectedRoute = ({ user, altPath = "/signin", children }) => {
-	// const { data } = useProfileQuery()
-	// const { user } = data
-	console.log("routes user", user)
-	// const { user } = useSelector(selectUserProfile)
+export const ProtectedRoute = ({ altPath = "/signin", children }) => {
+	const { data } = useProfileQuery()
+	const { user } = data
+
 	let location = useLocation()
-	console.log("location", location)
+
 	if (!user) {
-		// return <Navigate to={altPath} state={{ from: location }} replace />
-		return <Navigate to={altPath} replace />
+		return <Navigate to={altPath} state={{ from: location }} replace />
 	}
 
 	return children
 }
 
-export const renderProtectedRoutes = (routes, user) => {
+export const renderProtectedRoutes = (routes) => {
 	const protectedRoutes = routes.map((route, index) => {
 		const { path, Element } = route
 
 		return (
-			<>
+			<React.Fragment key={index}>
 				{route.subPath ? (
 					<Route
-						key={index}
 						path={path}
 						element={
-							<ProtectedRoute
-								user={user}
-								altPath={route.altPath ? route.altPath : null}
-							>
+							<ProtectedRoute altPath={route.altPath ? route.altPath : null}>
 								<Element key={index} />
 							</ProtectedRoute>
 						}
@@ -49,7 +41,6 @@ export const renderProtectedRoutes = (routes, user) => {
 										: { path: `${path}${subRoute.path}` })}
 									element={
 										<ProtectedRoute
-											user={user}
 											altPath={subRoute.altPath ? subRoute.altPath : null}
 										>
 											<Element key={subIndex} />
@@ -61,19 +52,15 @@ export const renderProtectedRoutes = (routes, user) => {
 					</Route>
 				) : (
 					<Route
-						key={index}
 						path={route.path}
 						element={
-							<ProtectedRoute
-								user={user}
-								altPath={route.altPath ? route.altPath : null}
-							>
+							<ProtectedRoute altPath={route.altPath ? route.altPath : null}>
 								<Element key={index} />
 							</ProtectedRoute>
 						}
 					/>
 				)}
-			</>
+			</React.Fragment>
 		)
 	})
 

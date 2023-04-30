@@ -22,7 +22,9 @@ import { useProfileQuery } from "../services/profile-slice2"
 
 export const Dashboard = () => {
 	const navigate = useNavigate()
-	const { data } = useProfileQuery()
+	const { data } = useProfileQuery(undefined, {
+		refetchOnMountOrArgChange: true,
+	})
 
 	// const hasBusiness =
 	// 	data.user.hasOwnProperty("business") &&
