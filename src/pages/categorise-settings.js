@@ -8,7 +8,7 @@ import {
 	selectUserProfile,
 	updateBusinessCategory,
 	selectTransactionCategories,
-} from "../redux/profileSlice"
+} from "../services/profile-slice"
 import { businessCategories } from "../helper/defaultData"
 
 import { size } from "../layout/theme"

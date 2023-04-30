@@ -5,15 +5,17 @@
 //if number of days is more than 30, monthly chart is spooled, if more then 365 days, yearly chart
 
 import React, { useState, useEffect } from "react"
-import { useSelector } from "react-redux"
-import {
-	selectUserProfile,
-	selectTransactionCategories,
-} from "../../redux/profileSlice"
+import { useProfileQuery } from "@services/profile-slice2"
+
+// import { useSelector } from "react-redux"
+// import {
+// 	selectUserProfile,
+// 	selectTransactionCategories,
+// } from "../../services/profile-slice"
 import { useDocument } from "../../hooks/useDocument"
 import { formatCategory, formatCategoryDropDown } from "../../helper"
 import { format, subDays } from "date-fns"
-import { useCharts } from "../../hooks/useCharts"
+import { renderCharts } from "../../hooks/useCharts"
 import { db } from "../../firebase/config"
 
 import Select from "../../components/select"
@@ -32,6 +34,10 @@ import { LineChart, PieChart, BarChart } from "../../components/charts"
 import ButtonState from "../../components/button-state"
 
 export const CashflowReports = () => {
+	const {
+		data: { selectedBusinessId },
+	} = useProfileQuery()
+
 	const todayDate = format(new Date("2022/06/30"), "yyyy-MM-dd")
 	const thirtyDaysAgo = format(
 		subDays(new Date("2022/06/30"), 30),
@@ -49,8 +55,8 @@ export const CashflowReports = () => {
 		combinedCashflowData,
 		getMOMData,
 		MOMData,
-	} = useCharts()
-	const { selectedBusinessId } = useSelector(selectUserProfile)
+	} = renderCharts()
+	// const { selectedBusinessId } = useSelector(selectUserProfile)
 	// const transactionCategories = useSelector((state) =>
 	// selectTransactionCategories(state, selectedBusinessId)
 	// )
@@ -81,7 +87,9 @@ export const CashflowReports = () => {
 	// 			}
 	// 		)
 	// }, [])
-
+	useEffect(() => {
+		getCashflowData(getTransactionsDoc.document, thirtyDaysAgo, todayDate)
+	}, [])
 	const handleCashflowChart = () => {
 		getCashflowData(
 			getTransactionsDoc.document,

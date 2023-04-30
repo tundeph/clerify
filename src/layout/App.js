@@ -3,13 +3,6 @@
 import React, { useState, useEffect } from "react"
 import { AppRoutes } from "../routes"
 
-import { useSelector, useDispatch } from "react-redux"
-import {
-	selectUserProfile,
-	authReady,
-	updateSelectedBusiness,
-} from "../redux/profileSlice"
-import { db, authService } from "../firebase/config"
 import { useFirestore } from "../hooks/useFirestore"
 
 import styled, { ThemeProvider } from "styled-components"
@@ -17,7 +10,6 @@ import { GlobalStyles } from "../layout/GlobalStyles"
 import theme from "../layout/theme"
 import shortid from "shortid"
 import { businessType, businessCategories } from "../helper/defaultData"
-import { handleButtonState } from "../helper"
 import { size } from "../layout/theme"
 
 import {
@@ -30,6 +22,7 @@ import {
 } from "../layout/styles"
 import Modal from "../components/modal"
 import AddBusinessForm from "../pages/add-business/add-business-form"
+import { useProfileQuery } from "../services/profile-slice2"
 
 const AppWrapper = styled.div`
 	position: relative;
@@ -39,9 +32,9 @@ const AppWrapper = styled.div`
 `
 
 const App = () => {
-	const dispatch = useDispatch()
+	const { data, error, isLoading } = useProfileQuery()
+
 	const { updateDocument, addDocument, response } = useFirestore("business")
-	const { user, authIsReady, profileTheme } = useSelector(selectUserProfile)
 
 	const [addModal, setAddModal] = useState({ status: false })
 	const [changeModal, setChangeModal] = useState({ status: false })
@@ -51,8 +44,6 @@ const App = () => {
 	const [accts, setAccts] = useState([
 		{ id: firstId, acctName: "", syncId: "" },
 	])
-
-	const buttonCondition = name.length > 0 && type.length > 0
 
 	const defaultBusinessCategories = businessCategories.reduce((acc, item) => {
 		if (item.value !== "") {
@@ -67,47 +58,7 @@ const App = () => {
 		return acc
 	}, [])
 
-	let selectedBusinessId = null
-
-	useEffect(() => {
-		const unsub = authService.onAuthStateChanged((user) => {
-			if (!user && !authIsReady) {
-				dispatch(authReady({ authIsReady: true }))
-			}
-			if (user) {
-				const { uid, displayName, photoURL, email } = user
-				db.collection("business")
-					.where("uid", "==", user.uid)
-					.onSnapshot((snapshot) => {
-						let business = {}
-						let hasAccts = {}
-
-						snapshot.docs.forEach((doc) => {
-							let id = doc.id
-							const { accts, name, type, selected, categories, lastAcctData } =
-								doc.data()
-							if (selected) {
-								selectedBusinessId = id
-								hasAccts = lastAcctData
-							}
-							business[id] = { id, accts, name, type, selected, categories }
-						})
-
-						dispatch(
-							authReady({
-								data: { uid, displayName, photoURL, email, business },
-								selectedBusinessId,
-								lastAcctData: hasAccts,
-							})
-						)
-					})
-
-				unsub(user)
-			}
-		})
-	}, [])
-
-	const handleChangeBusiness = async (e) => {
+	const handleChangeBusiness = async (e, user) => {
 		e.preventDefault()
 		setChangeModal({ status: true })
 		const businesses = user.business
@@ -125,7 +76,7 @@ const App = () => {
 		}
 	}
 
-	const handleAddBusiness = async (e) => {
+	const handleAddBusiness = async (e, user) => {
 		e.preventDefault()
 		const filteredAccts = accts.filter((acct) => acct.acctName.trim() !== "")
 		const business = {
@@ -182,59 +133,62 @@ const App = () => {
 	}
 
 	return (
-		<ThemeProvider theme={theme[profileTheme]}>
-			<GlobalStyles />
-			{authIsReady && (
-				<AppWrapper>
-					<AppRoutes
-						user={user}
-						hasBusiness={hasBusiness}
-						handleChangeBusiness={handleChangeBusiness}
-					/>
+		<>
+			<ThemeProvider theme={theme[data.profileTheme]}>
+				<GlobalStyles />
+				{data.authIsReady && (
+					<AppWrapper>
+						{console.log("useerrr", data.user)}
+						<AppRoutes
+							user={data.user}
+							hasBusiness={hasBusiness}
+							handleChangeBusiness={(e) => handleChangeBusiness(e, data.user)}
+						/>
 
-					{addModal.status && (
-						<Modal
-							title="Add another business"
-							handleClose={() => setAddModal({ status: false })}
-							noBgClose
-						>
-							<DivWrapper align="center" gap={1}>
-								<Form onSubmit={handleAddBusiness}>
-									<AddBusinessForm
-										name={name}
-										setName={setName}
-										type={type}
-										setType={setType}
-										businessType={businessType}
-										accts={accts}
-										handleAcctChange={handleAcctChange}
-										handleDeleteForm={handleDeleteForm}
-										handleAddMore={handleAddMore}
-									/>
-									<Divider gap={size.m} />
-									<DivWrapper>
-										<Button> Add business</Button>
-									</DivWrapper>
-								</Form>
-							</DivWrapper>
-						</Modal>
-					)}
-					{changeModal.status && (
-						<Modal
-							title="Changing business... "
-							handleClose={() => setChangeModal({ status: false })}
-							noBgClose
-						>
-							<DivWrapper align="center" gap={2}>
-								<Text color={theme.lightTheme.colors.gray300}>
-									<LoadingIcon size={80} />
-								</Text>
-							</DivWrapper>
-						</Modal>
-					)}
-				</AppWrapper>
-			)}
-		</ThemeProvider>
+						{addModal.status && (
+							<Modal
+								title="Add another business"
+								handleClose={() => setAddModal({ status: false })}
+								noBgClose
+							>
+								<DivWrapper align="center" gap={1}>
+									<Form onSubmit={(e) => handleAddBusiness(e, data.user)}>
+										<AddBusinessForm
+											name={name}
+											setName={setName}
+											type={type}
+											setType={setType}
+											businessType={businessType}
+											accts={accts}
+											handleAcctChange={handleAcctChange}
+											handleDeleteForm={handleDeleteForm}
+											handleAddMore={handleAddMore}
+										/>
+										<Divider gap={size.m} />
+										<DivWrapper>
+											<Button> Add business</Button>
+										</DivWrapper>
+									</Form>
+								</DivWrapper>
+							</Modal>
+						)}
+						{changeModal.status && (
+							<Modal
+								title="Changing business... "
+								handleClose={() => setChangeModal({ status: false })}
+								noBgClose
+							>
+								<DivWrapper align="center" gap={2}>
+									<Text color={theme.lightTheme.colors.gray300}>
+										<LoadingIcon size={80} />
+									</Text>
+								</DivWrapper>
+							</Modal>
+						)}
+					</AppWrapper>
+				)}
+			</ThemeProvider>
+		</>
 	)
 }
 

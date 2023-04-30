@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react"
 import { useSelector } from "react-redux"
-import { selectUserProfile } from "../../redux/profileSlice"
+import { selectUserProfile } from "../../services/profile-slice"
 import { useFirestore } from "../../hooks/useFirestore"
 import { useNavigate } from "react-router-dom"
 import shortid from "shortid"

@@ -2,6 +2,9 @@ import React, { useState, useContext } from "react"
 import { useLogin } from "../hooks/useLogin"
 import { handleButtonState } from "../helper"
 
+import { authService } from "../firebase/config"
+import { useNavigate } from "react-router-dom"
+
 //styles
 import Logo from "../components/logo"
 import styled, { ThemeContext } from "styled-components"
@@ -25,14 +28,17 @@ const CustomMidWrapper = styled(MidWrapper)`
 
 export const Signin = () => {
 	const { colors } = useContext(ThemeContext)
-	const { error, isPending, login, resetPassword } = useLogin()
+	// const { error, isPending, login, resetPassword } = useLogin()
+	const navigate = useNavigate()
 
+	const [error, setError] = useState("")
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
 	const [resetModal, setResetModal] = useState({ status: false, text: "" })
 
 	const buttonCondition = email.length > 5 && password.length > 5
-	const buttonPending = isPending && buttonCondition
+	// const buttonPending = isPending && buttonCondition
+	const buttonPending = error & buttonCondition
 
 	const handleResetPassword = (e) => {
 		e.preventDefault()
@@ -43,7 +49,7 @@ export const Signin = () => {
 
 		if (email.length) {
 			console.log("here", email)
-			resetPassword(email)
+			// resetPassword(email)
 			if (error) {
 				text = `There's an error while trying to send the password reset link to ${email}. Click the Reset link again`
 			}
@@ -52,9 +58,20 @@ export const Signin = () => {
 		setResetModal({ status: true, text })
 	}
 
-	const handleLogin = (e) => {
+	const handleLogin = async (e) => {
 		e.preventDefault()
-		login(email, password)
+		// login(email, password)
+		try {
+			const res = await authService.signInWithEmailAndPassword(email, password)
+			console.log("sign in res user", res)
+			if (res.user) {
+				navigate("/dashboard")
+			} else {
+				navigate("/signup")
+			}
+		} catch (err) {
+			setError(err)
+		}
 	}
 
 	return (

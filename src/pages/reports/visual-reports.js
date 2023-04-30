@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react"
+import { useProfileQuery } from "@services/profile-slice2"
 import { useSelector } from "react-redux"
 import {
 	selectUserProfile,
 	selectTransactionCategories,
-} from "../../redux/profileSlice"
+} from "../../services/profile-slice"
 import { useDocument } from "../../hooks/useDocument"
 import { formatCategory, formatCategoryDropDown } from "../../helper"
 import { format, subDays } from "date-fns"
-import { useCharts } from "../../hooks/useCharts"
+import { renderCharts } from "../../hooks/useCharts"
 import { db } from "../../firebase/config"
 
 import { size } from "../../layout/theme"
@@ -24,6 +25,10 @@ import CustomNavLink from "../../components/custom-navlink"
 import { LineChart, PieChart, BarChart } from "../../components/charts"
 
 export const VisualReports = () => {
+	const {
+		data: { user, selectedBusinessId },
+	} = useProfileQuery()
+
 	const todayDate = format(new Date("2022/06/30"), "yyyy-MM-dd")
 	const thirtyDaysAgo = format(
 		subDays(new Date("2022/06/30"), 30),
@@ -41,11 +46,12 @@ export const VisualReports = () => {
 		combinedCashflowData,
 		getMOMData,
 		MOMData,
-	} = useCharts()
-	const { selectedBusinessId } = useSelector(selectUserProfile)
-	const transactionCategories = useSelector((state) =>
-		selectTransactionCategories(state, selectedBusinessId)
-	)
+	} = renderCharts()
+	// const { selectedBusinessId } = useSelector(selectUserProfile)
+	// const transactionCategories = useSelector((state) =>
+	// 	selectTransactionCategories(state, selectedBusinessId)
+	// )
+	const transactionCategories = user.business[selectedBusinessId].categories
 	const categories = formatCategory(transactionCategories)
 	const getTransactionsDoc = useDocument("accounts", selectedBusinessId)
 	const [showCategories] = useState(
@@ -66,6 +72,7 @@ export const VisualReports = () => {
 							startDate,
 							endDate
 						)
+						// getCashflowData(snapshot.data(), startDate, endDate)
 					}
 				},
 				(err) => {

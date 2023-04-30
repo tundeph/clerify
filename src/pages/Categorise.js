@@ -16,7 +16,7 @@ import { useDocument } from "../hooks/useDocument"
 import {
 	selectUserProfile,
 	selectTransactionCategories,
-} from "../redux/profileSlice"
+} from "../services/profile-slice"
 import { useFirestore } from "../hooks/useFirestore"
 import { db } from "../firebase/config"
 import {

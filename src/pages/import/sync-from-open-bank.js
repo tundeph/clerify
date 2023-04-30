@@ -3,13 +3,8 @@
 
 import React, { useState, useContext, useReducer } from "react"
 import { useNavigate } from "react-router-dom"
-import { useSelector } from "react-redux"
-import {
-	selectUserProfile,
-	selectUserBusiness,
-	selectBusinessAccounts,
-	selectTransactionCategories,
-} from "../../redux/profileSlice"
+
+import { useProfileQuery } from "../../services/profile-slice2"
 import MonoConnect from "@mono.co/connect.js"
 import { MonoSync } from "../../backend/MonoSync"
 
@@ -53,7 +48,10 @@ export const SyncFromOpenBank = () => {
 	const { addDocumentWithId, updateDocument, response } =
 		useFirestore("accounts")
 	const updateBusiness = useFirestore("business")
-	const { selectedBusinessId, lastAcctData } = useSelector(selectUserProfile)
+
+	const {
+		data: { user, selectedBusinessId, lastAcctData },
+	} = useProfileQuery()
 	const { document } = useDocument("accounts", selectedBusinessId)
 	const syncModalMessage = syncModalMessages(colors)
 	const dateNow = new Date()
@@ -85,22 +83,15 @@ export const SyncFromOpenBank = () => {
 	const [state, dispatch] = useReducer(reducer, initialState)
 
 	const buttonCondition = selectedAccount
-	//
-	const business = useSelector(selectUserBusiness)
-	const getBusinessAccts = useSelector((state) =>
-		selectBusinessAccounts(state, selectedBusinessId)
-	)
 
+	const getBusinessAccts = user.business[selectedBusinessId].accts
 	const [businessAccts] = getBusinessAccts.filter(
 		(businessAcct) => businessAcct.id === selectedAccount
 	)
-	const transactionCategories = useSelector((state) =>
-		selectTransactionCategories(state, selectedBusinessId)
-	)
+	const transactionCategories = user.business[selectedBusinessId].categories
 
-	//
 	const bankAccounts = textSorter(
-		[...business[selectedBusinessId].accts],
+		[...user.business[selectedBusinessId].accts],
 		"asc",
 		"acctName"
 	).map((acct) => ({
@@ -260,13 +251,12 @@ export const SyncFromOpenBank = () => {
 						) : (
 							<DivWrapper bottom={2}>
 								<Text color={colors.gray600} size={0.8}>
-									Sync{" "}
+									Sync
 									{businessAccts && lastAcctData && (
 										<>
-											from last date{" "}
+											from last date
 											<Text bold>
-												{" "}
-												{new Date(lastAcctData.date).toDateString()}{" "}
+												{new Date(lastAcctData.date).toDateString()}
 											</Text>
 										</>
 									)}
