@@ -134,60 +134,61 @@ const App = () => {
 
 	return (
 		<>
-			<ThemeProvider theme={theme[data.profileTheme]}>
-				<GlobalStyles />
-				{data.authIsReady && (
-					<AppWrapper>
-						{console.log("useerrr", data.user)}
-						<AppRoutes
-							user={data.user}
-							hasBusiness={hasBusiness}
-							handleChangeBusiness={(e) => handleChangeBusiness(e, data.user)}
-						/>
+			{data && (
+				<ThemeProvider theme={theme[data.profileTheme]}>
+					<GlobalStyles />
+					{data.authIsReady && (
+						<AppWrapper>
+							<AppRoutes
+								user={data.user}
+								hasBusiness={hasBusiness}
+								handleChangeBusiness={(e) => handleChangeBusiness(e, data.user)}
+							/>
 
-						{addModal.status && (
-							<Modal
-								title="Add another business"
-								handleClose={() => setAddModal({ status: false })}
-								noBgClose
-							>
-								<DivWrapper align="center" gap={1}>
-									<Form onSubmit={(e) => handleAddBusiness(e, data.user)}>
-										<AddBusinessForm
-											name={name}
-											setName={setName}
-											type={type}
-											setType={setType}
-											businessType={businessType}
-											accts={accts}
-											handleAcctChange={handleAcctChange}
-											handleDeleteForm={handleDeleteForm}
-											handleAddMore={handleAddMore}
-										/>
-										<Divider gap={size.m} />
-										<DivWrapper>
-											<Button> Add business</Button>
-										</DivWrapper>
-									</Form>
-								</DivWrapper>
-							</Modal>
-						)}
-						{changeModal.status && (
-							<Modal
-								title="Changing business... "
-								handleClose={() => setChangeModal({ status: false })}
-								noBgClose
-							>
-								<DivWrapper align="center" gap={2}>
-									<Text color={theme.lightTheme.colors.gray300}>
-										<LoadingIcon size={80} />
-									</Text>
-								</DivWrapper>
-							</Modal>
-						)}
-					</AppWrapper>
-				)}
-			</ThemeProvider>
+							{addModal.status && (
+								<Modal
+									title="Add another business"
+									handleClose={() => setAddModal({ status: false })}
+									noBgClose
+								>
+									<DivWrapper align="center" gap={1}>
+										<Form onSubmit={(e) => handleAddBusiness(e, data.user)}>
+											<AddBusinessForm
+												name={name}
+												setName={setName}
+												type={type}
+												setType={setType}
+												businessType={businessType}
+												accts={accts}
+												handleAcctChange={handleAcctChange}
+												handleDeleteForm={handleDeleteForm}
+												handleAddMore={handleAddMore}
+											/>
+											<Divider gap={size.m} />
+											<DivWrapper>
+												<Button> Add business</Button>
+											</DivWrapper>
+										</Form>
+									</DivWrapper>
+								</Modal>
+							)}
+							{changeModal.status && (
+								<Modal
+									title="Changing business... "
+									handleClose={() => setChangeModal({ status: false })}
+									noBgClose
+								>
+									<DivWrapper align="center" gap={2}>
+										<Text color={theme.lightTheme.colors.gray300}>
+											<LoadingIcon size={80} />
+										</Text>
+									</DivWrapper>
+								</Modal>
+							)}
+						</AppWrapper>
+					)}
+				</ThemeProvider>
+			)}
 		</>
 	)
 }

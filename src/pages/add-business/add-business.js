@@ -92,7 +92,6 @@ export const AddBusiness = () => {
 		if (!response.error) {
 			navigate("/")
 		}
-		// console.log(business)
 	}
 
 	return (

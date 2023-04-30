@@ -28,59 +28,62 @@ import {
 	AddUserAccount,
 	DeleteUserAccount,
 } from "../pages"
+import { useProfileQuery } from "../services/profile-slice2"
 
-const routes = [
-	{ path: "/add-business", Element: AddBusiness },
-	// { path: "/dashboard", Element: Dashboard },
-	{ path: "/signup", Element: Signup, altPath: "/" },
-	{ path: "/sync-accounts", Element: SyncFromOpenBank },
-	{ path: "/reconcile", Element: CategoriseTransaction },
-	{
-		path: "/transaction-settings",
-		Element: TransactionSettings,
-		subPath: [
-			{
-				path: "",
-				Element: TransactionSettings,
-			},
-			{ path: "/category", Element: CategoriseSettings },
-			{ path: "/keywords", Element: KeywordsSettings },
-		],
-	},
-	{ path: "/reports", Element: Reports },
-	{
-		path: "/reports/visual",
-		Element: VisualReports,
-		subPath: [
-			{
-				path: "",
-				Element: CategoryReports,
-			},
-			{ path: "/cashflow", Element: CashflowReports },
-			{ path: "/mom", Element: MomReports },
-		],
-	},
-	{ path: "/reports/financial", Element: FinancialReports },
-	{
-		path: "/account-settings",
-		Element: AccountSettings,
-		subPath: [
-			{ path: "", Element: EditAccount },
-			{ path: "/add-user", Element: AddAccount },
-		],
-	},
-	{
-		path: "/admin-settings",
-		Element: AdminSettings,
-		subPath: [
-			{ path: "", Element: AddUserAccount },
-			{ path: "/delete", Element: DeleteUserAccount },
-			{ path: "/add-business", Element: AddBusiness },
-		],
-	},
-]
+export const AppRoutes = ({ hasBusiness, handleChangeBusiness }) => {
+	const { data } = useProfileQuery()
+	const { user } = data
 
-export const AppRoutes = ({ user, hasBusiness, handleChangeBusiness }) => {
+	const routes = [
+		{ path: "/add-business", Element: AddBusiness },
+		{ path: "/signup", Element: Signup, altPath: "/" },
+		{ path: "/sync-accounts", Element: SyncFromOpenBank },
+		{ path: "/reconcile", Element: CategoriseTransaction },
+		{
+			path: "/transaction-settings",
+			Element: TransactionSettings,
+			subPath: [
+				{
+					path: "",
+					Element: TransactionSettings,
+				},
+				{ path: "/category", Element: CategoriseSettings },
+				{ path: "/keywords", Element: KeywordsSettings },
+			],
+		},
+		{ path: "/reports", Element: Reports },
+		{
+			path: "/reports/visual",
+			Element: VisualReports,
+			subPath: [
+				{
+					path: "",
+					Element: CategoryReports,
+				},
+				{ path: "/cashflow", Element: CashflowReports },
+				{ path: "/mom", Element: MomReports },
+			],
+		},
+		{ path: "/reports/financial", Element: FinancialReports },
+		{
+			path: "/account-settings",
+			Element: AccountSettings,
+			subPath: [
+				{ path: "", Element: EditAccount },
+				{ path: "/add-user", Element: AddAccount },
+			],
+		},
+		{
+			path: "/admin-settings",
+			Element: AdminSettings,
+			subPath: [
+				{ path: "", Element: AddUserAccount },
+				{ path: "/delete", Element: DeleteUserAccount },
+				{ path: "/add-business", Element: AddBusiness },
+			],
+		},
+	]
+
 	return (
 		<BrowserRouter>
 			{hasBusiness(user) && (
@@ -102,10 +105,6 @@ export const AppRoutes = ({ user, hasBusiness, handleChangeBusiness }) => {
 				/>
 				<Route
 					path="/signin"
-					element={!user ? <Signin /> : <Navigate to="/dashboard" />}
-				/>
-				{/* <Route
-					path="/signin"
 					element={
 						!user ? (
 							<Signin />
@@ -115,9 +114,9 @@ export const AppRoutes = ({ user, hasBusiness, handleChangeBusiness }) => {
 							/>
 						)
 					}
-				/> */}
+				/>
 
-				{renderProtectedRoutes(routes, user)}
+				{renderProtectedRoutes(routes)}
 			</Routes>
 		</BrowserRouter>
 	)
