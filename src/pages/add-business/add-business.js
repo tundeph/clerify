@@ -23,7 +23,7 @@ import {
 import AddBusinessForm from "./add-business-form"
 import { AddFormButton, DeleteFormButton } from "../../components/form-buttons"
 import { handleButtonState } from "../../helper"
-import { businessType, businessCategories } from "../../helper/defaultData"
+import { businessType, businessCategories } from "../../helper/default-data"
 
 const CustomMidWrapper = styled(MidWrapper)`
 	gap: ${size.s}rem;
