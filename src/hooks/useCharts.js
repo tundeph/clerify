@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { format, addDays, differenceInDays } from "date-fns"
-import { returnColorOptions } from "../helper/defaultData"
+import { returnColorOptions } from "../helper/default-data"
 
 export const renderCharts = () => {
 	let labelArray = []
