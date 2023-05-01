@@ -6,14 +6,14 @@ import { useNavigate } from "react-router-dom"
 
 import { useProfileQuery } from "../../services/profile-slice2"
 import MonoConnect from "@mono.co/connect.js"
-import { MonoSync } from "../../backend/MonoSync"
+import { MonoSync } from "../../backend/mono-sync"
 
 import { useDocument } from "../../hooks/useDocument"
 import { useFirestore } from "../../hooks/useFirestore"
 
 import { addYears, format, isBefore } from "date-fns"
 import { textSorter, reconcileAccts, LIVE_PUBLIC_KEY } from "../../helper"
-import { syncModalMessages } from "../../helper/defaultData"
+import { syncModalMessages } from "../../helper/default-data"
 import shortid from "shortid"
 
 //
@@ -222,10 +222,10 @@ export const SyncFromOpenBank = () => {
 							<>
 								<DivWrapper>
 									<Text left={1} color={colors.gray600} size={0.8}>
-										Sync from{" "}
+										{`Sync from `}
 										{!lastAcctData && (
 											<>
-												as far back as{" "}
+												{` as far back as `}
 												<Text bold> {` ${oneYearBackwards}`} </Text>
 											</>
 										)}
@@ -239,7 +239,7 @@ export const SyncFromOpenBank = () => {
 								</DivWrapper>
 								<DivWrapper>
 									<Text left={1} color={colors.gray600} size={0.8}>
-										Sync up till:
+										{`Sync up till: `}
 									</Text>
 									<DateInput
 										type="date"
@@ -251,16 +251,16 @@ export const SyncFromOpenBank = () => {
 						) : (
 							<DivWrapper bottom={2}>
 								<Text color={colors.gray600} size={0.8}>
-									Sync
+									{`Sync `}
 									{businessAccts && lastAcctData && (
 										<>
-											from last date
+											{` from last date `}
 											<Text bold>
 												{new Date(lastAcctData.date).toDateString()}
 											</Text>
 										</>
 									)}
-									up till:
+									{` up till: `}
 								</Text>
 								<DateInput
 									type="date"
