@@ -191,7 +191,7 @@ export const SelectInput = styled.select`
 	color: ${({ theme }) => theme.colors.secondary};
 	box-sizing: border-box;
 	background-color: ${(props) =>
-		props.bgColor ? props.bgColor : ({ theme }) => theme.colors.gray100};
+		props.bgColor ? props.bgColor : ({ theme }) => theme.colors.white};
 	// style the dropdown arrow
 	appearance: none;
 	background-image: url(${moreIcon});
