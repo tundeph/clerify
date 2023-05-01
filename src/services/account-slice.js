@@ -1,30 +1,38 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { api } from "./api"
+import { db, authService } from "../firebase/config"
+import { transformLoginData } from "./utils"
 
-const initialState = {
-  accounts: {},
-}
+export const acctApi = api.injectEndpoints({
+	endpoints: (build) => ({
+		accounts: build.query({
+			queryFn: async (selectedBusinessId) => {
+				try {
+					let result
+					result = await new Promise((resolve, reject) =>
+						db
+							.collection("accounts")
+							.doc(selectedBusinessId)
+							.onSnapshot(
+								(snapshot) => {
+									if (snapshot.data()) {
+										console.log(snapshot.data())
+										resolve(snapshot.data())
+									}
+								},
+								(err) => {
+									throw err.message
+								}
+							)
+					)
+					return { data: result }
+				} catch (error) {
+					return { error: { error } }
+				}
+			},
 
-export const accountSlice = createSlice({
-  name: "userAccts",
-  initialState,
-  reducers: {
-    getTransactions: (state, { payload }) => {
-      state.accounts = payload.data
-    },
-    getUncategorisedTransactions: (state, { payload }) => {
-      state.uncategorisedAccts = payload.data
-    },
-    updateUncategorised: (state, { payload }) => {
-      state.uncategorisedAccts[payload.acctId][payload.acct] = payload.newlyCategorised
-    },
-  },
+			providesTags: ["Accounts"],
+		}),
+	}),
 })
 
-export const selectUserTransactions = (state) => state.userAccts.accounts
-export const selectUncategorisedAccts = (state) => state.userAccts.uncategorisedAccts
-// export const selectBusinessAccounts = (state, id) => state.userProfile.user.business[id].accts
-// export const selectTransactionCategories = (state, id) => state.userProfile.user.business[id].categories
-
-export const { getTransactions, getUncategorisedTransactions, updateUncategorised } = accountSlice.actions
-
-export default accountSlice.reducer
+export const { useAccountsQuery } = acctApi
