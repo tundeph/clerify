@@ -1,12 +1,9 @@
+// this file is to sign authorised users into the app
 import React, { useState, useContext } from "react"
-import { useLogin } from "../hooks/useLogin"
 import { handleButtonState } from "../helper"
+import { useLogin } from "../hooks/useLogin"
 
-import { authService } from "../firebase/config"
-import { redirect, useNavigate } from "react-router-dom"
-import { useProfileQuery } from "../services/profile-slice2"
-
-//styles
+//styles and components for the page are imported here
 import Logo from "../components/logo"
 import styled, { ThemeContext } from "styled-components"
 import { Link } from "react-router-dom"
@@ -28,20 +25,18 @@ const CustomMidWrapper = styled(MidWrapper)`
 `
 
 export const Signin = () => {
-	const { error, isLoading, refetch } = useProfileQuery()
+	const { error, isPending, login, resetPassword } = useLogin()
 	const { colors } = useContext(ThemeContext)
-	// const { error, isPending, login, resetPassword } = useLogin()
-	const navigate = useNavigate()
 
-	// const [error, setError] = useState("")
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
 	const [resetModal, setResetModal] = useState({ status: false, text: "" })
 
+	// the buttonCondition keeps the login button disabled until condition is met
 	const buttonCondition = email.length > 5 && password.length > 5
-	// const buttonPending = isPending && buttonCondition
-	const buttonPending = isLoading & buttonCondition
+	const buttonPending = isPending & buttonCondition
 
+	//function to reset password if usr forgets
 	const handleResetPassword = (e) => {
 		e.preventDefault()
 
@@ -50,8 +45,7 @@ export const Signin = () => {
 			: "Enter an email in the email address field"
 
 		if (email.length) {
-			console.log("here", email)
-			// resetPassword(email)
+			resetPassword(email)
 			if (error) {
 				text = `There's an error while trying to send the password reset link to ${email}. Click the Reset link again`
 			}
@@ -60,27 +54,10 @@ export const Signin = () => {
 		setResetModal({ status: true, text })
 	}
 
+	//function to log user into their account
 	const handleLogin = async (e) => {
 		e.preventDefault()
-		// login(email, password)
-		try {
-			const res = await authService.signInWithEmailAndPassword(email, password)
-
-			if (res.user) {
-				// console.log("sign in res user", res.user)
-				// console.log("redirectttt", redirect("/"))
-				// console.log("redirectttt", navigate("/"))
-				// navigate("/dashboard")
-				// return redirect("/")
-				refetch()
-			} else {
-				navigate("/signup")
-			}
-		} catch (err) {
-			// setError(err)
-			console.log(err)
-			return { error: err.message }
-		}
+		login(email, password)
 	}
 
 	return (
@@ -138,7 +115,6 @@ export const Signin = () => {
 						<Text justify="center" color={colors.red}>
 							{resetModal.text}
 						</Text>
-						{/* <Button onClick={() => setResetModal(false)}> Send email</Button> */}
 					</DivWrapper>
 				</Modal>
 			)}
