@@ -1,68 +1,33 @@
+//this is a custom hook to handle login ans reset password functions for the app
 import { useState, useEffect } from "react"
 import { authService } from "../firebase/config"
-import { useDispatch } from "react-redux"
-import { isLoggedIn } from "../services/profile-slice"
-import { db } from "../firebase/config"
-import { useNavigate } from "react-router-dom"
+import { useProfileQuery } from "../services/profile-slice2"
 
 export const useLogin = () => {
+	const { refetch } = useProfileQuery()
 	const [error, setError] = useState(null)
 	const [isPending, setIsPending] = useState(false)
 	const [isCancelled, setIsCancelled] = useState(false)
-	const dispatch = useDispatch()
-	const navigate = useNavigate()
 
 	const login = async (userEmail, userPassword) => {
 		setError(null)
 		setIsPending(true)
 
 		try {
+			//firebase function to log log uers in
 			const res = await authService.signInWithEmailAndPassword(
 				userEmail,
 				userPassword
 			)
-
-			const { uid, displayName, photoURL, email } = res.user
-			let business = {}
-			let selectedBusinessId = null
-			let hasAccts = {}
-			db.collection("business")
-				.where("uid", "==", uid)
-				.onSnapshot((snapshot) => {
-					snapshot.docs.forEach((doc, i) => {
-						let id = doc.id
-						const { accts, name, type, selected, categories, lastAcctData } =
-							doc.data()
-						if (selected) {
-							selectedBusinessId = id
-							hasAccts = lastAcctData
-						}
-						business[id] = { id, accts, name, type, selected, categories }
-					})
-					// dispatch(
-					// 	isLoggedIn({
-					// 		data: { uid, displayName, photoURL, email, business },
-					// 		selectedBusinessId,
-					// 		lastAcctData: hasAccts,
-					// 	})
-					// )
-				})
-
-			// const { documents } = useCollection("business", ["uid", "==", uid])
-			//   dispatch(isLoggedIn({ uid, displayName, photoURL, email, r }))
-
-			//update state
+			//if user account is available, refetch the rtkquery to fetch user details
+			if (res.user) refetch()
 			if (!isCancelled) {
 				setError(null)
 				setIsPending(false)
 			}
 		} catch (err) {
-			// if (!isCancelled) {
-			console.log(err)
 			setError(err.message)
 			setIsPending(false)
-
-			// }
 		}
 	}
 
@@ -71,18 +36,13 @@ export const useLogin = () => {
 		setIsPending(true)
 
 		try {
+			//firebase function to send reset password by email
 			await authService.sendPasswordResetEmail(userEmail)
-			// if (!isCancelled) {
 			setError(null)
 			setIsPending(false)
-			// }
 		} catch (err) {
-			// if (!isCancelled) {
-			console.log(err)
 			setError(err.message)
 			setIsPending(false)
-
-			// }
 		}
 	}
 
