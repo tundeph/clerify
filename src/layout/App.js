@@ -9,7 +9,7 @@ import styled, { ThemeProvider } from "styled-components"
 import { GlobalStyles } from "../layout/GlobalStyles"
 import theme from "../layout/theme"
 import shortid from "shortid"
-import { businessType, businessCategories } from "../helper/defaultData"
+import { businessType, businessCategories } from "../helper/default-data"
 import { size } from "../layout/theme"
 
 import {
