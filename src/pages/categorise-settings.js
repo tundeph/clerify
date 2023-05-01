@@ -9,7 +9,7 @@ import {
 	updateBusinessCategory,
 	selectTransactionCategories,
 } from "../services/profile-slice"
-import { businessCategories } from "../helper/defaultData"
+import { businessCategories } from "../helper/default-data"
 
 import { size } from "../layout/theme"
 import {
