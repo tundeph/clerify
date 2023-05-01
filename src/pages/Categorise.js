@@ -11,12 +11,9 @@
 
 import React, { useState, useEffect, useContext } from "react"
 import styled, { ThemeContext } from "styled-components"
-import { useSelector } from "react-redux"
 import { useDocument } from "../hooks/useDocument"
-import {
-	selectUserProfile,
-	selectTransactionCategories,
-} from "../services/profile-slice"
+import { useProfileQuery } from "@services/profile-slice2"
+import { useAccountsQuery } from "@services/account-slice"
 import { useFirestore } from "../hooks/useFirestore"
 import { db } from "../firebase/config"
 import {
@@ -46,7 +43,6 @@ import {
 import Select from "../components/select"
 import ButtonState from "../components/button-state"
 import NoTransactions from "../components/no-transactions"
-import { default as ReactSelect } from "react-select"
 
 export const CustomDivWrapper = styled(DivWrapper)`
 	gap: ${size.xxxs}rem;
@@ -64,35 +60,19 @@ const CustomButton = styled(ButtonState)`
 `
 
 export const CategoriseTransaction = () => {
+	const {
+		data: { user, selectedBusinessId },
+	} = useProfileQuery()
+	const { data: transactions } = useAccountsQuery(selectedBusinessId)
+
 	const { colors } = useContext(ThemeContext)
-	const { selectedBusinessId } = useSelector(selectUserProfile)
 	const [category, setCategory] = useState()
 	const [chosenKeyword, setChosenKeyword] = useState()
 	const [isPending, setIsPending] = useState(false)
-	const [transactions, setTransactions] = useState()
 	const [index, setIndex] = useState(0)
 	const [loading, setLoading] = useState(true)
 	const [chosenThirdParty, setChosenThirdParty] = useState("")
 	const [categorizedQty, setCategorizedQty] = useState(0)
-
-	useEffect(() => {
-		db.collection("accounts")
-			.doc(selectedBusinessId)
-			.onSnapshot(
-				(snapshot) => {
-					if (snapshot.data()) {
-						setTransactions(snapshot.data())
-						setLoading(false)
-					} else {
-						// setError("Oops! Nothing exists there")
-					}
-				},
-				(err) => {
-					console.log(err.message)
-					// setError("failed to get document")
-				}
-			)
-	}, [])
 
 	let sorted = []
 
@@ -106,9 +86,7 @@ export const CategoriseTransaction = () => {
 	const showReconcileButton =
 		index > 0 && (index >= sorted.length || categorizedQty === 6)
 
-	const transactionCategories = useSelector((state) =>
-		selectTransactionCategories(state, selectedBusinessId)
-	)
+	const transactionCategories = user.business[selectedBusinessId].categories
 	const categories = formatCategoryDropDown(transactionCategories)
 	const transactionsDb = useFirestore("accounts")
 	const businessDb = useFirestore("business")
@@ -143,7 +121,7 @@ export const CategoriseTransaction = () => {
 			chosenKeyword,
 			chosenThirdParty
 		)
-		// console.log(updatedCategories)
+
 		await businessDb.updateDocument(selectedBusinessId, {
 			categories: updatedCategories,
 		})
@@ -164,7 +142,6 @@ export const CategoriseTransaction = () => {
 					<DivWrapper bottom={size.xs}>
 						<Title> Reconcile records </Title>
 						<SubTitle>
-							{" "}
 							Reconcile your data by categorising them properly.
 						</SubTitle>
 					</DivWrapper>
@@ -219,7 +196,6 @@ export const CategoriseTransaction = () => {
 									{/* <ReactSelect options={formatKeywordsDropDown(sorted[index][1].remarks)} /> */}
 									<DivWrapper>
 										<Text
-											left={1}
 											bottom={size["4xs"]}
 											color={colors.gray600}
 											size={0.8}
@@ -236,7 +212,6 @@ export const CategoriseTransaction = () => {
 
 									<DivWrapper>
 										<Text
-											left={1}
 											bottom={size["4xs"]}
 											color={colors.gray600}
 											size={0.8}
@@ -281,7 +256,6 @@ export const CategoriseTransaction = () => {
 										<BouncingCabinetIcon size={80} />
 									</Text>
 									<Text align="center">
-										{" "}
 										Click the button below to reconcile your transactions{" "}
 									</Text>
 									<ButtonState
