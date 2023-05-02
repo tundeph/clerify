@@ -90,6 +90,7 @@ const App = () => {
 
 		await addDocument(business)
 		Object.entries(user.business).forEach((bus) => {
+			//usr.business here should become business
 			bus[1].name === name
 				? updateDocument(bus[0], { selected: true })
 				: updateDocument(bus[0], { selected: false })
@@ -120,16 +121,8 @@ const App = () => {
 		setAccts([...accts, { id, acctName: "", syncId: "" }])
 	}
 
-	const hasBusiness = (user) => {
-		if (user) {
-			if (
-				user.hasOwnProperty("business") &&
-				Object.keys(user.business).length
-			) {
-				return true
-			}
-		}
-		return false
+	const hasBusiness = (business) => {
+		return Object.keys(business).length ? true : false
 	}
 
 	return (
