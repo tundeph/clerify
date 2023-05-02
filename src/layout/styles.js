@@ -293,6 +293,15 @@ export const PageWrapper = styled(DivWrapper)`
 	/* z-index: -2; */
 `
 
+export const Card = styled(DivWrapper)`
+	gap: ${size.xxxs}rem;
+	box-shadow: 0px 0px 2px ${({ theme }) => theme.colors.gray300};
+	background-color: ${({ theme }) => theme.colors.reverse};
+	border-radius: 15px;
+	padding: ${size.xs}rem ${size.xxs}rem;
+	box-sizing: border-box;
+`
+
 export const MidWrapper = styled.div`
 	width: ${(props) => props.width || 80}%;
 	margin: 0 auto;
