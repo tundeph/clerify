@@ -16,7 +16,8 @@ export const transformLoginData = (data, user, initialState) => {
 
 	return {
 		...initialState,
-		user: { uid, displayName, photoURL, email, business },
+		user: { uid, displayName, photoURL, email },
+		business,
 		selectedBusinessId,
 		lastAcctData: hasAccts,
 		authIsReady: true,
