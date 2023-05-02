@@ -50,7 +50,7 @@ export const SyncFromOpenBank = () => {
 	const updateBusiness = useFirestore("business")
 
 	const {
-		data: { user, selectedBusinessId, lastAcctData },
+		data: { user, business, selectedBusinessId, lastAcctData },
 	} = useProfileQuery()
 	const { document } = useDocument("accounts", selectedBusinessId)
 	const syncModalMessage = syncModalMessages(colors)
@@ -84,14 +84,14 @@ export const SyncFromOpenBank = () => {
 
 	const buttonCondition = selectedAccount
 
-	const getBusinessAccts = user.business[selectedBusinessId].accts
+	const getBusinessAccts = business[selectedBusinessId].accts
 	const [businessAccts] = getBusinessAccts.filter(
 		(businessAcct) => businessAcct.id === selectedAccount
 	)
-	const transactionCategories = user.business[selectedBusinessId].categories
+	const transactionCategories = business[selectedBusinessId].categories
 
 	const bankAccounts = textSorter(
-		[...user.business[selectedBusinessId].accts],
+		[...business[selectedBusinessId].accts],
 		"asc",
 		"acctName"
 	).map((acct) => ({
