@@ -2,8 +2,10 @@ import { api } from "./api"
 import { db, authService } from "../firebase/config"
 import { transformLoginData } from "./utils"
 
+//an initial state is defined that is fed into global Theme object
 const initialState = {
 	user: null,
+	business: {},
 	authIsReady: false,
 	profileTheme: "lightTheme",
 }
@@ -13,15 +15,23 @@ export const authApi = api.injectEndpoints({
 		profile: build.query({
 			queryFn: async () => {
 				try {
+					// new Promise is used to get data from the firebase function
+					// as there are several callbacks, resolve saves the response
 					let result
 					result = await new Promise((resolve, reject) =>
 						authService.onAuthStateChanged(async (user) => {
 							if (user) {
 								db.collection("business")
 									.where("uid", "==", user.uid)
-									.onSnapshot((snapshot) => {
-										resolve(transformLoginData(snapshot, user, initialState))
-									})
+									.onSnapshot(
+										(snapshot) => {
+											resolve(transformLoginData(snapshot, user, initialState))
+										},
+										(err) => {
+											// error thrown here from firebase functions is sent to the catch below
+											throw err.message
+										}
+									)
 							} else {
 								resolve({ ...initialState, authIsReady: true })
 							}
@@ -34,37 +44,40 @@ export const authApi = api.injectEndpoints({
 			},
 
 			providesTags: ["Profile"],
-			async onQueryStarted(_, { getState }) {
-				// console.log("getState()", getState())
-			},
+			// onQueryStarted helps to access the getState() method to global state
+			// 	async onQueryStarted(_, { getState }) {
+			// 		console.log("getState()", getState())
+			// 	},
 		}),
-		logOut: build.query({
-			queryFn: async () => {
+		updateCategories: build.mutation({
+			queryFn: async (body) => {
+				const { selectedBusinessId, updatedCategories: categories } = body
+
 				try {
-					let result
-					result = await new Promise((resolve, reject) => {
-						authService.signOut()
-						resolve({ ...initialState, authIsReady: true })
-					})
+					// new Promise is used to get data from the firebase function
+					// as there are several callbacks, resolve saves the response
+					// resolve is defined here because a result must be returned
+					const result = await new Promise((resolve, reject) =>
+						db
+							.collection("business")
+							.doc(selectedBusinessId)
+							.update({ categories })
+							.then(() => resolve("success"))
+							.catch((error) => {
+								if (error) {
+									throw error
+								}
+							})
+					)
 					return { data: result }
-				} catch (error) {
-					return { error: { error } }
+				} catch (err) {
+					// returns error if there is any error in the endpoint
+					return { error: err }
 				}
 			},
 			invalidatesTags: ["Profile"],
 		}),
-
-		addPost: build.mutation({
-			query(body) {
-				return {
-					url: `posts`,
-					method: "POST",
-					body,
-				}
-			},
-			invalidatesTags: ["Posts"],
-		}),
 	}),
 })
 
-export const { useProfileQuery, useLogOutQuery } = authApi
+export const { useProfileQuery, useUpdateCategoriesMutation } = authApi
