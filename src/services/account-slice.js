@@ -1,6 +1,7 @@
 import { api } from "./api"
 import { db, authService } from "../firebase/config"
 import { transformLoginData } from "./utils"
+import { reconcileAccts } from "../helper"
 
 export const acctApi = api.injectEndpoints({
 	endpoints: (build) => ({
@@ -32,7 +33,21 @@ export const acctApi = api.injectEndpoints({
 
 			providesTags: ["Accounts"],
 		}),
+
+		updateAccounts: build.mutation({
+			queryFn: async (body) => {
+				const { selectedBusinessId, reconciledAccts } = body
+
+				try {
+					const ref = db.collection("accounts")
+					await ref.doc(selectedBusinessId).update(reconciledAccts)
+				} catch (err) {
+					return { error: err }
+				}
+			},
+			invalidatesTags: ["Accounts"],
+		}),
 	}),
 })
 
-export const { useAccountsQuery } = acctApi
+export const { useAccountsQuery, useUpdateAccountsMutation } = acctApi
