@@ -80,7 +80,7 @@ export const KeywordsSettings = () => {
 	const handleAddKeyword = async () => {
 		if (keyword.trim().length) {
 			const updatedCategories = formatUpdatedCategories(
-				document,
+				document.categories,
 				category,
 				keyword,
 				""
