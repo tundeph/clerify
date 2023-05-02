@@ -32,7 +32,7 @@ import { useProfileQuery } from "../services/profile-slice2"
 
 export const AppRoutes = ({ hasBusiness, handleChangeBusiness }) => {
 	const { data } = useProfileQuery()
-	const { user } = data
+	const { user, business } = data
 
 	const routes = [
 		{ path: "/add-business", Element: AddBusiness },
@@ -88,7 +88,7 @@ export const AppRoutes = ({ hasBusiness, handleChangeBusiness }) => {
 		<BrowserRouter>
 			{hasBusiness(user) && (
 				<Sidebar
-					business={user.business}
+					business={business}
 					onChange={(e) => handleChangeBusiness(e)}
 				/>
 			)}
@@ -110,7 +110,7 @@ export const AppRoutes = ({ hasBusiness, handleChangeBusiness }) => {
 							<Signin />
 						) : (
 							<Navigate
-								to={!hasBusiness(user) ? "/add-business" : "/dashboard"}
+								to={!hasBusiness(business) ? "/add-business" : "/dashboard"}
 							/>
 						)
 					}
@@ -120,10 +120,4 @@ export const AppRoutes = ({ hasBusiness, handleChangeBusiness }) => {
 			</Routes>
 		</BrowserRouter>
 	)
-}
-
-AppRoutes.propTypes = {
-	user: PropTypes.shape({
-		business: PropTypes.object,
-	}),
 }
