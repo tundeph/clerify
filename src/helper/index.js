@@ -114,8 +114,12 @@ export const reconcileAccts = (categories, accounts) => {
 				if (category.type === account[1].type) {
 					category.keywords.forEach((selected) => {
 						if (
-							account[1].remarks.includes(selected.keyword) &&
-							account[1].remarks.includes(selected.thirdParty)
+							account[1].remarks
+								.toLowerCase()
+								.includes(selected.keyword.toLowerCase()) &&
+							account[1].remarks
+								.toLowerCase()
+								.includes(selected.thirdParty.toLowerCase())
 						) {
 							accounts[account[0]].categoryId = category.categoryId
 							foundCategory = true
