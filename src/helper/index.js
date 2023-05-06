@@ -103,25 +103,25 @@ export const getKeywordsFromRemarks = (remarks) => {
 }
 
 export const reconcileAccts = (categories, accounts) => {
-	if (Object.keys(categories).length === 0) return accounts
+	if (categories.length === 0) return accounts
 
 	/// new logic
-	Object.entries(accounts).forEach((account) => {
-		if (!account[1].categoryId) {
+	accounts.forEach((account, index) => {
+		if (!account.categoryId) {
 			for (const category of categories) {
 				let foundCategory = false
 
-				if (category.type === account[1].type) {
+				if (category.type === account.type) {
 					category.keywords.forEach((selected) => {
 						if (
-							account[1].remarks
+							account.remarks
 								.toLowerCase()
 								.includes(selected.keyword.toLowerCase()) &&
-							account[1].remarks
+							account.remarks
 								.toLowerCase()
 								.includes(selected.thirdParty.toLowerCase())
 						) {
-							accounts[account[0]].categoryId = category.categoryId
+							accounts[index].categoryId = category.categoryId
 							foundCategory = true
 						}
 					})
