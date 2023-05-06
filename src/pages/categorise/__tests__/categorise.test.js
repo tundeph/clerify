@@ -11,10 +11,9 @@ import {
 } from "../fixtures"
 
 const generateTransaction = (transaction, id, remarks, type) => {
-	const transactionObject = Object.entries(transaction)
-	const prop = id ? id : transactionObject[0][0]
-	const value = { ...transactionObject[0][1], remarks, type }
-	return { [prop]: value }
+	const prop = id ? id : transaction[0].id
+	const value = { ...transaction[0], id: prop, remarks, type }
+	return [value]
 }
 
 describe("transaction categorisation", () => {
@@ -29,13 +28,13 @@ describe("transaction categorisation", () => {
 		)
 
 		const categorized = reconcileAccts(categories, sales)
-		expect(categorized[id].categoryId).toEqual(SALES_CAT_ID)
+		expect(categorized[0].categoryId).toEqual(SALES_CAT_ID)
 	})
 
 	it("should categorize group of transactions properly", () => {
 		const categorized = reconcileAccts(categories, salesTransactions)
-		Object.entries(categorized).map((selected) => {
-			expect(selected[1].categoryId).toEqual(SALES_CAT_ID)
+		categorized.map((selected) => {
+			expect(selected.categoryId).toEqual(SALES_CAT_ID)
 		})
 	})
 
@@ -50,7 +49,7 @@ describe("transaction categorisation", () => {
 		)
 
 		const categorized = reconcileAccts(categories, sales)
-		expect(categorized[id].categoryId).not.toEqual(SALES_CAT_ID)
-		expect(categorized[id].categoryId).toEqual("")
+		expect(categorized[0].categoryId).not.toEqual(SALES_CAT_ID)
+		expect(categorized[0].categoryId).toEqual("")
 	})
 })
