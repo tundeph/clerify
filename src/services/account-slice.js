@@ -1,5 +1,10 @@
 import { api } from "./api"
 import { db, authService } from "../firebase/config"
+import {
+	addAccountsService,
+	getAccountsService,
+	updateAccountsService,
+} from "./account-service"
 import { transformLoginData } from "./utils"
 import { reconcileAccts } from "../helper"
 
@@ -9,22 +14,10 @@ export const acctApi = api.injectEndpoints({
 			queryFn: async (selectedBusinessId) => {
 				try {
 					let result
-					result = await new Promise((resolve, reject) =>
-						db
-							.collection("accounts")
-							.doc(selectedBusinessId)
-							.onSnapshot(
-								(snapshot) => {
-									if (snapshot.data()) {
-										console.log(snapshot.data())
-										resolve(snapshot.data())
-									}
-								},
-								(err) => {
-									throw err.message
-								}
-							)
-					)
+					result = await new Promise((resolve) => {
+						resolve(getAccountsService(selectedBusinessId))
+					})
+					console.log("rrr", result)
 					return { data: result }
 				} catch (error) {
 					return { error: { error } }
@@ -34,13 +27,39 @@ export const acctApi = api.injectEndpoints({
 			providesTags: ["Accounts"],
 		}),
 
+		addAccounts: build.mutation({
+			queryFn: async (body) => {
+				const { selectedBusinessId, accts } = body
+
+				try {
+					const result = await new Promise((resolve) => {
+						resolve(addAccountsService(selectedBusinessId, accts))
+					})
+					if (result) {
+						return { data: result }
+					} else {
+						throw "error"
+					}
+				} catch (err) {
+					return { error: err }
+				}
+			},
+			invalidatesTags: ["Accounts", "Profile"],
+		}),
+
 		updateAccounts: build.mutation({
 			queryFn: async (body) => {
 				const { selectedBusinessId, reconciledAccts } = body
 
 				try {
-					const ref = db.collection("accounts")
-					await ref.doc(selectedBusinessId).update(reconciledAccts)
+					const result = await new Promise((resolve) => {
+						resolve(updateAccountsService(selectedBusinessId, reconciledAccts))
+					})
+					if (result) {
+						return { data: result }
+					} else {
+						throw "error"
+					}
 				} catch (err) {
 					return { error: err }
 				}
@@ -50,4 +69,23 @@ export const acctApi = api.injectEndpoints({
 	}),
 })
 
-export const { useAccountsQuery, useUpdateAccountsMutation } = acctApi
+export const {
+	useAccountsQuery,
+	useAddAccountsMutation,
+	useUpdateAccountsMutation,
+} = acctApi
+
+// db
+// 	.collection("accounts")
+// 	.doc(selectedBusinessId)
+// 	.onSnapshot(
+// 		(snapshot) => {
+// 			if (snapshot.data()) {
+// 				console.log(snapshot.data())
+// 				resolve(snapshot.data())
+// 			}
+// 		},
+// 		(err) => {
+// 			throw err.message
+// 		}
+// 	)
