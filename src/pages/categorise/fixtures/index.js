@@ -26,8 +26,9 @@ export const categories = [
 	},
 ]
 
-export const salesTransactions = {
-	G6wI4oVW0q: {
+export const salesTransactions = [
+	{
+		id: "G6wI4oVW0q",
 		date: "03/06/2022",
 		acctName: "26gyqd9n9tl",
 		categoryId: "",
@@ -39,7 +40,8 @@ export const salesTransactions = {
 		type: "credit",
 		reference: "",
 	},
-	LZOpxfOFS: {
+	{
+		id: "LZOpxfOFS",
 		type: "credit",
 		date: "15/06/2022",
 		remarks:
@@ -51,10 +53,11 @@ export const salesTransactions = {
 		categoryId: "",
 		transDate: "15/06/2022",
 	},
-}
+]
 
-export const bankChargesTransactions = {
-	JgvocKaPFAH: {
+export const bankChargesTransactions = [
+	{
+		id: "JgvocKaPFAH",
 		remarks: "NIP CR/PHOSTER SOLUTION ENTERPRISES/GTB",
 		transDate: "06/06/2022",
 		categoryId: "UxDfZTHNV5B",
@@ -65,7 +68,8 @@ export const bankChargesTransactions = {
 		reference: "",
 		balance: 26428549,
 	},
-	NqPlNRIIiWy: {
+	{
+		id: "NqPlNRIIiWy",
 		amount: 5375,
 		type: "debit",
 		balance: "303,026.02",
@@ -76,10 +80,11 @@ export const bankChargesTransactions = {
 		remarks: "NIP Charge + VAT",
 		categoryId: "",
 	},
-}
+]
 
-export const transaction = {
-	JgvocKaPFAH: {
+export const transaction = [
+	{
+		id: "JgvocKaPFAH",
 		remarks: "NIP CR/PHOSTER SOLUTION ENTERPRISES/GTB",
 		transDate: "06/06/2022",
 		categoryId: "",
@@ -90,4 +95,4 @@ export const transaction = {
 		reference: "",
 		balance: 26428549,
 	},
-}
+]
