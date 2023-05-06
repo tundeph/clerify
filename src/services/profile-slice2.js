@@ -18,7 +18,7 @@ export const authApi = api.injectEndpoints({
 					// new Promise is used to get data from the firebase function
 					// as there are several callbacks, resolve saves the response
 					let result
-					result = await new Promise((resolve, reject) =>
+					result = await new Promise((resolve) =>
 						authService.onAuthStateChanged(async (user) => {
 							if (user) {
 								db.collection("business")
