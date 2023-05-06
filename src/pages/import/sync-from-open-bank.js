@@ -5,6 +5,7 @@ import React, { useState, useContext, useReducer } from "react"
 import { useNavigate } from "react-router-dom"
 
 import { useProfileQuery } from "../../services/profile-slice2"
+import { useAddAccountsMutation } from "../../services/account-slice"
 import MonoConnect from "@mono.co/connect.js"
 import { MonoSync } from "../../backend/mono-sync"
 
@@ -29,11 +30,14 @@ import {
 	Title,
 	SubTitle,
 	LoadingIcon,
+	Button,
 } from "../../layout/styles"
 
 import Select from "../../components/select"
 import Modal from "../../components/modal"
 import ButtonState from "../../components/button-state"
+
+import carpaddyData from "../../helper/carpaddy.json"
 
 export const CustomText = styled(Text)`
 	background-color: ${({ theme }) => theme.colors.gray100};
@@ -52,6 +56,8 @@ export const SyncFromOpenBank = () => {
 	const {
 		data: { user, business, selectedBusinessId, lastAcctData },
 	} = useProfileQuery()
+	const [addAccounts, { isLoading }] = useAddAccountsMutation()
+
 	const { document } = useDocument("accounts", selectedBusinessId)
 	const syncModalMessage = syncModalMessages(colors)
 	const dateNow = new Date()
@@ -65,6 +71,19 @@ export const SyncFromOpenBank = () => {
 	const initialState = {
 		status: false,
 		mssg: {},
+	}
+
+	//for test purposes, to be removed
+	const handleUploadFromComputer = () => {
+		const transformedData = carpaddyData.map((data) => {
+			const id = shortid.generate()
+			data.id = id
+			data.acctName = selectedAccount
+			data.categoryId = ""
+			return data
+		})
+
+		addAccounts({ selectedBusinessId, accts: transformedData })
 	}
 
 	const reducer = (state, action) => {
@@ -275,6 +294,13 @@ export const SyncFromOpenBank = () => {
 							onClick={() => monoConnect.open()}
 						>
 							Sync data
+						</ButtonState>
+						<ButtonState
+							loading={isLoading}
+							condition={buttonCondition}
+							onClick={handleUploadFromComputer}
+						>
+							Upload from Computer
 						</ButtonState>
 					</DivWrapper>
 				</UserWrapper>
