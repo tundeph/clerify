@@ -6,6 +6,8 @@
 
 import React, { useState, useEffect } from "react"
 import { useProfileQuery } from "@services/profile-slice2"
+import { useAccountsQuery } from "../../services/account-slice"
+import { getCategoryChartData } from "../../hooks/charts-util"
 // import { useSelector } from "react-redux"
 // import {
 // 	selectUserProfile,
@@ -16,6 +18,7 @@ import { formatCategory, formatCategoryDropDown } from "../../helper"
 import { format, subDays } from "date-fns"
 import { renderCharts } from "../../hooks/useCharts"
 import { db } from "../../firebase/config"
+import { useOutletContext } from "react-router-dom"
 
 import Select from "../../components/select"
 import {
@@ -34,14 +37,16 @@ import ButtonState from "../../components/button-state"
 
 export const CategoryReports = () => {
 	const {
-		data: { user, selectedBusinessId },
+		data: { business, selectedBusinessId },
 	} = useProfileQuery()
+	// const { data: accounts } = useAccountsQuery(selectedBusinessId)
 
 	const todayDate = format(new Date("2022/06/30"), "yyyy-MM-dd")
 	const thirtyDaysAgo = format(
 		subDays(new Date("2022/06/30"), 30),
 		"yyyy-MM-dd"
 	)
+
 	//
 	const [startDate, setStartDate] = useState(thirtyDaysAgo)
 	const [endDate, setEndDate] = useState(todayDate)
@@ -56,15 +61,17 @@ export const CategoryReports = () => {
 	const buttonConditionMOM = firstMonth && secondMonth && MOMCategory
 
 	const {
-		getData,
-		dailyCategoryData,
+		// getData,
+		// dailyCategoryData,
 		getCashflowData,
 		combinedCashflowData,
 		getMOMData,
 		MOMData,
 	} = renderCharts()
 
-	const transactionCategories = user.business[selectedBusinessId].categories
+	const { getData, accounts } = useOutletContext()
+
+	const transactionCategories = business[selectedBusinessId].categories
 
 	// const { selectedBusinessId } = useSelector(selectUserProfile)
 	// const transactionCategories = useSelector((state) =>
@@ -77,27 +84,47 @@ export const CategoryReports = () => {
 	)
 	const categoriesDropDown = formatCategoryDropDown(transactionCategories)
 
-	useEffect(() => {
-		db.collection("accounts")
-			.doc(selectedBusinessId)
-			.onSnapshot(
-				(snapshot) => {
-					if (snapshot.data()) {
-						// getData(
-						// 	snapshot.data(),
-						// 	transactionCategories,
-						// 	showCategories,
-						// 	startDate,
-						// 	endDate
-						// )
+	// testing ground
+	let chartData
+	if (accounts) {
+		// console.log(
+		// 	accounts,
+		// 	business[selectedBusinessId].categories,
+		// 	showCategories,
+		// 	thirtyDaysAgo,
+		// 	todayDate
+		// )
 
-						getCashflowData(snapshot.data(), startDate, endDate)
-					}
-				},
-				(err) => {
-					console.log(err.message)
-				}
-			)
+		chartData = getCategoryChartData(
+			accounts,
+			business[selectedBusinessId].categories,
+			showCategories,
+			startDate,
+			endDate
+		)
+	}
+	// end of testing
+
+	useEffect(() => {
+		// db.collection("accounts")
+		// 	.doc(selectedBusinessId)
+		// 	.onSnapshot(
+		// 		(snapshot) => {
+		// 			if (snapshot.data()) {
+		// 				getData(
+		// 					snapshot.data(),
+		// 					transactionCategories,
+		// 					showCategories,
+		// 					startDate,
+		// 					endDate
+		// 				)
+		// 			}
+		// 		},
+		// 		(err) => {
+		// 			console.log(err.message)
+		// 		}
+		// 	)
+		// getData(accounts, transactionCategories, showCategories, startDate, endDate)
 	}, [])
 
 	const handleCategoryChart = () => {
@@ -131,10 +158,10 @@ export const CategoryReports = () => {
 	return (
 		<>
 			{/* <SubTitle>Select the categories you want to generate reports for.</SubTitle> */}
-			<DivWrapper top={2} bottom={2}>
-				<Text bold size={1}>
+			<DivWrapper bottom={2}>
+				{/* <Text bold size={1}>
 					Category Reports
-				</Text>
+				</Text> */}
 				<SplitDiv minWidth={120} gap={1} top={2}>
 					<DateInput
 						type="date"
@@ -148,18 +175,20 @@ export const CategoryReports = () => {
 						onChange={(e) => setEndDate(e.target.value)}
 						size="small"
 					/>
-					<Button size="small" onClick={handleCategoryChart}>
+					{/* <Button size="small" onClick={handleCategoryChart}>
 						Apply
-					</Button>
+					</Button> */}
 				</SplitDiv>
 				<DivWrapper top={1}>
 					<GraphWrapper top={1}>
-						{dailyCategoryData && <LineChart data={dailyCategoryData} />}
+						{/* {dailyCategoryData && <LineChart data={dailyCategoryData} />}
+						<Divider /> */}
+						{chartData && <LineChart data={chartData} />}
 					</GraphWrapper>
 				</DivWrapper>
 			</DivWrapper>
 
-			<Divider />
+			{/* <Divider />
 			<DivWrapper top={2} bottom={2}>
 				<Text bold size={1}>
 					Cashflow Reports
@@ -186,9 +215,9 @@ export const CategoryReports = () => {
 						{combinedCashflowData && <PieChart data={combinedCashflowData} />}
 					</GraphWrapper>
 				</DivWrapper>
-			</DivWrapper>
+			</DivWrapper> */}
 
-			<Divider />
+			{/* <Divider />
 
 			<DivWrapper top={2} bottom={2}>
 				<Text bold size={1}>
@@ -228,7 +257,7 @@ export const CategoryReports = () => {
 						{combinedCashflowData && <BarChart data={MOMData} />}
 					</GraphWrapper>
 				</DivWrapper>
-			</DivWrapper>
+			</DivWrapper> */}
 		</>
 	)
 }
