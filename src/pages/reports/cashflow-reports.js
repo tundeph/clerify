@@ -6,6 +6,8 @@
 
 import React, { useState, useEffect } from "react"
 import { useProfileQuery } from "@services/profile-slice2"
+import { useOutletContext } from "react-router-dom"
+import { getCashflowChartData } from "../../hooks/charts-util"
 
 // import { useSelector } from "react-redux"
 // import {
@@ -48,11 +50,19 @@ export const CashflowReports = () => {
 	const [cashflowStartDate, setCashflowStartDate] = useState(thirtyDaysAgo)
 	const [cashflowEndDate, setCashflowEndDate] = useState(todayDate)
 
+	const { getCashflowData, combinedCashflowData, accounts } = useOutletContext()
+	console.log("combinedCashflowData", combinedCashflowData)
+	let dd
+
+	if (accounts) {
+		dd = getCashflowChartData(accounts, cashflowStartDate, cashflowEndDate)
+		console.log("dd", dd)
+	}
 	const {
 		getData,
 		dailyCategoryData,
-		getCashflowData,
-		combinedCashflowData,
+		// getCashflowData,
+		// combinedCashflowData,
 		getMOMData,
 		MOMData,
 	} = renderCharts()
@@ -119,6 +129,9 @@ export const CashflowReports = () => {
 					</Button>
 				</SplitDiv>
 				<DivWrapper top={1}>
+					<GraphWrapper top={1}>
+						{dd ? <PieChart data={dd} /> : null}
+					</GraphWrapper>
 					<GraphWrapper top={1}>
 						{combinedCashflowData && <PieChart data={combinedCashflowData} />}
 					</GraphWrapper>
