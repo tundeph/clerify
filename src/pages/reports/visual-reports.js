@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { useProfileQuery } from "@services/profile-slice2"
+import { useAccountsQuery } from "../../services/account-slice"
 import { useSelector } from "react-redux"
 import {
 	selectUserProfile,
@@ -26,8 +27,9 @@ import { LineChart, PieChart, BarChart } from "../../components/charts"
 
 export const VisualReports = () => {
 	const {
-		data: { user, selectedBusinessId },
+		data: { business, selectedBusinessId },
 	} = useProfileQuery()
+	const { data: accounts } = useAccountsQuery(selectedBusinessId)
 
 	const todayDate = format(new Date("2022/06/30"), "yyyy-MM-dd")
 	const thirtyDaysAgo = format(
@@ -51,7 +53,7 @@ export const VisualReports = () => {
 	// const transactionCategories = useSelector((state) =>
 	// 	selectTransactionCategories(state, selectedBusinessId)
 	// )
-	const transactionCategories = user.business[selectedBusinessId].categories
+	const transactionCategories = business[selectedBusinessId].categories
 	const categories = formatCategory(transactionCategories)
 	const getTransactionsDoc = useDocument("accounts", selectedBusinessId)
 	const [showCategories] = useState(
@@ -59,27 +61,27 @@ export const VisualReports = () => {
 	)
 	const categoriesDropDown = formatCategoryDropDown(transactionCategories)
 
-	useEffect(() => {
-		db.collection("accounts")
-			.doc(selectedBusinessId)
-			.onSnapshot(
-				(snapshot) => {
-					if (snapshot.data()) {
-						getData(
-							snapshot.data(),
-							transactionCategories,
-							showCategories,
-							startDate,
-							endDate
-						)
-						// getCashflowData(snapshot.data(), startDate, endDate)
-					}
-				},
-				(err) => {
-					console.log(err.message)
-				}
-			)
-	}, [])
+	// useEffect(() => {
+	// 	db.collection("accounts")
+	// 		.doc(selectedBusinessId)
+	// 		.onSnapshot(
+	// 			(snapshot) => {
+	// 				if (snapshot.data()) {
+	// 					getData(
+	// 						snapshot.data(),
+	// 						transactionCategories,
+	// 						showCategories,
+	// 						startDate,
+	// 						endDate
+	// 					)
+	// 					// getCashflowData(snapshot.data(), startDate, endDate)
+	// 				}
+	// 			},
+	// 			(err) => {
+	// 				console.log(err.message)
+	// 			}
+	// 		)
+	// }, [])
 
 	return (
 		<PageWrapper>
@@ -102,7 +104,17 @@ export const VisualReports = () => {
 					</DivWrapper>
 				</DivWrapper>
 
-				<Outlet />
+				<Outlet
+					context={{
+						accounts,
+						getData,
+						dailyCategoryData,
+						getCashflowData,
+						combinedCashflowData,
+						getMOMData,
+						MOMData,
+					}}
+				/>
 			</UserWrapper>
 		</PageWrapper>
 	)
