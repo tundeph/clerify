@@ -31,20 +31,9 @@ export const addAccountsService = async (id, doc) => {
 }
 
 // custom firebase function to get transactions from the database
-export const getAccountsService = async (id, categoryId = undefined) => {
+export const getAccountsService = async (id) => {
 	const ref = db.collection("accounts").doc(id).collection("transactions")
-	let data
-
-	// if categoryId is not defined, fetch all transactions
-	if (typeof categoryId === undefined) {
-		data = await ref.get()
-	} else {
-		// if categoryId is true, fetch only transaction that have categoryId
-		// else fetch uncategorized transactions
-		data = categoryId
-			? await ref.where("categoryId", "!=", "").get()
-			: await ref.where("categoryId", "==", "").get()
-	}
+	const data = await ref.get()
 
 	let result = []
 	try {
