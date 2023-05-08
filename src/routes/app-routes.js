@@ -86,7 +86,7 @@ export const AppRoutes = ({ hasBusiness, handleChangeBusiness }) => {
 
 	return (
 		<BrowserRouter>
-			{hasBusiness(user) && (
+			{hasBusiness(business) && (
 				<Sidebar
 					business={business}
 					onChange={(e) => handleChangeBusiness(e)}
@@ -100,7 +100,7 @@ export const AppRoutes = ({ hasBusiness, handleChangeBusiness }) => {
 				<Route
 					path="/dashboard"
 					element={
-						hasBusiness(user) ? <Dashboard /> : <Navigate to="/signin" />
+						hasBusiness(business) ? <Dashboard /> : <Navigate to="/signin" />
 					}
 				/>
 				<Route
@@ -112,6 +112,16 @@ export const AppRoutes = ({ hasBusiness, handleChangeBusiness }) => {
 							<Navigate
 								to={!hasBusiness(business) ? "/add-business" : "/dashboard"}
 							/>
+						)
+					}
+				/>
+				<Route
+					path="*"
+					element={
+						hasBusiness(business) ? (
+							<Navigate to="/dashboard" />
+						) : (
+							<Navigate to="/signin" />
 						)
 					}
 				/>
