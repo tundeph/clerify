@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom"
 import styled, { css } from "styled-components"
 import { useLogout } from "../hooks/useLogout"
 import { authService } from "../firebase/config"
+import { useLogoutMutation } from "../services/profile-slice2"
 
 import {
 	PageWrapper,
@@ -88,7 +89,7 @@ const SubTitle = styled.span`
 `
 
 export const Sidebar = ({ business, onChange }) => {
-	const { logout } = useLogout()
+	const [logout] = useLogoutMutation(undefined, {})
 
 	const [showSubmenu, setShowSubmenu] = useState(false)
 
@@ -138,7 +139,7 @@ export const Sidebar = ({ business, onChange }) => {
 				{/* <Nav onClick={() => setShowSubmenu(!showSubmenu)}>Add account</Nav> */}
 				<Nav to="/account-settings">Account settings</Nav>
 				<Nav to="/admin-settings">Admin settings </Nav>
-				<Nav to="/signin" onClick={async () => await authService.signOut()}>
+				<Nav to="/signin" onClick={async () => logout()}>
 					<SignOutIcon /> Sign out
 				</Nav>
 			</SidebarContent>
