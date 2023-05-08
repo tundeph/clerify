@@ -1,8 +1,13 @@
 import React, { useContext, useState } from "react"
-import { useSelector } from "react-redux"
-import { selectUserProfile } from "../../services/profile-slice"
+// import { useSelector } from "react-redux"
+// import { selectUserProfile } from "../../services/profile-slice"
 import { useFirestore } from "../../hooks/useFirestore"
 import { useNavigate } from "react-router-dom"
+import {
+	useProfileQuery,
+	useAddBusinessMutation,
+} from "../../services/profile-slice2"
+// import { useLogout } from "../hooks/useLogout"
 import shortid from "shortid"
 import Logo from "../../components/logo"
 import Select from "../../components/select"
@@ -31,10 +36,16 @@ const CustomMidWrapper = styled(MidWrapper)`
 `
 
 export const AddBusiness = () => {
+	const {
+		data: { user, selectedBusinessId },
+	} = useProfileQuery()
+	const [addBusiness, { isError, isLoading }] = useAddBusinessMutation()
+
 	const { colors } = useContext(ThemeContext)
-	const { user } = useSelector(selectUserProfile)
+	// const { user } = useSelector(selectUserProfile)
 	const navigate = useNavigate()
-	const { addDocument, response } = useFirestore("business")
+	// const { addDocument, response } = useFirestore("business")
+
 	const defaultBusinessCategories = businessCategories.reduce((acc, item) => {
 		if (item.value !== "") {
 			const categoryId = shortid.generate()
@@ -88,8 +99,9 @@ export const AddBusiness = () => {
 			categories: defaultBusinessCategories,
 			selected: true,
 		}
-		await addDocument(business)
-		if (!response.error) {
+		addBusiness({ selectedBusinessId, business })
+		// await addDocument(business)
+		if (isError) {
 			navigate("/")
 		}
 	}
@@ -100,6 +112,7 @@ export const AddBusiness = () => {
 				<DivWrapper bottom={3}>
 					<Logo />
 				</DivWrapper>
+				{/* <Text onClick={async () => await authService.signOut()}>Log out </Text> */}
 				<DivWrapper bottom={size.xxs}>
 					<Title> Create a business or organization. </Title>
 					<SubTitle>
@@ -161,7 +174,7 @@ export const AddBusiness = () => {
 					<Divider gap={size.m} />
 					<DivWrapper gap={size.xxs} left={size.m} right={size.m}>
 						{handleButtonState(
-							response.isPending,
+							isLoading,
 							"Loading",
 							"Add business",
 							buttonCondition
