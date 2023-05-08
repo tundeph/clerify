@@ -51,7 +51,7 @@ export const LineChart = memo(({ data }) => {
 	return <Line options={options} data={data} />
 })
 
-export const PieChart = ({ data }) => {
+export const PieChart = memo(({ data }) => {
 	ChartJS.register(ArcElement, Tooltip, Legend)
 
 	const options = {
@@ -66,9 +66,9 @@ export const PieChart = ({ data }) => {
 	}
 
 	return <Pie options={options} data={data} />
-}
+})
 
-export const BarChart = ({ data }) => {
+export const BarChart = memo(({ data }) => {
 	ChartJS.register(
 		CategoryScale,
 		LinearScale,
@@ -93,4 +93,4 @@ export const BarChart = ({ data }) => {
 	}
 
 	return <Bar options={options} data={data} />
-}
+})
