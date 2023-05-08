@@ -10,7 +10,7 @@ import {
 	Text,
 	FormInput,
 } from "../../layout/styles"
-import Select from "../../components/select-"
+import Select from "../../components/select"
 
 const AddBusinessForm = ({
 	name,
