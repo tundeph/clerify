@@ -6,7 +6,7 @@ import { getCashflowChartData } from "../helper/charts-util"
 
 import { format, subDays } from "date-fns"
 import RecentTransactions from "../components/recent-transactions"
-import { PieChart, BarChart } from "../components/c-harts"
+import { PieChart, BarChart } from "../components/charts"
 import { size } from "../layout/theme"
 import {
 	PageWrapper,
