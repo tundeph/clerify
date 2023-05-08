@@ -1,10 +1,6 @@
-import React, { useState } from "react"
+import React from "react"
 import { useProfileQuery } from "@services/profile-slice2"
 import { useAccountsQuery } from "../../services/account-slice"
-
-import { useDocument } from "../../hooks/useDocument"
-import { formatCategory, formatCategoryDropDown } from "../../helper"
-import { format, subDays } from "date-fns"
 
 import { size } from "../../layout/theme"
 import { Outlet } from "react-router-dom"
