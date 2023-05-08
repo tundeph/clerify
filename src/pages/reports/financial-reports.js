@@ -24,7 +24,7 @@ import ReportsTable from "../../components/reports-table"
 
 export const FinancialReports = () => {
 	const {
-		data: { user, selectedBusinessId },
+		data: { user, business, selectedBusinessId },
 	} = useProfileQuery()
 
 	const todayDate = format(new Date("2022/06/30"), "yyyy-MM-dd")
@@ -34,7 +34,7 @@ export const FinancialReports = () => {
 	)
 
 	// const { selectedBusinessId } = useSelector(selectUserProfile)
-	const transactionCategories = user.business[selectedBusinessId].categories
+	const transactionCategories = business[selectedBusinessId].categories
 	const getTransactionsDoc = useDocument("accounts", selectedBusinessId)
 	// const transactionCategories = useSelector((state) =>
 	// 	selectTransactionCategories(state, selectedBusinessId)
