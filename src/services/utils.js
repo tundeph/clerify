@@ -5,7 +5,7 @@ export const transformLoginData = (data, user, initialState) => {
 
 	const { uid, displayName, photoURL, email } = user
 
-	data.docs.map((doc) => {
+	data.docs.forEach((doc) => {
 		const { accts, name, type, selected, categories, lastAcctData } = doc.data()
 		if (selected) {
 			selectedBusinessId = doc.id
