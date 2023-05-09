@@ -49,9 +49,10 @@ export const authApi = api.injectEndpoints({
 			// 		console.log("getState()", getState())
 			// 	},
 		}),
-		updateCategories: build.mutation({
+		updateBusiness: build.mutation({
 			queryFn: async (body) => {
-				const { selectedBusinessId, updatedCategories: categories } = body
+				const { selectedBusinessId, updatedBusiness: business } = body
+				const updatedBusiness = business[selectedBusinessId]
 
 				try {
 					// new Promise is used to get data from the firebase function
@@ -61,7 +62,7 @@ export const authApi = api.injectEndpoints({
 						db
 							.collection("business")
 							.doc(selectedBusinessId)
-							.update({ categories })
+							.update({ ...updatedBusiness })
 							.then(() => resolve("success"))
 							.catch((error) => {
 								if (error) {
@@ -127,7 +128,7 @@ export const authApi = api.injectEndpoints({
 
 export const {
 	useProfileQuery,
-	useUpdateCategoriesMutation,
+	useUpdateBusinessMutation,
 	useAddBusinessMutation,
 	useLogoutMutation,
 } = authApi

@@ -11,7 +11,7 @@ import { clone } from "ramda"
 
 import {
 	useProfileQuery,
-	useUpdateCategoriesMutation,
+	useUpdateBusinessMutation,
 } from "@services/profile-slice2"
 import {
 	useAccountsQuery,
@@ -74,7 +74,7 @@ export const CategoriseTransaction = () => {
 			(transaction) => transaction.categoryId.trim() === ""
 		)
 	}
-	const [updateCategories] = useUpdateCategoriesMutation()
+	const [updateBusiness] = useUpdateBusinessMutation()
 
 	const { colors } = useContext(ThemeContext)
 	const [category, setCategory] = useState()
@@ -114,15 +114,18 @@ export const CategoriseTransaction = () => {
 		setIsPending(true)
 
 		//update categories with keyword
-		const categories = clone(business[selectedBusinessId].categories)
+		const updatedBusiness = clone(business)
 		const updatedCategories = formatUpdatedCategories(
-			categories,
+			updatedBusiness[selectedBusinessId].categories,
 			category,
 			chosenKeyword,
 			chosenThirdParty
 		)
+
+		updatedBusiness[selectedBusinessId].categories = updatedCategories
+
 		//update function from rtkquery to update db
-		updateCategories({ selectedBusinessId, updatedCategories })
+		updateBusiness({ selectedBusinessId, updatedBusiness })
 
 		if (index <= sorted.length) {
 			setIndex(index + 1)
