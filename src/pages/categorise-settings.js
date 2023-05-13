@@ -35,7 +35,7 @@ export const CategoriseSettings = () => {
 	const transactionCategories = useSelector((state) =>
 		selectTransactionCategories(state, selectedBusinessId)
 	)
-	const { document, error } = useDocument("business", selectedBusinessId)
+	const { document } = useDocument("business", selectedBusinessId)
 
 	const dispatch = useDispatch()
 
