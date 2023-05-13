@@ -30,7 +30,6 @@ import {
 	Title,
 	SubTitle,
 	LoadingIcon,
-	Button,
 } from "../../layout/styles"
 
 import Select from "../../components/select"
@@ -54,7 +53,7 @@ export const SyncFromOpenBank = () => {
 	const updateBusiness = useFirestore("business")
 
 	const {
-		data: { user, business, selectedBusinessId, lastAcctData },
+		data: { business, selectedBusinessId, lastAcctData },
 	} = useProfileQuery()
 	const [addAccounts, { isLoading }] = useAddAccountsMutation()
 
