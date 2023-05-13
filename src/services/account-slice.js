@@ -1,12 +1,10 @@
 import { api } from "./api"
-import { db, authService } from "../firebase/config"
+
 import {
 	addAccountsService,
 	getAccountsService,
 	updateAccountsService,
 } from "./account-service"
-import { transformLoginData } from "./utils"
-import { reconcileAccts } from "../helper"
 
 export const acctApi = api.injectEndpoints({
 	endpoints: (build) => ({
@@ -17,7 +15,7 @@ export const acctApi = api.injectEndpoints({
 					result = await new Promise((resolve) => {
 						resolve(getAccountsService(selectedBusinessId))
 					})
-					console.log("rrr", result)
+
 					return { data: result }
 				} catch (error) {
 					return { error: { error } }
@@ -37,8 +35,6 @@ export const acctApi = api.injectEndpoints({
 					})
 					if (result) {
 						return { data: result }
-					} else {
-						throw "error"
 					}
 				} catch (err) {
 					return { error: err }
@@ -57,8 +53,6 @@ export const acctApi = api.injectEndpoints({
 					})
 					if (result) {
 						return { data: result }
-					} else {
-						throw "error"
 					}
 				} catch (err) {
 					return { error: err }
