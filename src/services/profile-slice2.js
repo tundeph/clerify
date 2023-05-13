@@ -22,7 +22,11 @@ export const authApi = api.injectEndpoints({
 						authService.onAuthStateChanged(async (user) => {
 							if (user) {
 								db.collection("business")
-									.where("uid", "==", user.uid)
+									// .where("uid", "==", user.uid)
+									.where("users", "array-contains-any", [
+										{ uid: user.uid, permission: "admin" },
+										{ uid: user.uid, permission: "user" },
+									])
 									.onSnapshot(
 										(snapshot) => {
 											resolve(transformLoginData(snapshot, user, initialState))
@@ -51,10 +55,9 @@ export const authApi = api.injectEndpoints({
 		}),
 		updateBusiness: build.mutation({
 			queryFn: async (body) => {
-				const { selectedBusinessId, updatedBusiness: business } = body
-				const updatedBusiness = business[selectedBusinessId]
-
 				try {
+					const { selectedBusinessId, updatedBusiness } = body
+					const business = updatedBusiness[selectedBusinessId]
 					// new Promise is used to get data from the firebase function
 					// as there are several callbacks, resolve saves the response
 					// resolve is defined here because a result must be returned
@@ -62,17 +65,16 @@ export const authApi = api.injectEndpoints({
 						db
 							.collection("business")
 							.doc(selectedBusinessId)
-							.update({ ...updatedBusiness })
+							.update({ ...business })
 							.then(() => resolve("success"))
 							.catch((error) => {
 								if (error) {
-									throw error
+									throw error.message
 								}
 							})
 					)
 					return { data: result }
 				} catch (err) {
-					// returns error if there is any error in the endpoint
 					return { error: err }
 				}
 			},
