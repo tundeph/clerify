@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react"
-import { format, subDays, addDays, differenceInDays } from "date-fns"
+import { format, addDays, differenceInDays } from "date-fns"
 import { returnColorOptions } from "./default-data"
 
 const returnDate = (dateValue) => {
@@ -127,9 +126,6 @@ export const getCategoryChartData = (
 		const added = format(addDays(new Date(startDate), counter), "MMM d")
 		labelArray.push(added)
 	}
-
-	//get date object which uses dates as keys/props and add 0 as value for all dates
-	const final = Array.from(Array(labelArray.length).keys(), (x) => 0)
 
 	const resultForCategory = { labels: labelArray, datasets: [] }
 
