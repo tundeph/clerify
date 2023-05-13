@@ -1,6 +1,7 @@
 import React, { useContext } from "react"
 import { ThemeContext } from "styled-components"
 import { Button, DisabledButton, LoadingIcon } from "../layout/styles"
+import * as R from "ramda"
 
 export const handleButtonState = (
 	loading,
@@ -202,6 +203,9 @@ export const currencyFormatter = (number) =>
 	new Intl.NumberFormat("en-NG", { style: "currency", currency: "NGN" }).format(
 		number
 	)
+
+export const findByProp = (prop, propValue, returnProp) =>
+	R.pipe(R.find(R.propEq(prop, propValue)), R.prop(returnProp))
 
 export const TEST_SECRET_KEY = "test_sk_C1d7PNuoqToOVzoSXvHQ"
 export const TEST_PUBLIC_KEY = "test_pk_SirSHhAgeBBeXvK8YYcV"
