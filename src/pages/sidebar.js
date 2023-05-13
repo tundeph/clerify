@@ -1,12 +1,9 @@
 import React, { useState } from "react"
 import { NavLink } from "react-router-dom"
 import styled, { css } from "styled-components"
-import { useLogout } from "../hooks/useLogout"
-import { authService } from "../firebase/config"
 import { useLogoutMutation } from "../services/profile-slice2"
 
 import {
-	PageWrapper,
 	DivWrapper,
 	DashboardIcon,
 	ImportAccountsIcon,
@@ -88,10 +85,10 @@ const SubTitle = styled.span`
 	color: ${({ theme }) => theme.colors.background};
 `
 
-export const Sidebar = ({ business, onChange }) => {
+export const Sidebar = ({ permission, business, onChange }) => {
 	const [logout] = useLogoutMutation(undefined, {})
 
-	const [showSubmenu, setShowSubmenu] = useState(false)
+	const [showSubmenu] = useState(false)
 
 	const data = Object.entries(business).map((bus) => ({
 		value: bus[0],
@@ -138,7 +135,9 @@ export const Sidebar = ({ business, onChange }) => {
 				</SubTitle>
 				{/* <Nav onClick={() => setShowSubmenu(!showSubmenu)}>Add account</Nav> */}
 				<Nav to="/account-settings">Account settings</Nav>
-				<Nav to="/admin-settings">Admin settings </Nav>
+				{permission === "admin" ? (
+					<Nav to="/admin-settings">Admin settings </Nav>
+				) : null}
 				<Nav to="/signin" onClick={async () => logout()}>
 					<SignOutIcon /> Sign out
 				</Nav>
