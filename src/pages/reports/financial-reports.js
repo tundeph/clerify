@@ -24,7 +24,7 @@ import ReportsTable from "../../components/reports-table"
 
 export const FinancialReports = () => {
 	const {
-		data: { user, business, selectedBusinessId },
+		data: { business, selectedBusinessId },
 	} = useProfileQuery()
 
 	const todayDate = format(new Date("2022/06/30"), "yyyy-MM-dd")
