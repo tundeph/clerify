@@ -1,7 +1,6 @@
 import React from "react"
-import PropTypes from "prop-types"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
-import { ProtectedRoute, renderProtectedRoutes } from "./protected-route"
+import { renderProtectedRoutes } from "./protected-route"
 
 import {
 	Home,
@@ -28,12 +27,13 @@ import {
 	AddUserAccount,
 	DeleteUserAccount,
 } from "../pages"
-import { useProfileQuery } from "../services/profile-slice2"
 
-export const AppRoutes = ({ hasBusiness, handleChangeBusiness }) => {
-	const { data } = useProfileQuery()
-	const { user, business } = data
-
+export const AppRoutes = ({
+	user,
+	business,
+	hasBusiness,
+	handleChangeBusiness,
+}) => {
 	const routes = [
 		{ path: "/add-business", Element: AddBusiness },
 		{ path: "/signup", Element: Signup, altPath: "/" },
@@ -70,11 +70,12 @@ export const AppRoutes = ({ hasBusiness, handleChangeBusiness }) => {
 			Element: AccountSettings,
 			subPath: [
 				{ path: "", Element: EditAccount },
-				{ path: "/add-user", Element: AddAccount },
+				{ path: "/add", Element: AddAccount },
 			],
 		},
 		{
 			path: "/admin-settings",
+			permission: "admin",
 			Element: AdminSettings,
 			subPath: [
 				{ path: "", Element: AddUserAccount },
@@ -89,6 +90,7 @@ export const AppRoutes = ({ hasBusiness, handleChangeBusiness }) => {
 			{hasBusiness(business) && (
 				<Sidebar
 					business={business}
+					permission={user.permission}
 					onChange={(e) => handleChangeBusiness(e)}
 				/>
 			)}
@@ -126,7 +128,7 @@ export const AppRoutes = ({ hasBusiness, handleChangeBusiness }) => {
 					}
 				/>
 
-				{renderProtectedRoutes(routes)}
+				{renderProtectedRoutes(routes, user)}
 			</Routes>
 		</BrowserRouter>
 	)
