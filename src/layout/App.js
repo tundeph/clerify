@@ -1,6 +1,4 @@
-// NEEDED - Error handling if useeffect data fails to render a modal or something
-
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { AppRoutes } from "../routes"
 
 import { useFirestore } from "../hooks/useFirestore"
@@ -32,7 +30,7 @@ const AppWrapper = styled.div`
 `
 
 const App = () => {
-	const { data, error, isLoading } = useProfileQuery()
+	const { data } = useProfileQuery()
 
 	const { updateDocument, addDocument, response } = useFirestore("business")
 
@@ -134,6 +132,7 @@ const App = () => {
 						<AppWrapper>
 							<AppRoutes
 								user={data.user}
+								business={data.business}
 								hasBusiness={hasBusiness}
 								handleChangeBusiness={(e) => handleChangeBusiness(e, data.user)}
 							/>
