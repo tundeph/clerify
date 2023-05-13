@@ -1,6 +1,6 @@
 import React from "react"
 import { size } from "../../layout/theme"
-import { Outlet } from "react-router-dom"
+
 import {
 	PageWrapper,
 	UserWrapper,
