@@ -1,4 +1,4 @@
-import { db, authService } from "../firebase/config"
+import { db } from "../firebase/config"
 
 //in firebase, we have a collection (accounts), with a doc (named using selectedBusinessId)
 // and then the doc have subcollection and in the subcollection are the documents that contains transactions
