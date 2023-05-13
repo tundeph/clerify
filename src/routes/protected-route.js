@@ -2,11 +2,18 @@ import React from "react"
 import { Route, Navigate, useLocation } from "react-router-dom"
 import { useProfileQuery } from "../services/profile-slice2"
 
-export const ProtectedRoute = ({ altPath = "/signin", children }) => {
+export const ProtectedRoute = ({
+	permission,
+	altPath = "/signin",
+	children,
+}) => {
 	const { data } = useProfileQuery()
 	const { user } = data
 
 	let location = useLocation()
+	if (permission === "admin" && permission !== user.permission) {
+		return <Navigate to={"dashboard"} replace />
+	}
 
 	if (!user) {
 		return <Navigate to={altPath} state={{ from: location }} replace />
@@ -15,9 +22,9 @@ export const ProtectedRoute = ({ altPath = "/signin", children }) => {
 	return children
 }
 
-export const renderProtectedRoutes = (routes) => {
+export const renderProtectedRoutes = (routes, user) => {
 	const protectedRoutes = routes.map((route, index) => {
-		const { path, Element } = route
+		const { path, permission, Element } = route
 
 		return (
 			<React.Fragment key={index}>
@@ -25,7 +32,10 @@ export const renderProtectedRoutes = (routes) => {
 					<Route
 						path={path}
 						element={
-							<ProtectedRoute altPath={route.altPath ? route.altPath : null}>
+							<ProtectedRoute
+								altPath={route.altPath ? route.altPath : null}
+								permission={permission}
+							>
 								<Element key={index} />
 							</ProtectedRoute>
 						}
@@ -42,6 +52,7 @@ export const renderProtectedRoutes = (routes) => {
 									element={
 										<ProtectedRoute
 											altPath={subRoute.altPath ? subRoute.altPath : null}
+											permission={permission}
 										>
 											<Element key={subIndex} />
 										</ProtectedRoute>
@@ -54,7 +65,10 @@ export const renderProtectedRoutes = (routes) => {
 					<Route
 						path={route.path}
 						element={
-							<ProtectedRoute altPath={route.altPath ? route.altPath : null}>
+							<ProtectedRoute
+								altPath={route.altPath ? route.altPath : null}
+								permission={permission}
+							>
 								<Element key={index} />
 							</ProtectedRoute>
 						}
