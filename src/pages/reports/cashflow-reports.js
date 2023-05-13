@@ -2,13 +2,12 @@
 //create the date components for users to select date range
 //get all transactions and sort/filter based on date values
 
-import React, { useState, useEffect, useMemo } from "react"
+import React, { useState, useMemo } from "react"
 import { useOutletContext } from "react-router-dom"
 import { getCashflowChartData } from "../../helper/charts-util"
 
 import { format, subDays } from "date-fns"
 
-import Select from "../../components/select"
 import {
 	DivWrapper,
 	SplitDiv,
