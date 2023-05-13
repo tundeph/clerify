@@ -335,6 +335,13 @@ export const Text = styled.span`
 	${({ bold }) => bold && ` font-family: "Beatrice Bold", sans-serif`}
 `
 
+export const Label = styled(Text).attrs(() => ({
+	align: "left",
+	size: size.xxxs,
+}))`
+	color: ${({ theme }) => theme.colors.secondary};
+`
+
 export const Divider = styled.div`
 	display: inline-block;
 	border-top: 1px solid ${({ theme }) => theme.colors.gray300};
