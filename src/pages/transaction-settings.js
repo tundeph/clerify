@@ -3,7 +3,6 @@ import React from "react"
 import { useProfileQuery } from "../services/profile-slice2"
 import { useAccountsQuery } from "../services/account-slice"
 
-import { NavLink } from "react-router-dom"
 import {
 	PageWrapper,
 	UserWrapper,
