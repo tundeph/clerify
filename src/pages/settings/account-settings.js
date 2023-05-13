@@ -22,7 +22,7 @@ export const AccountSettings = () => {
 							<CustomNavLink to="/account-settings">
 								Edit financial account
 							</CustomNavLink>
-							<CustomNavLink to="/account-settings/add-user">
+							<CustomNavLink to="/account-settings/add">
 								Add new financial account
 							</CustomNavLink>
 						</DivWrapper>
