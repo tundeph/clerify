@@ -14,7 +14,7 @@ export const transformLoginData = (data, user, initialState) => {
 			hasAccts = lastAcctData
 		}
 		business[doc.id] = { id: doc.id, accts, name, type, selected, categories }
-		permission = users.filter((user) => user.uid === uid)[0].permission
+		permission = users.filter((user) => user.email === email)[0].permission
 	})
 
 	return {
