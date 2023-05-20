@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import {
 	useProfileQuery,
 	useAddBusinessMutation,
+	useLogoutMutation,
 } from "../../services/profile-slice2"
 
 import shortid from "shortid"
@@ -35,6 +36,7 @@ export const AddBusiness = () => {
 		data: { user, selectedBusinessId },
 	} = useProfileQuery()
 	const [addBusiness, { isError, isLoading }] = useAddBusinessMutation()
+	const [logout] = useLogoutMutation()
 
 	const navigate = useNavigate()
 
@@ -84,7 +86,7 @@ export const AddBusiness = () => {
 		e.preventDefault()
 		const filteredAccts = accts.filter((acct) => acct.acctName.trim() !== "")
 		const business = {
-			users: [{ uid: user.uid, permission: "admin" }],
+			users: [{ email: user.email, permission: "admin" }],
 			name,
 			type,
 			accts: filteredAccts,
@@ -104,6 +106,14 @@ export const AddBusiness = () => {
 				<DivWrapper bottom={3}>
 					<Logo />
 				</DivWrapper>
+				<SubTitle
+					onClick={() => {
+						console.log("clicked")
+						logout()
+					}}
+				>
+					Logout
+				</SubTitle>
 				{/* <Text onClick={async () => await authService.signOut()}>Log out </Text> */}
 				<DivWrapper bottom={size.xxs}>
 					<Title> Create a business or organization. </Title>
