@@ -1,5 +1,5 @@
 import { api } from "./api"
-import { db, authService, timestamp } from "../firebase/config"
+import { db, authService, timestamp, FieldValue } from "../firebase/config"
 import { transformLoginData } from "./utils"
 
 //an initial state is defined that is fed into global Theme object
@@ -24,8 +24,8 @@ export const authApi = api.injectEndpoints({
 								db.collection("business")
 									// .where("uid", "==", user.uid)
 									.where("users", "array-contains-any", [
-										{ uid: user.uid, permission: "admin" },
-										{ uid: user.uid, permission: "user" },
+										{ email: user.email, permission: "admin" },
+										{ email: user.email, permission: "user" },
 									])
 									.onSnapshot(
 										(snapshot) => {
@@ -53,6 +53,71 @@ export const authApi = api.injectEndpoints({
 			// 		console.log("getState()", getState())
 			// 	},
 		}),
+
+		// this is used to add a new user (which is an admin user)
+		addProfile: build.mutation({
+			queryFn: async (body) => {
+				try {
+					const { email, password, name } = body
+
+					// creates new user and updates the displayName
+					const result = await new Promise((resolve) =>
+						authService
+							.createUserWithEmailAndPassword(email, password)
+							.then((data) => resolve(data))
+							.catch((err) => {
+								throw err.messsage
+							})
+					)
+					const user = result.user.updateProfile({ displayName: name })
+
+					return {
+						data: {
+							...initialState,
+							user: {
+								uid: user.uid,
+								displayName: name,
+								photoURL: user.photoURL,
+								email,
+							},
+						},
+					}
+				} catch (err) {
+					return { error: err }
+				}
+			},
+			invalidatesTags: ["Profile"],
+		}),
+
+		// this is used to add extra users that can access the account
+		updateUsers: build.mutation({
+			queryFn: async (body) => {
+				try {
+					const { selectedBusinessId, email, permission } = body
+
+					// add new user's detail to the business db
+					const result = await new Promise((resolve) =>
+						db
+							.collection("business")
+							.doc(selectedBusinessId)
+							.update({
+								users: FieldValue.arrayUnion({ email, permission }),
+							})
+							.then(() => resolve("success"))
+							.catch((error) => {
+								if (error) {
+									throw error.message
+								}
+							})
+					)
+					return { data: result }
+				} catch (err) {
+					console.log(err)
+					return { error: { data: JSON.stringify(err) } }
+				}
+			},
+		}),
+
 		updateBusiness: build.mutation({
 			queryFn: async (body) => {
 				try {
@@ -131,6 +196,8 @@ export const authApi = api.injectEndpoints({
 export const {
 	useProfileQuery,
 	useUpdateBusinessMutation,
+	useUpdateUsersMutation,
 	useAddBusinessMutation,
+	useAddProfileMutation,
 	useLogoutMutation,
 } = authApi
