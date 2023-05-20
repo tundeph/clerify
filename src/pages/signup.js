@@ -35,7 +35,8 @@ export const Signup = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
-		signup(email, password, name)
+		const editedEmail = email.trim().toLowerCase()
+		signup(editedEmail, password, name)
 	}
 
 	return (
