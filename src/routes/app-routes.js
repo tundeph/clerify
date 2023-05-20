@@ -1,6 +1,6 @@
 import React from "react"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
-import { renderProtectedRoutes } from "./protected-route"
+import { renderProtectedRoutes, ProtectedRoute } from "./protected-route"
 
 import {
 	Home,
@@ -114,6 +114,18 @@ export const AppRoutes = ({
 							<Navigate
 								to={!hasBusiness(business) ? "/add-business" : "/dashboard"}
 							/>
+						)
+					}
+				/>
+				<Route
+					path="/add-business"
+					element={
+						hasBusiness(business) ? (
+							<Navigate to="/dashboard" />
+						) : (
+							<ProtectedRoute>
+								<AddBusiness />
+							</ProtectedRoute>
 						)
 					}
 				/>
