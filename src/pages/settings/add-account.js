@@ -65,17 +65,17 @@ export const AddAccount = () => {
 
 	return (
 		<Form onSubmit={(e) => handleSubmit(e, selectedBusinessId, business)}>
-			<AddAccountForm
-				accts={newAccts}
-				align="left"
-				title=""
-				description="Enter an account name, for example, name of a bank account "
-				onChange={handleAcctChange}
-				onAddMoreClick={handleAddMore}
-				onDeleteFormClick={handleDeleteForm}
-			/>
+			<DivWrapper gap={size.xs} max="xs">
+				<AddAccountForm
+					accts={newAccts}
+					align="left"
+					title=""
+					description="Enter an account name, for example, name of a bank account "
+					onChange={handleAcctChange}
+					onAddMoreClick={handleAddMore}
+					onDeleteFormClick={handleDeleteForm}
+				/>
 
-			<DivWrapper top={2} gap={size.xxs}>
 				{handleButtonState(
 					isLoading,
 					"Loading",
