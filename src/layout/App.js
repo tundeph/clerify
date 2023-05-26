@@ -133,6 +133,7 @@ const App = () => {
 							<AppRoutes
 								user={data.user}
 								business={data.business}
+								selectedBusinessId={data.selectedBusinessId}
 								hasBusiness={hasBusiness}
 								handleChangeBusiness={(e) => handleChangeBusiness(e, data.user)}
 							/>
