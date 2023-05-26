@@ -1,12 +1,7 @@
 import React, { useState } from "react"
 import { useProfileQuery } from "@services/profile-slice2"
-// import { useSelector } from "react-redux"
-// import {
-// 	selectUserProfile,
-// 	selectTransactionCategories,
-// } from "../../services/profile-slice"
-import { renderCharts } from "../../hooks/useCharts"
-import { useDocument } from "../../hooks/useDocument"
+import { useAccountsQuery } from "@services/account-slice"
+import { getCategoryChartData } from "@utils/charts-util"
 
 import { format, subDays } from "date-fns"
 
@@ -17,15 +12,15 @@ import {
 	Text,
 	DateInput,
 	SplitDiv,
-} from "../../layout/styles"
-import ButtonState from "../../components/button-state"
-import { formatCategory } from "../../helper"
-import ReportsTable from "../../components/reports-table"
+} from "@layout/styles"
+import ButtonState from "@components/button-state"
+import { formatCategory } from "@utils"
+import ReportsTable from "@components/reports-table"
 
-export const FinancialReports = () => {
-	const {
-		data: { business, selectedBusinessId },
-	} = useProfileQuery()
+export const FinancialReports = (props) => {
+	const { data } = useProfileQuery()
+	const { data: accounts } = useAccountsQuery(props.selectedBusinessId)
+	const { business } = data
 
 	const todayDate = format(new Date("2022/06/30"), "yyyy-MM-dd")
 	const thirtyDaysAgo = format(
@@ -33,17 +28,13 @@ export const FinancialReports = () => {
 		"yyyy-MM-dd"
 	)
 
-	// const { selectedBusinessId } = useSelector(selectUserProfile)
-	const transactionCategories = business[selectedBusinessId].categories
-	const getTransactionsDoc = useDocument("accounts", selectedBusinessId)
-	// const transactionCategories = useSelector((state) =>
-	// 	selectTransactionCategories(state, selectedBusinessId)
-	// )
+	const transactionCategories = business[props.selectedBusinessId].categories
 	const categories = formatCategory(transactionCategories)
-	const { getData, dailyCategoryData } = renderCharts()
-	//
+
 	const [startDate, setStartDate] = useState(thirtyDaysAgo)
 	const [endDate, setEndDate] = useState(todayDate)
+	const [dailyCategoryData, setDailyCategoryData] = useState()
+
 	const [showCategories] = useState(
 		categories.map((category) => category.value)
 	)
@@ -51,12 +42,14 @@ export const FinancialReports = () => {
 	const buttonConditionPL = startDate && endDate
 
 	const handlePL = () => {
-		getData(
-			getTransactionsDoc.document,
-			transactionCategories,
-			showCategories,
-			startDate,
-			endDate
+		setDailyCategoryData(
+			getCategoryChartData(
+				accounts,
+				transactionCategories,
+				showCategories,
+				startDate,
+				endDate
+			)
 		)
 	}
 
