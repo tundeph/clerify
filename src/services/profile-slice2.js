@@ -1,5 +1,5 @@
 import { api } from "./api"
-import { db, authService, timestamp, FieldValue } from "../firebase/config"
+import { db, authService, timestamp } from "../firebase/config"
 import { transformLoginData } from "./utils"
 
 //an initial state is defined that is fed into global Theme object
@@ -89,35 +89,6 @@ export const authApi = api.injectEndpoints({
 			invalidatesTags: ["Profile"],
 		}),
 
-		// this is used to add extra users that can access the account
-		updateUsers: build.mutation({
-			queryFn: async (body) => {
-				try {
-					const { selectedBusinessId, email, permission } = body
-
-					// add new user's detail to the business db
-					const result = await new Promise((resolve) =>
-						db
-							.collection("business")
-							.doc(selectedBusinessId)
-							.update({
-								users: FieldValue.arrayUnion({ email, permission }),
-							})
-							.then(() => resolve("success"))
-							.catch((error) => {
-								if (error) {
-									throw error.message
-								}
-							})
-					)
-					return { data: result }
-				} catch (err) {
-					console.log(err)
-					return { error: { data: JSON.stringify(err) } }
-				}
-			},
-		}),
-
 		updateBusiness: build.mutation({
 			queryFn: async (body) => {
 				try {
@@ -196,7 +167,6 @@ export const authApi = api.injectEndpoints({
 export const {
 	useProfileQuery,
 	useUpdateBusinessMutation,
-	useUpdateUsersMutation,
 	useAddBusinessMutation,
 	useAddProfileMutation,
 	useLogoutMutation,
