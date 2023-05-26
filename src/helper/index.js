@@ -207,6 +207,15 @@ export const currencyFormatter = (number) =>
 export const findByProp = (prop, propValue, returnProp) =>
 	R.pipe(R.find(R.propEq(prop, propValue)), R.prop(returnProp))
 
+export const screenSizes = {
+	xxs: "320px",
+	xs: "480px",
+	s: "600px",
+	m: "768px",
+	l: "900px",
+	xl: "1024px",
+}
+
 export const TEST_SECRET_KEY = "test_sk_C1d7PNuoqToOVzoSXvHQ"
 export const TEST_PUBLIC_KEY = "test_pk_SirSHhAgeBBeXvK8YYcV"
 export const LIVE_SECRET_KEY = "live_sk_eFuifauPDbVczZOBr5rg"
