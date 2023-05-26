@@ -3,13 +3,13 @@ import { ThemeContext } from "styled-components"
 import {
 	useProfileQuery,
 	useUpdateBusinessMutation,
-} from "../../services/profile-slice2"
+} from "@services/profile-slice2"
 import { textSorter } from "../../helper"
 
 import { handleButtonState } from "../../helper"
 import { size } from "../../layout/theme"
-import { Text, DivWrapper, Form, FormInput } from "../../layout/styles"
-import Select from "../../components/select"
+import { Text, DivWrapper, Form, FormInput, Label } from "@layout/styles"
+import Select from "@components/select"
 
 import { findIndex, assocPath, propEq, prop, find } from "ramda"
 
@@ -34,7 +34,7 @@ export const EditAccount = () => {
 	}))
 
 	const sortedBankAccounts = [
-		{ value: "", label: "Select account" },
+		{ value: " ", label: "Select account" },
 		...bankAccounts,
 	]
 
@@ -75,7 +75,7 @@ export const EditAccount = () => {
 
 	return (
 		<Form onSubmit={handleSubmit}>
-			<DivWrapper top={2} gap={size.xs}>
+			<DivWrapper top={2} gap={size.xs} max="xs">
 				<Select
 					label="Select a business"
 					name="business"
@@ -84,10 +84,12 @@ export const EditAccount = () => {
 					value={selectedAccount}
 				/>
 
+				<Label>Type here to edit selected account</Label>
 				<FormInput
 					onChange={(e) => setEditedAccts(e.target.value)}
-					value={editedAccts}
+					value={editedAccts ? editedAccts : ""}
 					type="text"
+					disabled={editedAccts ? false : true}
 				/>
 
 				{handleButtonState(
