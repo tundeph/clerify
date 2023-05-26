@@ -4,58 +4,59 @@ import styled from "styled-components"
 import { CustomCloseIcon } from "../layout/styles"
 
 const ModalBackdrop = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgb(0, 0, 0, 0.5);
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgb(0, 0, 0, 0.5);
+	z-index: 1;
 `
 
 const ModalContents = styled.div`
-  padding: 30px;
-  max-width: 480px;
-  margin: 100px auto;
-  border-radius: 10px;
-  background-color: #ffffff;
+	padding: 30px;
+	max-width: 480px;
+	margin: 100px auto;
+	border-radius: 10px;
+	background-color: #ffffff;
 `
 
 const ModalTitle = styled.div`
-  text-align: center;
-  font-family: "Beatrice Bold", sans-serif;
-  font-size: 1.2rem;
+	text-align: center;
+	font-family: "Beatrice Bold", sans-serif;
+	font-size: 1.2rem;
 `
 
 const ModalHeader = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 20px;
-  margin-bottom: 30px;
-  align-items: center;
-  padding-bottom: 5px;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.gray300};
+	display: grid;
+	grid-template-columns: 1fr 20px;
+	margin-bottom: 30px;
+	align-items: center;
+	padding-bottom: 5px;
+	border-bottom: 1px solid ${({ theme }) => theme.colors.gray300};
 `
 
 const ModalBody = styled.div`
-  /* display: flex; */
+	/* display: flex; */
 
-  text-align: center;
+	text-align: center;
 `
 
 const Modal = ({ title, children, handleClose, icon, noBgClose }) => {
-  return ReactDOM.createPortal(
-    <ModalBackdrop onClick={noBgClose ? null : handleClose}>
-      <ModalContents>
-        <ModalHeader>
-          <ModalTitle>
-            {title} {icon}
-          </ModalTitle>
-          <CustomCloseIcon onClick={handleClose} />
-        </ModalHeader>
-        <ModalBody> {children} </ModalBody>
-      </ModalContents>
-    </ModalBackdrop>,
-    document.querySelector("#root")
-  )
+	return ReactDOM.createPortal(
+		<ModalBackdrop onClick={noBgClose ? null : handleClose}>
+			<ModalContents>
+				<ModalHeader>
+					<ModalTitle>
+						{title} {icon}
+					</ModalTitle>
+					<CustomCloseIcon onClick={handleClose} />
+				</ModalHeader>
+				<ModalBody> {children} </ModalBody>
+			</ModalContents>
+		</ModalBackdrop>,
+		document.querySelector("#root")
+	)
 }
 
 export default Modal
