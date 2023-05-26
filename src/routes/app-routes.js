@@ -32,6 +32,7 @@ export const AppRoutes = ({
 	user,
 	business,
 	hasBusiness,
+	selectedBusinessId,
 	handleChangeBusiness,
 }) => {
 	const routes = [
@@ -140,7 +141,7 @@ export const AppRoutes = ({
 					}
 				/>
 
-				{renderProtectedRoutes(routes, user)}
+				{renderProtectedRoutes(routes, user, business, selectedBusinessId)}
 			</Routes>
 		</BrowserRouter>
 	)
