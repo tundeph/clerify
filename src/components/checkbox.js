@@ -1,6 +1,6 @@
 import React from "react"
 import styled, { css } from "styled-components"
-import { CheckmarkIcon } from "../layout/styles"
+import { CheckmarkIcon, Text } from "../layout/styles"
 import { size } from "../layout/theme"
 
 const CheckboxProps = styled.input.attrs({
@@ -33,11 +33,12 @@ const Label = styled.label`
 `
 
 const LabelDiv = styled.div`
-  display: block;
+  display: inline-block;
   resize: none;
   cursor: pointer;
   border-radius: 50px;
   min-width: max-content;
+  width: max-content;
   text-align: center;
   padding: 3px 3px;
   border: 1px solid ${({ theme }) => theme.colors.gray300};
@@ -53,8 +54,14 @@ const Checkbox = ({ name, id, value, checked, onChange, children }) => {
     <LabelDiv checked={checked}>
       {checked && <CustomCheckmarkIcon />}
       <Label htmlFor={id}>
-        <CheckboxProps id={id} name={name} value={value} onChange={onChange} checked={checked} />
-        {children}
+        <CheckboxProps
+          id={id}
+          name={name}
+          value={value}
+          onChange={onChange}
+          checked={checked}
+        />
+        <Text size={size.xxxs}> {children}</Text>
       </Label>
     </LabelDiv>
   )
