@@ -150,8 +150,7 @@ export const KeywordsSettings = () => {
 							Are you sure you want to delete this keyword?
 						</Text>
 						<Button onClick={() => handleDeleteKeyword(deleteModal.keyword)}>
-							{" "}
-							Yes, Delete it{" "}
+							Yes, Delete it
 						</Button>
 					</DivWrapper>
 				</Modal>
