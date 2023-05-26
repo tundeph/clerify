@@ -2,10 +2,8 @@
 // access the business. These additional users may have lower permission level, like user-level instead of admin
 
 import React, { useState, useContext } from "react"
-import {
-	useUpdateUsersMutation,
-	useProfileQuery,
-} from "@services/profile-slice2"
+import { useProfileQuery } from "@services/profile-slice2"
+import { useAddUsersMutation } from "../../services/users-slice"
 import { handleButtonState } from "../../helper"
 
 import { ThemeContext } from "styled-components"
@@ -18,7 +16,7 @@ export const AddUserAccount = () => {
 		data: { selectedBusinessId },
 	} = useProfileQuery()
 
-	const [updateUsers, result] = useUpdateUsersMutation()
+	const [updateUsers, result] = useAddUsersMutation()
 	const { colors } = useContext(ThemeContext)
 
 	const [permission, setPermission] = useState("")
@@ -41,7 +39,7 @@ export const AddUserAccount = () => {
 	}
 
 	return (
-		<DivWrapper>
+		<DivWrapper max="xs">
 			<form onSubmit={handleSubmit}>
 				<DivWrapper bottom={1}>
 					<Text> Add another user to this business </Text>
