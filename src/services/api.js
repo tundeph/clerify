@@ -4,5 +4,5 @@ export const api = createApi({
 	reducerPath: "api",
 	baseQuery: fakeBaseQuery(),
 	endpoints: () => ({}),
-	tagTypes: ["Profile", "Accounts"],
+	tagTypes: ["Profile", "Accounts", "Users"],
 })
