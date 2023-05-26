@@ -21,6 +21,11 @@ import { ArrowRight } from "@styled-icons/bootstrap/ArrowRight"
 import { CheckmarkCircle } from "@styled-icons/fluentui-system-regular/CheckmarkCircle"
 import { Cabinet } from "@styled-icons/boxicons-regular/Cabinet"
 import { Check2 } from "@styled-icons/bootstrap/Check2"
+import { Dash } from "@styled-icons/bootstrap/Dash"
+import { Category } from "@styled-icons/material-rounded/Category"
+import { BuildingBank } from "@styled-icons/fluentui-system-regular/BuildingBank"
+
+import { screenSizes } from "@utils"
 
 const IconProps = css`
 	height: ${(props) => props.size || 15}px;
@@ -135,6 +140,31 @@ export const CabinetIcon = styled(Cabinet)`
 	${IconProps}
 `
 
+export const DashIcon = styled(Dash)`
+	${IconProps}
+`
+
+export const CategoryIcon = styled(Category)`
+	${IconProps}
+`
+export const BankIcon = styled(BuildingBank)`
+	${IconProps}
+`
+
+export const CustomCheckmarkIcon = styled(CheckmarkIcon)`
+	height: 1.2em;
+	padding: 8px 8px;
+	border-radius: 999px;
+	background-color: ${({ theme }) => theme.colors.gray300};
+`
+
+export const CustomDashIcon = styled(DashIcon)`
+	height: 1.2em;
+	padding: 8px 8px;
+	border-radius: 999px;
+	background-color: ${({ theme }) => theme.colors.orange};
+`
+
 export const CustomCloseIcon = styled(CloseOutline)`
 	height: 1.2em;
 	padding: 10px 10px;
@@ -165,7 +195,27 @@ export const FormInput = styled.input`
 	width: 100%;
 	border: 1px solid ${({ theme }) => theme.colors.gray300};
 	border-radius: ${size["2xxl"]}px;
-	padding: 0.5rem 2rem;
+	padding: 0.5rem 1rem;
+	font-size: ${(props) => props.fontSize || size.xxs}em;
+	font-family: "Beatrice", sans-serif;
+	color: ${({ theme }) => theme.colors.secondary};
+	box-sizing: border-box;
+	background-color: ${({ theme }) => theme.colors.gray100};
+
+	&:focus {
+		border-color: ${({ theme }) => theme.colors.primary};
+		background-color: ${({ theme }) => theme.colors.reverse};
+		outline: none;
+	}
+`
+
+export const TextareaInput = styled.textarea.attrs(() => ({
+	rows: 4,
+}))`
+	width: 100%;
+	border: 1px solid ${({ theme }) => theme.colors.gray300};
+	border-radius: ${size["2xxl"]}px;
+	padding: 0.5rem 1rem;
 	font-size: ${(props) => props.fontSize || size.xxs}em;
 	font-family: "Beatrice", sans-serif;
 	color: ${({ theme }) => theme.colors.secondary};
@@ -272,6 +322,7 @@ export const DivWrapper = styled.div`
 	position: relative;
 	display: flex;
 	min-width: ${null || ((props) => props.width)}rem;
+	max-width: ${null || ((props) => screenSizes[props.max])};
 	flex-direction: ${(props) => props.direction || "column"};
 	margin-bottom: ${null || ((props) => props.bottom)}rem;
 	margin-top: ${null || ((props) => props.top)}rem;
@@ -282,6 +333,7 @@ export const DivWrapper = styled.div`
 	align-items: ${(props) => props.align || "left"};
 	flex-wrap: ${(props) => props.wrap || "nowrap"};
 	color: ${null || ((props) => props.color)};
+	padding: ${null || ((props) => props.padding)}px;
 `
 
 export const PageWrapper = styled(DivWrapper)`
@@ -297,7 +349,7 @@ export const Card = styled(DivWrapper)`
 	gap: ${size.xxxs}rem;
 	box-shadow: 0px 0px 2px ${({ theme }) => theme.colors.gray300};
 	background-color: ${({ theme }) => theme.colors.reverse};
-	border-radius: 15px;
+	border-radius: 10px;
 	padding: ${size.xs}rem ${size.xxs}rem;
 	box-sizing: border-box;
 `
@@ -333,6 +385,16 @@ export const Text = styled.span`
 	color: ${null || ((props) => props.color)};
 
 	${({ bold }) => bold && ` font-family: "Beatrice Bold", sans-serif`}
+`
+
+export const Pill = styled(Text)`
+	display: inline-flex;
+	flex-direction: row;
+	white-space: nowrap;
+	padding: 5px 10px;
+	border-radius: 100px;
+	color: ${((props) => props.color) || null};
+	background-color: ${(props) => props.bg || props.theme.colors.gray100};
 `
 
 export const Label = styled(Text).attrs(() => ({
@@ -475,7 +537,9 @@ export const InfoBox = styled.div`
 	${({ success }) => success && InfoBoxSuccessProp}
 `
 
-export const SpanWrapper = styled.span``
+export const SpanWrapper = styled.span`
+	color: ${null || ((props) => props.color)};
+`
 
 export const UnderFormText = styled(Text)`
 	margin-top: 0.8rem;
