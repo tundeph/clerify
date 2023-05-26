@@ -25,9 +25,6 @@ export const AdminSettings = () => {
 							<CustomNavLink to="/admin-settings/delete">
 								Delete user account
 							</CustomNavLink>
-							<CustomNavLink to="/admin-settings/add-business">
-								Add business
-							</CustomNavLink>
 						</DivWrapper>
 						<Divider />
 					</DivWrapper>
