@@ -22,9 +22,19 @@ export const ProtectedRoute = ({
 	return children
 }
 
-export const renderProtectedRoutes = (routes, user) => {
+export const renderProtectedRoutes = (
+	routes,
+	user,
+	business,
+	selectedBusinessId
+) => {
 	const protectedRoutes = routes.map((route, index) => {
 		const { path, permission, Element } = route
+		const defaultProps = {
+			selectedBusinessId,
+			user,
+			business,
+		}
 
 		return (
 			<React.Fragment key={index}>
@@ -36,7 +46,7 @@ export const renderProtectedRoutes = (routes, user) => {
 								altPath={route.altPath ? route.altPath : null}
 								permission={permission}
 							>
-								<Element key={index} />
+								<Element key={index} {...defaultProps} />
 							</ProtectedRoute>
 						}
 					>
@@ -54,7 +64,7 @@ export const renderProtectedRoutes = (routes, user) => {
 											altPath={subRoute.altPath ? subRoute.altPath : null}
 											permission={permission}
 										>
-											<Element key={subIndex} />
+											<Element key={subIndex} {...defaultProps} />
 										</ProtectedRoute>
 									}
 								/>
@@ -69,7 +79,7 @@ export const renderProtectedRoutes = (routes, user) => {
 								altPath={route.altPath ? route.altPath : null}
 								permission={permission}
 							>
-								<Element key={index} />
+								<Element key={index} {...defaultProps} />
 							</ProtectedRoute>
 						}
 					/>
