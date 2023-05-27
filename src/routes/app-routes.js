@@ -40,18 +40,7 @@ export const AppRoutes = ({
     { path: "/signup", Element: Signup, altPath: "/" },
     { path: "/sync-accounts", Element: SyncFromOpenBank },
     { path: "/reconcile", Element: CategoriseTransaction },
-    {
-      path: "/transaction-settings",
-      Element: TransactionSettings,
-      subPath: [
-        {
-          path: "",
-          Element: TransactionSettings,
-        },
-
-        { path: "/keywords", Element: KeywordsSettings },
-      ],
-    },
+    { path: "/transaction-settings", Element: TransactionSettings },
     { path: "/reports", Element: Reports },
     {
       path: "/reports/visual",
@@ -73,6 +62,7 @@ export const AppRoutes = ({
         { path: "", Element: EditAccount },
         { path: "/add", Element: AddAccount },
         { path: "/category", Element: CategoriseSettings },
+        { path: "/keywords", Element: KeywordsSettings },
       ],
     },
     {
