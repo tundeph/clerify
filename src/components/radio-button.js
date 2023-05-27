@@ -1,5 +1,6 @@
 import React from "react"
-import styled, { css } from "styled-components"
+import styled, { css, useTheme } from "styled-components"
+import { Text } from "@layout/styles"
 
 const RadioInput = styled.input`
   appearance: none;
@@ -41,6 +42,8 @@ const LabelDiv = styled.div`
 `
 
 const RadioButton = ({ labelText, value, checked, onChange }) => {
+  const { size } = useTheme()
+
   return (
     <LabelDiv selected={checked}>
       <Label htmlFor={labelText}>
@@ -50,8 +53,8 @@ const RadioButton = ({ labelText, value, checked, onChange }) => {
           value={value}
           checked={checked}
           onChange={onChange}
-        />{" "}
-        {labelText}
+        />
+        <Text size={size.xxxs}> {labelText} </Text>
       </Label>
     </LabelDiv>
   )
