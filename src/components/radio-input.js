@@ -1,7 +1,7 @@
 import React from "react"
 import { DivWrapper } from "../layout/styles"
 
-const RadioInput = ({ name, id, onChange, children }) => {
+export const RadioInput = ({ name, id, onChange, children }) => {
   return (
     <DivWrapper direction="horizontal" gap={1}>
       <input type="radio" name={name} id={id} onChange={onChange} />
@@ -9,5 +9,3 @@ const RadioInput = ({ name, id, onChange, children }) => {
     </DivWrapper>
   )
 }
-
-export default RadioInput

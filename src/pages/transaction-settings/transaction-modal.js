@@ -4,9 +4,7 @@ import { size } from "@layout/theme"
 import { formatCategoryDropDown } from "@utils"
 import { DivWrapper, TextareaInput, Label } from "@layout/styles"
 
-import Select from "@components/select"
-import ButtonState from "@components/button-state"
-import Modal from "@components/modal"
+import { Select, ButtonState, Modal } from "@components"
 
 const transactionType = [
   { label: "Credit", value: "credit" },

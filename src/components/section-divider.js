@@ -22,12 +22,10 @@ const Span = styled.span`
   border: 0.5px solid ${({ theme }) => theme.colors.gray300};
 `
 
-const SectionDivider = ({ children }) => {
+export const SectionDivider = ({ children }) => {
   return (
     <Container>
       <Span> {children} </Span>
     </Container>
   )
 }
-
-export default SectionDivider

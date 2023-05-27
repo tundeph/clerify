@@ -20,7 +20,7 @@ const CustomText = styled(Text)`
   overflow: hidden;
 `
 
-const RecentTransactions = ({ data }) => {
+export const RecentTransactions = ({ data }) => {
   const numOfTransactions = 5
 
   return (
@@ -40,5 +40,3 @@ const RecentTransactions = ({ data }) => {
     </>
   )
 }
-
-export default RecentTransactions

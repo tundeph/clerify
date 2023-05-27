@@ -17,7 +17,7 @@ const KeywordButton = styled.div`
   box-shadow: 0px 0px 15px ${({ theme }) => theme.colors.gray300};
 `
 
-const Keyword = ({ text, Icon, onClick }) => {
+export const Keyword = ({ text, Icon, onClick }) => {
   const handleClick = (text) => {
     if (!onClick) return null
     return onClick(text)
@@ -31,5 +31,3 @@ const Keyword = ({ text, Icon, onClick }) => {
     </KeywordButton>
   )
 }
-
-export default Keyword

@@ -41,7 +41,7 @@ const LabelDiv = styled.div`
   ${({ selected }) => (selected ? SelectedProp : DeselectedProp)}
 `
 
-const RadioButton = ({ labelText, value, checked, onChange }) => {
+export const RadioButton = ({ labelText, value, checked, onChange }) => {
   const { size } = useTheme()
 
   return (
@@ -59,5 +59,3 @@ const RadioButton = ({ labelText, value, checked, onChange }) => {
     </LabelDiv>
   )
 }
-
-export default RadioButton

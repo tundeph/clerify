@@ -1,6 +1,6 @@
 // used to sync user's data through the open bank api
 
-import React, { useState, useContext, useReducer } from "react"
+import React, { useState, useReducer } from "react"
 import { useNavigate } from "react-router-dom"
 
 import { useProfileQuery } from "../../services/profile-slice2"
@@ -17,7 +17,7 @@ import { syncModalMessages } from "../../helper/default-data"
 import shortid from "shortid"
 
 //
-import styled, { ThemeContext } from "styled-components"
+import styled, { useTheme } from "styled-components"
 import { size } from "../../layout/theme"
 
 import {
@@ -31,10 +31,9 @@ import {
   LoadingIcon,
 } from "../../layout/styles"
 
-import Select from "../../components/select"
-import Modal from "../../components/modal"
-import ButtonState from "../../components/button-state"
+import { Select, Modal, ButtonState } from "@components"
 
+//for testing, to be removed
 import carpaddyData from "../../helper/carpaddy.json"
 
 export const CustomText = styled(Text)`
@@ -45,7 +44,7 @@ export const CustomText = styled(Text)`
 `
 
 export const SyncFromOpenBank = () => {
-  const { colors } = useContext(ThemeContext)
+  const { colors } = useTheme()
   const navigate = useNavigate()
   const { addDocumentWithId, updateDocument, response } =
     useFirestore("accounts")

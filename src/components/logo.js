@@ -10,7 +10,7 @@ const LogoText = styled(Text)`
   font-weight: bold;
 `
 
-const Logo = ({ reverse }) => {
+export const Logo = ({ reverse }) => {
   const { colors } = useContext(ThemeContext)
 
   return (
@@ -23,5 +23,3 @@ const Logo = ({ reverse }) => {
 Logo.propTypes = {
   reverse: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 }
-
-export default Logo

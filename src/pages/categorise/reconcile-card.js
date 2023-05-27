@@ -1,11 +1,11 @@
-import React, { useContext } from "react"
-import { ThemeContext } from "styled-components"
+import React from "react"
+import { useTheme } from "styled-components"
 
 import { DivWrapper, Text, BouncingCabinetIcon } from "../../layout/styles"
-import ButtonState from "@components/button-state"
+import { ButtonState } from "@components"
 
 const ReconcileCard = ({ isPending, onClick }) => {
-  const { colors } = useContext(ThemeContext)
+  const { colors } = useTheme()
 
   return (
     <DivWrapper align="center" gap={2}>

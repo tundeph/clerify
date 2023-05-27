@@ -6,7 +6,7 @@ const CustomCheckmarkCircleIcon = styled(CheckmarkCircleIcon)`
   height: 5em;
 `
 
-const NoTransactions = () => {
+export const NoTransactions = () => {
   const { colors } = useContext(ThemeContext)
 
   return (
@@ -16,5 +16,3 @@ const NoTransactions = () => {
     </DivWrapper>
   )
 }
-
-export default NoTransactions

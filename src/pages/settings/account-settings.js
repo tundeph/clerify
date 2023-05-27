@@ -1,5 +1,5 @@
 import React from "react"
-import { size } from "../../layout/theme"
+import { size } from "@layout/theme"
 import { Outlet } from "react-router-dom"
 import {
   PageWrapper,
@@ -7,9 +7,9 @@ import {
   DivWrapper,
   Title,
   Divider,
-} from "../../layout/styles"
+} from "@layout/styles"
 
-import CustomNavLink from "../../components/custom-navlink"
+import { CustomNavLink } from "@components"
 
 export const AccountSettings = () => {
   return (

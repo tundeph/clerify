@@ -32,7 +32,7 @@ const SubMenuNav = styled(NavLink)`
   ${NavProps}
 `
 
-const CustomNavLink = ({ children, to, ...props }) => {
+export const CustomNavLink = ({ children, to, ...props }) => {
   let resolved = useResolvedPath(to)
   let match = useMatch({ path: resolved.pathname, end: true })
 
@@ -42,5 +42,3 @@ const CustomNavLink = ({ children, to, ...props }) => {
     </SubMenuNav>
   )
 }
-
-export default CustomNavLink

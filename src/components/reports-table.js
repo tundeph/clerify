@@ -4,7 +4,7 @@ import { size } from "../layout/theme"
 import { DivWrapper, SplitDiv, Text, Divider } from "../layout/styles"
 import { currencyFormatter } from "../helper"
 
-function ReportsTable({ data, categories }) {
+export const ReportsTable = ({ data, categories }) => {
   const categoriesObj = categories.reduce((prev, current) => {
     prev[[current.title]] = current.type
     return prev
@@ -45,7 +45,9 @@ function ReportsTable({ data, categories }) {
                 </DivWrapper>
                 <DivWrapper>
                   <Text align="right" size={size.xxxs}>
-                    {currencyFormatter(selected.data.reduce((prev, curr) => prev + curr, 0))}
+                    {currencyFormatter(
+                      selected.data.reduce((prev, curr) => prev + curr, 0)
+                    )}
                   </Text>
                 </DivWrapper>
               </SplitDiv>
@@ -67,10 +69,10 @@ function ReportsTable({ data, categories }) {
       <DivWrapper justify="space-between" gap={0.5}>
         <FormatCreditList data={data} obj={categoriesObj} type="credit" />
         <FormatCreditList data={data} obj={categoriesObj} type="debit" />
-        {data.datasets.length ? <CalculateTotal data={data} obj={categoriesObj} /> : null}
+        {data.datasets.length ? (
+          <CalculateTotal data={data} obj={categoriesObj} />
+        ) : null}
       </DivWrapper>
     </DivWrapper>
   )
 }
-
-export default ReportsTable

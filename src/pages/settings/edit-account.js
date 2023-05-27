@@ -1,17 +1,16 @@
 import React, { useState, useContext } from "react"
 import { ThemeContext } from "styled-components"
+import { findIndex, assocPath, propEq, prop, find } from "ramda"
 import {
   useProfileQuery,
   useUpdateBusinessMutation,
 } from "@services/profile-slice2"
-import { textSorter } from "../../helper"
+import { textSorter } from "@utils"
 
-import { handleButtonState } from "../../helper"
-import { size } from "../../layout/theme"
+import { handleButtonState } from "@utils"
+import { size } from "@layout/theme"
 import { Text, DivWrapper, Form, FormInput, Label } from "@layout/styles"
-import Select from "@components/select"
-
-import { findIndex, assocPath, propEq, prop, find } from "ramda"
+import { Select } from "@components"
 
 export const EditAccount = () => {
   const { colors } = useContext(ThemeContext)

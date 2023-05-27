@@ -19,10 +19,7 @@ import {
   Button,
   Text,
 } from "../../layout/styles"
-import Select from "../../components/select"
-import Keyword from "../../components/keyword"
-import Modal from "../../components/modal"
-import ButtonState from "../../components/button-state"
+import { Select, Keyword, Modal, ButtonState } from "@components"
 
 const CustomKeywordsWrapper = styled(KeywordsWrapper)`
   background-color: ${({ theme }) => theme.colors.gray300};

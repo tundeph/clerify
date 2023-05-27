@@ -49,7 +49,7 @@ const CustomCheckmarkIcon = styled(CheckmarkIcon)`
   padding-left: 0.5em;
 `
 
-const Checkbox = ({ name, id, value, checked, onChange, children }) => {
+export const Checkbox = ({ name, id, value, checked, onChange, children }) => {
   return (
     <LabelDiv checked={checked}>
       {checked && <CustomCheckmarkIcon />}
@@ -66,5 +66,3 @@ const Checkbox = ({ name, id, value, checked, onChange, children }) => {
     </LabelDiv>
   )
 }
-
-export default Checkbox

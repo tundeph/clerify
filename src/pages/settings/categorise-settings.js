@@ -17,11 +17,13 @@ import {
   CustomEditIcon,
 } from "../../layout/styles"
 
-import Keyword from "../../components/keyword"
-import Modal from "../../components/modal"
-import ButtonState from "../../components/button-state"
-import RadioButton from "../../components/radio-button"
-import SectionDivider from "../../components/section-divider"
+import {
+  Keyword,
+  Modal,
+  ButtonState,
+  RadioButton,
+  SectionDivider,
+} from "@components"
 
 export const CategoriseSettings = (props) => {
   const { colors } = useTheme()

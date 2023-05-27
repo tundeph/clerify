@@ -18,8 +18,8 @@ import {
 } from "@layout/styles"
 
 import { size } from "@layout/theme"
+import { Checkbox } from "@components"
 import TransactionCard from "./transaction-card"
-import Checkbox from "../../components/checkbox"
 import TransactionModal from "./transaction-modal"
 import { combinedFilters, filterReducer } from "./transaction-utils"
 

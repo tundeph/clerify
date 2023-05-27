@@ -1,5 +1,4 @@
-import React, { useContext } from "react"
-import { ThemeContext } from "styled-components"
+import React from "react"
 import { Button, DisabledButton, LoadingIcon } from "../layout/styles"
 import * as R from "ramda"
 
@@ -9,8 +8,6 @@ export const handleButtonState = (
   buttonText,
   condition
 ) => {
-  const { colors } = useContext(ThemeContext)
-
   if (loading) {
     return (
       <DisabledButton>
@@ -21,9 +18,7 @@ export const handleButtonState = (
     if (condition) {
       return <Button> {buttonText}</Button>
     } else {
-      return (
-        <DisabledButton color={colors.gray600}> {buttonText} </DisabledButton>
-      )
+      return <DisabledButton color={"#434343"}> {buttonText} </DisabledButton>
     }
   }
 }
