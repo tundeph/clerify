@@ -229,7 +229,7 @@ export const SyncFromOpenBank = () => {
             <Title> Import financial records </Title>
             <SubTitle> Sync your financial records from your bank. </SubTitle>
           </DivWrapper>
-          <DivWrapper gap={2}>
+          <DivWrapper gap={2} max="s">
             <Select
               options={sortedBankAccounts}
               onChange={(e) => setSelectedAccount(e.target.value)}
