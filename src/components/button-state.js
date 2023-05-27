@@ -2,7 +2,14 @@ import React, { useContext } from "react"
 import { ThemeContext } from "styled-components"
 import { Button, DisabledButton, LoadingIcon } from "../layout/styles"
 
-const ButtonState = ({ size, loading, loadingText, children, condition, onClick }) => {
+export const ButtonState = ({
+  size,
+  loading,
+  loadingText,
+  children,
+  condition,
+  onClick,
+}) => {
   const { colors } = useContext(ThemeContext)
 
   if (loading) {
@@ -27,5 +34,3 @@ const ButtonState = ({ size, loading, loadingText, children, condition, onClick 
     }
   }
 }
-
-export default ButtonState
