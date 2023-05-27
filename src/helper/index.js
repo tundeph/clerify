@@ -180,24 +180,58 @@ export const formatUpdatedCategories = (
   keyword,
   thirdParty
 ) => {
-  return categories.reduce((acc, item) => {
-    if (item.categoryId === category) {
-      if (
-        !item.keywords.filter(
-          (selected) =>
-            selected.keyword.toLowerCase() === keyword.toLowerCase() &&
-            selected.thirdParty.toLowerCase() === thirdParty.toLowerCase()
-        ).length
-      ) {
-        item.keywords.push({ keyword, thirdParty })
+  return R.reduce(
+    (acc, item) => {
+      if (item.categoryId === category) {
+        const keywordExists = R.anyPass([
+          R.propEq("keyword", keyword.toLowerCase()),
+          R.propEq("thirdParty", thirdParty.toLowerCase()),
+        ])
+
+        const keywordAlreadyExists = R.any(keywordExists, item.keywords)
+
+        if (!keywordAlreadyExists) {
+          const updatedKeywords = R.append(
+            { keyword, thirdParty },
+            item.keywords
+          )
+          acc.push(R.assoc("keywords", updatedKeywords, item))
+        } else {
+          acc.push(item)
+        }
+      } else {
+        acc.push(item)
       }
-      acc.push(item)
-    } else {
-      acc.push(item)
-    }
-    return acc
-  }, [])
+      return acc
+    },
+    [],
+    categories
+  )
 }
+
+//deletes a keyword from the category and returns updated business object
+export const deleteKeywordFromCategory = (
+  businessId,
+  categoryId,
+  keyword,
+  data
+) =>
+  R.over(
+    R.lensPath([businessId, "categories"]),
+    R.map((item) => {
+      if (item.categoryId === categoryId) {
+        return R.over(
+          R.lensProp("keywords"),
+          R.reject(R.whereEq({ keyword: keyword }))
+        )(item)
+      }
+      return item
+    })
+  )(data)
+
+// replace the categories array of an object
+export const replaceCategory = (id, newCategory, business) =>
+  R.assocPath([id, "categories"], newCategory, business)
 
 // adds a new category object into categories array
 export const addCategoryData = (id, business, category) =>
