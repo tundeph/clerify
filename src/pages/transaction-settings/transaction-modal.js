@@ -1,6 +1,7 @@
 import React from "react"
 
 import { size } from "@layout/theme"
+import { formatCategoryDropDown } from "@utils"
 import { DivWrapper, TextareaInput, Label } from "@layout/styles"
 
 import Select from "@components/select"
@@ -18,7 +19,12 @@ const TransactionModal = ({
   setAccountToEdit,
   result,
   onClickUpdate,
+  ...props
 }) => {
+  const transactionCategories =
+    props.business[props.selectedBusinessId].categories
+  const categories = formatCategoryDropDown(transactionCategories)
+
   return (
     <Modal
       title="Edit transaction"
@@ -42,8 +48,20 @@ const TransactionModal = ({
         </DivWrapper>
 
         <Select
+          options={categories}
+          label="Category of transaction"
+          onChange={(e) =>
+            setAccountToEdit((data) => ({
+              ...data,
+              categoryId: e.target.value,
+            }))
+          }
+          value={accountToEdit.categoryId}
+        />
+
+        <Select
           options={transactionType}
-          label="Type"
+          label="Type of transaction"
           onChange={(e) =>
             setAccountToEdit((data) => ({
               ...data,
