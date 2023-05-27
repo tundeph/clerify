@@ -19,14 +19,15 @@ export const AccountSettings = () => {
           <Title> Settings </Title>
           <DivWrapper>
             <DivWrapper direction="row" gap={1.5} top={2}>
-              <CustomNavLink to="/account-settings">
-                Edit financial account
-              </CustomNavLink>
+              <CustomNavLink to="/account-settings">Edit account</CustomNavLink>
               <CustomNavLink to="/account-settings/add">
-                Add new financial account
+                Add new account
               </CustomNavLink>
               <CustomNavLink to="/account-settings/category">
                 Category settings
+              </CustomNavLink>
+              <CustomNavLink to="/account-settings/keywords">
+                Keyword settings
               </CustomNavLink>
             </DivWrapper>
             <Divider />
