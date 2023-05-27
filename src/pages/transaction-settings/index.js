@@ -128,6 +128,7 @@ export const TransactionSettings = (props) => {
           onClickUpdate={() =>
             handleUpdateTransaction(props.selectedBusinessId)
           }
+          {...props}
         />
       )}
     </PageWrapper>
