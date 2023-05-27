@@ -293,13 +293,13 @@ export const SyncFromOpenBank = () => {
             >
               Sync data
             </ButtonState>
-            <ButtonState
+            {/* <ButtonState
               loading={isLoading}
               condition={buttonCondition}
               onClick={handleUploadFromComputer}
             >
               Upload from Computer
-            </ButtonState>
+            </ButtonState> */}
           </DivWrapper>
         </UserWrapper>
       </PageWrapper>
