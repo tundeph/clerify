@@ -37,7 +37,6 @@ export const AppRoutes = ({
 }) => {
   const routes = [
     { path: "/add-business", Element: AddBusiness },
-    { path: "/signup", Element: Signup, altPath: "/" },
     { path: "/sync-accounts", Element: SyncFromOpenBank },
     { path: "/reconcile", Element: CategoriseTransaction },
     { path: "/transaction-settings", Element: TransactionSettings },
@@ -90,6 +89,10 @@ export const AppRoutes = ({
         <Route
           path="/"
           element={!user ? <Home /> : <Navigate to="/dashboard" />}
+        />
+        <Route
+          path="/signup"
+          element={!user ? <Signup /> : <Navigate to="/dashboard" />}
         />
         <Route
           path="/dashboard"
