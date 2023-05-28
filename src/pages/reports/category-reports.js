@@ -1,10 +1,7 @@
-//spool the categories from selector and make their ids their value
-//create the date components for users to select date range
-//get all transactions and sort/filter based on date values
-//get the chart.js graph from my exercise repo
-//if number of days is more than 30, monthly chart is spooled, if more then 365 days, yearly chart
+//this gets the categories from state, gets all transactions
+// and sort/filter based on date values then plot line chart
 
-import React, { useState, useMemo } from "react"
+import React, { useState, useEffect } from "react"
 import { getCategoryChartData } from "../../helper/charts-util"
 import { formatCategory } from "../../helper"
 import { format, subDays } from "date-fns"
@@ -31,6 +28,7 @@ export const CategoryReports = () => {
   //
   const [startDate, setStartDate] = useState(thirtyDaysAgo)
   const [endDate, setEndDate] = useState(todayDate)
+  const [chartData, setChartData] = useState()
 
   const categories = formatCategory(transactionCategories)
   const [showCategories] = useState(
@@ -38,17 +36,28 @@ export const CategoryReports = () => {
   )
 
   //get the chart data
-  const chartData = useMemo(
-    () =>
+  useEffect(() => {
+    setChartData(
       getCategoryChartData(
         accounts,
         business[selectedBusinessId].categories,
         showCategories,
         startDate,
         endDate
-      ),
-    [accounts, showCategories, startDate, endDate, business, selectedBusinessId]
-  )
+      )
+    )
+
+    return () => {
+      setChartData(null)
+    }
+  }, [
+    accounts,
+    showCategories,
+    startDate,
+    endDate,
+    business,
+    selectedBusinessId,
+  ])
 
   return (
     <>
@@ -71,6 +80,7 @@ export const CategoryReports = () => {
           <GraphWrapper top={1}>
             {/* {dailyCategoryData && <LineChart data={dailyCategoryData} />}
 						<Divider /> */}
+
             {chartData && <LineChart data={chartData} />}
           </GraphWrapper>
         </DivWrapper>
