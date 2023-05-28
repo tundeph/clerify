@@ -8,10 +8,10 @@ import {
   DivWrapper,
   UserWrapper,
   Text,
-  SubTitle,
   Divider,
   SplitDiv,
   Button,
+  MidWrapper,
 } from "../layout/styles"
 
 import ReconcileImg from "../assets/images/reconcile.svg"
@@ -29,9 +29,7 @@ const Image = styled.img`
   }
 `
 
-const StyledLink = styled(Link)`
-  text-align: right;
-`
+const CustomSplitDiv = styled(SplitDiv)``
 
 export const Home = () => {
   const navigate = useNavigate()
@@ -39,62 +37,26 @@ export const Home = () => {
   return (
     <PageWrapper align="center">
       <UserWrapper>
-        <DivWrapper align="center">
+        <DivWrapper align="center" gap={2}>
           <Logo />
-          <SplitDiv minWidth={200} gap={3} top={2}>
-            <StyledLink to="/signup">Sign up</StyledLink>
-            <Link to="/signin">Login </Link>
-          </SplitDiv>
+          <Divider />
+          <DivWrapper direction="vertical" align="center" gap={5}>
+            <Image src={ReconcileImg} size={5} />
+            <Image src={DecisionsImg} size={5} />
+            <Image src={MoneyImg} size={5} />
+          </DivWrapper>
+          <Text align="center" size={size.xs}>
+            CarPaddy's automated acount reconciliation and categorization
+            application
+          </Text>
         </DivWrapper>
-        <SplitDiv minWidth={200} top={3} gap={4}>
-          <DivWrapper top={5} gap={3}>
-            <Text size={size.m}> Reconcile your accounts in seconds. </Text>
-            <SubTitle>
-              Categorize millions of financial transactions with accuracy, in a
-              breeze. Your financial statements are no longer a burden
-            </SubTitle>
-            <Divider />
-          </DivWrapper>
-          <DivWrapper>
-            <Image src={ReconcileImg} size={25} />
-          </DivWrapper>
-        </SplitDiv>
 
-        <SplitDiv minWidth={200} top={3} gap={4}>
-          <DivWrapper align="left">
-            <Image src={DecisionsImg} size={24} />
+        <MidWrapper>
+          <DivWrapper direction="vertical" gap={3} bottom={3} justify="center">
+            <Button onClick={() => navigate("signup")}> Sign up </Button>
+            <Button onClick={() => navigate("signin")}> Log in </Button>
           </DivWrapper>
-          <DivWrapper top={5} gap={3}>
-            <Text size={size.m}>
-              {" "}
-              Make better decisions for your business.{" "}
-            </Text>
-            <SubTitle>
-              See how your business is doing- with financial and visual reports
-              in real time. Plot charts, compare month-on-month volumes for any
-              category of your transactions in few clicks
-            </SubTitle>
-            <Divider />
-          </DivWrapper>
-        </SplitDiv>
-
-        <SplitDiv minWidth={200} top={3} gap={4}>
-          <DivWrapper top={5} gap={3}>
-            <Text size={size.m}> Save time and money </Text>
-            <SubTitle>
-              Save time and money with our automated transaction categorization.
-              You'll never have to worry about your accounts again
-            </SubTitle>
-            <Divider />
-          </DivWrapper>
-          <DivWrapper>
-            <Image src={MoneyImg} size={24} />
-          </DivWrapper>
-        </SplitDiv>
-
-        <DivWrapper top={5} bottom={3}>
-          <Button onClick={() => navigate("signup")}> Create account </Button>
-        </DivWrapper>
+        </MidWrapper>
       </UserWrapper>
     </PageWrapper>
   )
