@@ -77,7 +77,7 @@ export const Signin = () => {
               </DivWrapper>
               <DivWrapper gap={1}>
                 <FormInput
-                  type="text"
+                  type="email"
                   placeholder="Email address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
