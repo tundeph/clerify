@@ -8,16 +8,16 @@ export const ErrorModal = () => <div>There was an error</div>
 export function ErrorFallback({ error, resetErrorBoundary }) {
   const [errorModal, setErrorModal] = useState(true)
   // Call resetErrorBoundary() to reset the error boundary and retry the render.
-  console.log("There is an error")
+
+  const handleCloseModal = () => {
+    setErrorModal(false)
+    window.location.replace("/")
+  }
 
   return (
     <>
       {errorModal ? (
-        <Modal
-          role="alert"
-          title="Error"
-          handleClose={() => setErrorModal(false)}
-        >
+        <Modal role="alert" title="Error" handleClose={handleCloseModal}>
           <p>Something went wrong</p>
         </Modal>
       ) : null}
