@@ -2,6 +2,7 @@
 import React, { useState, useContext } from "react"
 import { handleButtonState } from "../helper"
 import { useLogin } from "../hooks/useLogin"
+import { screenSizes } from "../helper"
 
 //styles and components for the page are imported here
 import { Logo, Modal } from "@components"
@@ -17,10 +18,12 @@ import {
   Text,
   PasswordInput,
   UnderFormText,
+  Card,
 } from "@layout/styles"
 
 const CustomMidWrapper = styled(MidWrapper)`
   gap: 1.5rem;
+  max-width: ${screenSizes.s};
 `
 
 export const Signin = () => {
@@ -67,40 +70,42 @@ export const Signin = () => {
             <DivWrapper bottom={3}>
               <Logo />
             </DivWrapper>
-            <DivWrapper bottom={1}>
-              <Title> Welcome back! </Title>
-              <SubTitle> Login with your email and password </SubTitle>
-            </DivWrapper>
-            <DivWrapper gap={1}>
-              <FormInput
-                type="text"
-                placeholder="Email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <DivWrapper>
-                <PasswordInput
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+            <Card padding="36">
+              <DivWrapper bottom={1}>
+                <Title> Welcome back! </Title>
+                <SubTitle> Login with your email and password </SubTitle>
+              </DivWrapper>
+              <DivWrapper gap={1}>
+                <FormInput
+                  type="text"
+                  placeholder="Email address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
+                <DivWrapper>
+                  <PasswordInput
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <UnderFormText>
+                    Forgot password?{" "}
+                    <Link to="" onClick={handleResetPassword}>
+                      Reset it
+                    </Link>
+                  </UnderFormText>
+                </DivWrapper>
+              </DivWrapper>
+              <DivWrapper top={0.2}>
+                {handleButtonState(buttonPending, "", "Login", buttonCondition)}
+
                 <UnderFormText>
-                  Forgot password?{" "}
-                  <Link to="" onClick={handleResetPassword}>
-                    Reset it
-                  </Link>
+                  Don’t have an account? <Link to="/signup"> Sign Up </Link>
                 </UnderFormText>
               </DivWrapper>
-            </DivWrapper>
-            <DivWrapper top={0.2}>
-              {handleButtonState(buttonPending, "", "Login", buttonCondition)}
-
-              <UnderFormText>
-                Don’t have an account? <Link to="/signup"> Sign Up </Link>
-              </UnderFormText>
-            </DivWrapper>
-            {error && <Text color={colors.red}>{error}</Text>}
+              {error && <Text color={colors.red}>{error}</Text>}
+            </Card>
           </form>
         </CustomMidWrapper>
       </PageWrapper>
