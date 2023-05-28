@@ -6,6 +6,8 @@ import { Logo } from "@components"
 import styled, { useTheme } from "styled-components"
 import { Link } from "react-router-dom"
 
+import { screenSizes } from "../helper"
+
 import {
   PageWrapper,
   MidWrapper,
@@ -16,10 +18,12 @@ import {
   Text,
   PasswordInput,
   UnderFormText,
+  Card,
 } from "../layout/styles"
 
 const CustomMidWrapper = styled(MidWrapper)`
   gap: 1.5rem;
+  max-width: ${screenSizes.s};
 `
 
 export const Signup = () => {
@@ -46,42 +50,44 @@ export const Signup = () => {
           <DivWrapper bottom={3}>
             <Logo />
           </DivWrapper>
-          <DivWrapper bottom={1}>
-            <Title> Sign up</Title>
-            <SubTitle> Create an account today </SubTitle>
-          </DivWrapper>
-          <DivWrapper gap={1}>
-            <FormInput
-              type="text"
-              placeholder="Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <FormInput
-              type="text"
-              placeholder="Email address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <PasswordInput
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </DivWrapper>
-          <DivWrapper top={3} bottom={1}>
-            {handleButtonState(
-              isPending,
-              "Loading",
-              "Create account",
-              buttonCondition
-            )}
-          </DivWrapper>
-          <UnderFormText>
-            Already have an account? <Link to="/signin"> Log in </Link>
-          </UnderFormText>
-          {error && <Text color={colors.red}>{error}</Text>}
+          <Card padding="36">
+            <DivWrapper bottom={1}>
+              <Title> Sign up</Title>
+              <SubTitle> Create an account today </SubTitle>
+            </DivWrapper>
+            <DivWrapper gap={1}>
+              <FormInput
+                type="text"
+                placeholder="Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <FormInput
+                type="text"
+                placeholder="Email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <PasswordInput
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </DivWrapper>
+            <DivWrapper top={3} bottom={1}>
+              {handleButtonState(
+                isPending,
+                "Loading",
+                "Create account",
+                buttonCondition
+              )}
+            </DivWrapper>
+            <UnderFormText>
+              Already have an account? <Link to="/signin"> Log in </Link>
+            </UnderFormText>
+            {error && <Text color={colors.red}>{error}</Text>}
+          </Card>
         </form>
       </CustomMidWrapper>
     </PageWrapper>
