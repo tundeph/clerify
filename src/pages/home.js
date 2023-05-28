@@ -29,8 +29,6 @@ const Image = styled.img`
   }
 `
 
-const CustomSplitDiv = styled(SplitDiv)``
-
 export const Home = () => {
   const navigate = useNavigate()
 
@@ -46,8 +44,8 @@ export const Home = () => {
             <Image src={MoneyImg} size={5} />
           </DivWrapper>
           <Text align="center" size={size.xs}>
-            CarPaddy's automated acount reconciliation and categorization
-            application
+            CarPaddy's internal automated acount reconciliation and
+            categorization application
           </Text>
         </DivWrapper>
 
