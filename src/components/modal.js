@@ -1,7 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import styled from "styled-components"
-import { CustomCloseIcon } from "../layout/styles"
+import { CloseOutline } from "@styled-icons/evaicons-outline/CloseOutline"
 
 const ModalBackdrop = styled.div`
   position: fixed;
@@ -33,13 +33,27 @@ const ModalHeader = styled.div`
   margin-bottom: 30px;
   align-items: center;
   padding-bottom: 5px;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.gray300};
+  border-bottom: 1px solid #cccccc;
 `
 
 const ModalBody = styled.div`
   /* display: flex; */
-
   text-align: center;
+`
+
+const CustomCloseIcon = styled(CloseOutline)`
+  height: 1.2em;
+  padding: 10px 10px;
+  border-radius: 100px;
+
+  &:hover {
+    color: #434343;
+    background-color: #ebebeb;
+  }
+
+  &:active {
+    background-color: #cccccc;
+  }
 `
 
 export const Modal = ({ title, children, handleClose, icon, noBgClose }) => {
