@@ -26,7 +26,7 @@ import { Dash } from "@styled-icons/bootstrap/Dash"
 import { Category } from "@styled-icons/material-rounded/Category"
 import { BuildingBank } from "@styled-icons/fluentui-system-regular/BuildingBank"
 
-import { screenSizes } from "@utils"
+import { screenSizes } from "../helper"
 
 const IconProps = css`
   height: ${(props) => props.size || 15}px;
