@@ -362,7 +362,7 @@ export const Card = styled(DivWrapper)`
   box-shadow: 0px 0px 2px ${({ theme }) => theme.colors.gray300};
   background-color: ${({ theme }) => theme.colors.reverse};
   border-radius: 10px;
-  padding: ${`${(props) => props.padding}px` || `${size.xs}rem ${size.xxs}rem`};
+  padding: ${(props) => props.padding || size["4xxl"]}px;
   box-sizing: border-box;
 `
 
