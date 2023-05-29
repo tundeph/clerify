@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 import { size } from "../layout/theme"
 import {
@@ -9,7 +9,6 @@ import {
   UserWrapper,
   Text,
   Divider,
-  SplitDiv,
   Button,
   MidWrapper,
 } from "../layout/styles"
