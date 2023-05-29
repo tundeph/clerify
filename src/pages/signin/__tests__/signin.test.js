@@ -1,6 +1,7 @@
 import React from "react"
 import "@testing-library/jest-dom"
-import { render, fireEvent } from "@testing-library/react"
+import { waitFor, act } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import { renderWithProviders } from "@utils/test-providers"
 
 import { Signin } from "../index"
@@ -34,11 +35,20 @@ describe("Sign in page", () => {
     expect(getByRole("button", { name: /login/i })).toBeInTheDocument()
   })
 
-  // it("should click only one checkbox to sort per time", () => {
-  //   render(<Search options={options} handleSortBy={jest.fn} />)
-  //   const nameSelectElement = screen.getByTestId("name")
-  //   const addedSelectElement = screen.getByTestId("added")
-  //   fireEvent.click(nameSelectElement)
-  //   expect(addedSelectElement).not.toBeChecked()
-  // })
+  it("should display disabled button", () => {
+    const { getByRole } = renderWithWrapper()
+    expect(getByRole("button", { name: /login/i })).toBeDisabled()
+  })
+
+  it("should fulfill condition before button is enabled", async () => {
+    const { getByTestId, getByRole } = renderWithWrapper()
+    act(() => {
+      userEvent.type(getByTestId("email"), "carpaddy@carpaddy.com")
+      userEvent.type(getByTestId("password"), "cccccc")
+    })
+
+    await waitFor(() => {
+      expect(getByRole("button", { name: /login/i })).not.toBeDisabled()
+    })
+  })
 })
