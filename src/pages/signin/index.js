@@ -77,6 +77,7 @@ export const Signin = () => {
               </DivWrapper>
               <DivWrapper gap={1}>
                 <FormInput
+                  data-testid="email"
                   type="email"
                   placeholder="Email address"
                   value={email}
@@ -84,6 +85,7 @@ export const Signin = () => {
                 />
                 <DivWrapper>
                   <PasswordInput
+                    data-testid="password"
                     type="password"
                     placeholder="Password"
                     value={password}
