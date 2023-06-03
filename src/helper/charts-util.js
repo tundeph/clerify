@@ -1,5 +1,29 @@
 import { format, addDays, differenceInDays } from "date-fns"
 import { returnColorOptions } from "./default-data"
+import * as R from "ramda"
+
+// return label array of dates from start date to end date
+
+const returnLabelArray = (numberOfDays, startDate) => {
+  const labelArray = []
+  for (let counter = 0; counter <= numberOfDays; counter++) {
+    const added = format(addDays(new Date(startDate), counter), "dd-M")
+    labelArray.push(added)
+  }
+
+  return labelArray
+}
+
+// helper function that adds all the figures in the data array of the datasets
+// to give cumulative figures
+const returnCumulativeCategoryData = (data) =>
+  R.over(
+    R.lensProp("datasets"),
+    R.map((dataset) => {
+      const updatedData = R.scan(R.add, 0, dataset.data)
+      return R.assoc("data", updatedData, dataset)
+    })
+  )(data)
 
 const returnDate = (dateValue) => {
   return new Date(dateValue)
@@ -45,8 +69,8 @@ const returnMOMData = (data, filteredCategories, date) => {
   return obj
 }
 
-// helper function for the getashflowData method
-const returnRawCashflowData = (datas, startDate, endDate) => {
+// helper function for the getting the rawData method
+const returnRawData = (datas, startDate, endDate) => {
   let labelArray = []
   let dailyCategory = {}
   let inflow
@@ -117,8 +141,8 @@ export const getCategoryChartData = (
 ) => {
   let labelArray = []
 
-  if (startDate || endDate) {
-    let { dailyCategory } = returnRawCashflowData(datas, startDate, endDate)
+  if (startDate && endDate) {
+    let { dailyCategory } = returnRawData(datas, startDate, endDate)
 
     //calculate number of days between start and end date
     const numberOfDays = differenceInDays(
@@ -126,11 +150,13 @@ export const getCategoryChartData = (
       new Date(startDate)
     )
 
+    labelArray = returnLabelArray(numberOfDays, startDate)
+
     // create the array for the chart labels
-    for (let counter = 0; counter <= numberOfDays; counter++) {
-      const added = format(addDays(new Date(startDate), counter), "MMM d")
-      labelArray.push(added)
-    }
+    // for (let counter = 0; counter <= numberOfDays; counter++) {
+    //   const added = format(addDays(new Date(startDate), counter), "dd-M")
+    //   labelArray.push(added)
+    // }
 
     const resultForCategory = { labels: labelArray, datasets: [] }
 
@@ -143,7 +169,7 @@ export const getCategoryChartData = (
     ) {
       return resultForCategory
     } else {
-      //format the soreted dailyCategory data for chart.js
+      //format the sorted dailyCategory data for chart.js
       Object.entries(dailyCategory).forEach((currentData) => {
         // check that filteredCategories has a category
         // this is used to make the chart responsive so that we can filter categories to be
@@ -163,21 +189,43 @@ export const getCategoryChartData = (
         }
       })
 
-      return resultForCategory
+      // transform the data array to generate to cumulative chart data fro comparisons
+      const cumulativeDataSets = resultForCategory.datasets.map((result) => {
+        return result.data.reduce((acc, item, index) => {
+          if (index === 0) {
+            acc.push(item)
+          } else {
+            // let newtot =
+            acc.push(acc[index - 1] + item)
+          }
+          return acc
+        }, [])
+      })
+
+      const cumulativeResultForCategory =
+        returnCumulativeCategoryData(resultForCategory)
+
+      //return results
+      return { resultForCategory, cumulativeResultForCategory }
     }
   } else {
-    console.log("gone ")
-    return { labels: [], datasets: [] }
+    const emptyResult = { labels: [], datasets: [] }
+    return {
+      resultForCategory: emptyResult,
+      cumulativeResultForCategory: emptyResult,
+    }
   }
 }
 
 //
 export const getCashflowChartData = (datas, startDate, endDate) => {
-  const { dailyCashflow } = returnRawCashflowData(datas, startDate, endDate)
-  const dayLabel = Array.from(Array(30).keys(), (x) => x + 1)
+  const { dailyCashflow } = returnRawData(datas, startDate, endDate)
   const numberOfDays = differenceInDays(new Date(endDate), new Date(startDate))
-  // let resultForDailyCashflow = {}
-  // let resultForMonthlyCashflow = {}
+
+  // create the array for the chart labels
+  // const dayLabel = Array.from(Array(numberOfDays).keys(), (x) => x + 1)
+
+  const dayLabel = returnLabelArray(numberOfDays, startDate)
 
   //initially define empty data for charts
   const resultForDailyCashflow = {
@@ -256,12 +304,8 @@ export const getMOMChartData = (
   const secondMonthStartDate = `${secondMonth}-01`
   const secondMonthEndDate = `${secondMonth}-31`
 
-  const firstData = returnRawCashflowData(
-    datas,
-    firstMonthStartDate,
-    firstMonthEndDate
-  )
-  const secondData = returnRawCashflowData(
+  const firstData = returnRawData(datas, firstMonthStartDate, firstMonthEndDate)
+  const secondData = returnRawData(
     datas,
     secondMonthStartDate,
     secondMonthEndDate
