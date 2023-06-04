@@ -133,6 +133,7 @@ export const Sidebar = ({ permission, business, onChange }) => {
           <SettingsIcon /> Settings
         </SubTitle>
         {/* <Nav onClick={() => setShowSubmenu(!showSubmenu)}>Add account</Nav> */}
+        <Nav to="/reset-password">Reset password </Nav>
         <Nav to="/account-settings">Account settings</Nav>
         {permission === "admin" ? (
           <Nav to="/admin-settings">Admin settings </Nav>
