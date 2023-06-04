@@ -34,7 +34,7 @@ export const authApi = api.injectEndpoints({
                     (err) => {
                       // error thrown here from firebase functions is sent to the catch below
                       // throw err.message
-                      console.log(err)
+                      // console.log(err)
                     }
                   )
               } else {
