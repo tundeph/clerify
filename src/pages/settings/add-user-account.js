@@ -9,7 +9,7 @@ import { handleButtonState } from "@utils"
 import { ThemeContext } from "styled-components"
 
 import { DivWrapper, FormInput, Text } from "@layout/styles"
-import { Select } from "@components"
+import { Select, Modal } from "@components"
 
 export const AddUserAccount = () => {
   const {
@@ -21,6 +21,7 @@ export const AddUserAccount = () => {
 
   const [permission, setPermission] = useState("")
   const [email, setEmail] = useState("")
+  const [modalOpen, setModalOpen] = useState(false)
 
   const permissions = [
     { value: "", label: "Select an option" },
@@ -34,40 +35,50 @@ export const AddUserAccount = () => {
     e.preventDefault()
     const editedEmail = email.trim().toLowerCase()
     updateUsers({ selectedBusinessId, email: editedEmail, permission })
+    setModalOpen(true)
     setEmail("")
     setPermission("")
   }
 
   return (
-    <DivWrapper max="xs">
-      <form onSubmit={handleSubmit}>
-        <DivWrapper bottom={1}>
-          <Text> Add another user to this business </Text>
-        </DivWrapper>
-        <DivWrapper gap={1}>
-          <FormInput
-            type="text"
-            placeholder="Enter their email address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Select
-            options={permissions}
-            label="Permission-level"
-            onChange={(e) => setPermission(e.target.value)}
-            value={permission}
-          />
-        </DivWrapper>
-        <DivWrapper top={3} bottom={1}>
-          {handleButtonState(
-            result.isPending,
-            "Loading",
-            "Add user",
-            buttonCondition
-          )}
-        </DivWrapper>
-        {result.error && <Text color={colors.red}>{result.error}</Text>}
-      </form>
-    </DivWrapper>
+    <>
+      <DivWrapper max="xs">
+        <form onSubmit={handleSubmit}>
+          <DivWrapper bottom={1}>
+            <Text> Add another user to this business </Text>
+          </DivWrapper>
+          <DivWrapper gap={1}>
+            <FormInput
+              type="text"
+              placeholder="Enter their email address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Select
+              options={permissions}
+              label="Permission-level"
+              onChange={(e) => setPermission(e.target.value)}
+              value={permission}
+            />
+          </DivWrapper>
+          <DivWrapper top={3} bottom={1}>
+            {handleButtonState(
+              result.isPending,
+              "Loading",
+              "Add user",
+              buttonCondition
+            )}
+          </DivWrapper>
+          {result.error && <Text color={colors.red}>{result.error}</Text>}
+        </form>
+      </DivWrapper>
+      {modalOpen && (
+        <Modal title="User added" handleClose={() => setModalOpen(false)}>
+          <Text justify="center">
+            A new user has been added to your account
+          </Text>
+        </Modal>
+      )}
+    </>
   )
 }
