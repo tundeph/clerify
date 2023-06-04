@@ -28,6 +28,7 @@ import {
   AddAccount,
   AddUserAccount,
   DeleteUserAccount,
+  ResetPassword,
 } from "../pages"
 
 export const AppRoutes = ({
@@ -66,6 +67,7 @@ export const AppRoutes = ({
         { path: "/cashflow", Element: FinancialCashflowReport },
       ],
     },
+    { path: "/reset-password", Element: ResetPassword },
     {
       path: "/account-settings",
       Element: AccountSettings,
