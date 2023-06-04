@@ -5,7 +5,7 @@ import shortid from "shortid"
 import { useUpdateBusinessMutation } from "@services/profile-slice2"
 import { addCategoryData, updateCategoryTitle } from "@utils"
 
-import { size } from "../../layout/theme"
+import { size } from "@layout/theme"
 import {
   DivWrapper,
   SubTitle,
@@ -15,7 +15,7 @@ import {
   Button,
   Label,
   CustomEditIcon,
-} from "../../layout/styles"
+} from "@layout/styles"
 
 import {
   Keyword,
