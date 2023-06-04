@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
+import * as R from "ramda"
 import { useProfileQuery } from "@services/profile-slice2"
 import { useAccountsQuery } from "@services/account-slice"
 import { getCashflowChartData } from "@utils/charts-util"
@@ -10,15 +11,30 @@ import { DivWrapper, DateInput, SplitDiv, Text, Divider } from "@layout/styles"
 import { ButtonState } from "@components"
 import { formatCategory, currencyFormatter } from "@utils"
 
-let cashflowBalance = 0
-
 const titles = ["Date", "Inflow", "Outflow", "Balance"]
 
-const hasOutflowOrInflow = (dailyCashflowData, index) =>
-  (typeof dailyCashflowData.datasets[0].data[index] === "number" &&
-    dailyCashflowData.datasets[0].data[index] !== 0) ||
-  (typeof dailyCashflowData.datasets[1].data[index] === "number" &&
-    dailyCashflowData.datasets[1].data[index] !== 0)
+const convertCashflowData = (data) => {
+  let balance = 0
+  return data.labels.reduce((acc, item, index) => {
+    balance =
+      balance + data.datasets[0].data[index] - data.datasets[1].data[index]
+
+    if (
+      (typeof data.datasets[0].data[index] === "number" &&
+        data.datasets[0].data[index] !== 0) ||
+      (typeof data.datasets[1].data[index] === "number" &&
+        data.datasets[1].data[index] !== 0)
+    ) {
+      acc.push({
+        label: data.labels[index],
+        inflow: data.datasets[0].data[index],
+        outflow: data.datasets[1].data[index],
+        balance: balance,
+      })
+    }
+    return acc
+  }, [])
+}
 
 export const FinancialCashflowReport = (props) => {
   const { data } = useProfileQuery()
@@ -39,10 +55,6 @@ export const FinancialCashflowReport = (props) => {
   const [dailyCashflowData, setDailyCashflowData] = useState(null)
   const [info, setInfo] = useState("Click the Apply button to see the reports")
 
-  const [showCategories] = useState(
-    categories.map((category) => category.value)
-  )
-
   const buttonConditionPL = startDate && endDate
 
   const handlePL = () => {
@@ -52,7 +64,7 @@ export const FinancialCashflowReport = (props) => {
       endDate
     )
 
-    setDailyCashflowData(resultForDailyCashflow)
+    setDailyCashflowData(convertCashflowData(resultForDailyCashflow))
     setInfo("Sory, No data to show!")
   }
 
@@ -93,30 +105,14 @@ export const FinancialCashflowReport = (props) => {
         <Divider />
         {dailyCashflowData ? (
           <>
-            {dailyCashflowData.labels.map((label, index) => {
-              return hasOutflowOrInflow(dailyCashflowData, index) ? (
-                <SplitDiv key={index} minWidth={100} gap={1} top={size.xxs}>
-                  <Text size={size.xxxs}>{label}</Text>
-                  <Text size={size.xxxs}>
-                    {currencyFormatter(
-                      dailyCashflowData.datasets[0].data[index]
-                    )}
-                  </Text>
-                  <Text size={size.xxxs}>
-                    {currencyFormatter(
-                      dailyCashflowData.datasets[1].data[index]
-                    )}
-                  </Text>
-                  <Text size={size.xxxs}>
-                    {currencyFormatter(
-                      cashflowBalance +
-                        dailyCashflowData.datasets[0].data[index] -
-                        dailyCashflowData.datasets[1].data[index]
-                    )}
-                  </Text>
-                </SplitDiv>
-              ) : null
-            })}
+            {dailyCashflowData.map((data, index) => (
+              <SplitDiv key={index} minWidth={100} gap={1} top={size.xxs}>
+                <Text size={size.xxxs}>{data.label}</Text>
+                <Text size={size.xxxs}>{currencyFormatter(data.inflow)}</Text>
+                <Text size={size.xxxs}>{currencyFormatter(data.outflow)}</Text>
+                <Text size={size.xxxs}>{currencyFormatter(data.balance)}</Text>
+              </SplitDiv>
+            ))}
           </>
         ) : (
           <Text size={size.xxxs} top={size.xxs}>
