@@ -160,7 +160,7 @@ export const authApi = api.injectEndpoints({
           return { error: err }
         }
       },
-      invalidatesTags: ["Profile"],
+      invalidatesTags: ["Profile", "Accounts"],
     }),
   }),
 })
