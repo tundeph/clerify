@@ -1,3 +1,4 @@
+// parent component for the visual report components
 import React from "react"
 import { useProfileQuery } from "@services/profile-slice2"
 import { useAccountsQuery } from "@services/account-slice"
@@ -15,6 +16,7 @@ import {
 import { CustomNavLink } from "@components"
 
 export const VisualReports = () => {
+  // get all data from redux
   const {
     data: { business, selectedBusinessId },
   } = useProfileQuery()
@@ -42,7 +44,7 @@ export const VisualReports = () => {
             <Divider />
           </DivWrapper>
         </DivWrapper>
-
+        {/* pass all data through outlet to child components */}
         <Outlet
           context={{
             accounts,
