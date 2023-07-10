@@ -30,7 +30,7 @@ export const VisualCategoryReport = () => {
     categories.map((category) => category.value)
   )
 
-  //get the chart data
+  //get the chart data and load once component loads
   useEffect(() => {
     const { cumulativeResultForCategory } = getCategoryChartData(
       accounts,
