@@ -23,6 +23,7 @@ export const VisualCashflowReport = () => {
   const [cashflowStartDate, setCashflowStartDate] = useState(thirtyDaysAgo)
   const [cashflowEndDate, setCashflowEndDate] = useState(todayDate)
 
+  // get chart data
   const chartData = useMemo(
     () => getCashflowChartData(accounts, cashflowStartDate, cashflowEndDate),
     [accounts, cashflowStartDate, cashflowEndDate]
