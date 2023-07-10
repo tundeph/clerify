@@ -1,6 +1,6 @@
+// component that renders cashflow financial reports
 import React, { useState } from "react"
-import * as R from "ramda"
-import { useProfileQuery } from "@services/profile-slice2"
+
 import { useAccountsQuery } from "@services/account-slice"
 import { getCashflowChartData } from "@utils/charts-util"
 
@@ -9,10 +9,11 @@ import { size } from "@layout/theme"
 
 import { DivWrapper, DateInput, SplitDiv, Text, Divider } from "@layout/styles"
 import { ButtonState } from "@components"
-import { formatCategory, currencyFormatter } from "@utils"
+import { currencyFormatter } from "@utils"
 
 const titles = ["Date", "Inflow", "Outflow", "Balance"]
 
+// function to convert cashflow data from db to table contents
 const convertCashflowData = (data) => {
   let balance = 0
   return data.labels.reduce((acc, item, index) => {
@@ -37,9 +38,8 @@ const convertCashflowData = (data) => {
 }
 
 export const FinancialCashflowReport = (props) => {
-  const { data } = useProfileQuery()
+  // get all data from redux state
   const { data: accounts } = useAccountsQuery(props.selectedBusinessId)
-  const { business } = data
 
   const todayDate = format(new Date("2022/06/30"), "yyyy-MM-dd")
   const thirtyDaysAgo = format(
@@ -47,17 +47,14 @@ export const FinancialCashflowReport = (props) => {
     "yyyy-MM-dd"
   )
 
-  const transactionCategories = business[props.selectedBusinessId].categories
-  const categories = formatCategory(transactionCategories)
-
   const [startDate, setStartDate] = useState(thirtyDaysAgo)
   const [endDate, setEndDate] = useState(todayDate)
   const [dailyCashflowData, setDailyCashflowData] = useState(null)
   const [info, setInfo] = useState("Click the Apply button to see the reports")
 
-  const buttonConditionPL = startDate && endDate
+  const buttonConditionCR = startDate && endDate
 
-  const handlePL = () => {
+  const handleCR = () => {
     const { resultForDailyCashflow } = getCashflowChartData(
       accounts,
       startDate,
@@ -86,9 +83,9 @@ export const FinancialCashflowReport = (props) => {
         <ButtonState
           size="small"
           loading={false}
-          condition={buttonConditionPL}
+          condition={buttonConditionCR}
           loadingText=""
-          onClick={handlePL}
+          onClick={handleCR}
         >
           Apply
         </ButtonState>
