@@ -23,6 +23,7 @@ import {
 export const Dashboard = () => {
   const { showBoundary } = useErrorBoundary()
 
+  // get profile and accounts data from db
   const { data } = useProfileQuery(undefined, {
     refetchOnMountOrArgChange: true,
   })
@@ -30,13 +31,14 @@ export const Dashboard = () => {
   const endDate = format(new Date("2022/06/30"), "yyyy-MM-dd")
   const startDate = format(subDays(new Date("2022/06/30"), 30), "yyyy-MM-dd")
 
-  //calculate data for chart and feed into the chart components
+  // calculate data for chart and feed into the chart components
   let chartData
   chartData = useMemo(
     () => getCashflowChartData(accounts, startDate, endDate),
     [accounts, startDate, endDate]
   )
 
+  // catch error and push to app root error component
   if (error) {
     showBoundary(error)
   }
