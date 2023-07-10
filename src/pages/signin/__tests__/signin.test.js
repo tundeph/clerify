@@ -1,3 +1,5 @@
+/* eslint-disable testing-library/no-unnecessary-act */
+/* eslint-disable testing-library/prefer-screen-queries */
 import React from "react"
 import "@testing-library/jest-dom"
 import { waitFor, act } from "@testing-library/react"
