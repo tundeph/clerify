@@ -1,3 +1,4 @@
+// component for the presenting the p&l statement
 import React, { useState } from "react"
 import { useProfileQuery } from "@services/profile-slice2"
 import { useAccountsQuery } from "@services/account-slice"
@@ -10,6 +11,7 @@ import { ButtonState, ReportsTable } from "@components"
 import { formatCategory } from "@utils"
 
 export const FinancialProfitAndLossReport = (props) => {
+  // get accounts and profile data from redux state
   const { data } = useProfileQuery()
   const { data: accounts } = useAccountsQuery(props.selectedBusinessId)
   const { business } = data
@@ -33,6 +35,7 @@ export const FinancialProfitAndLossReport = (props) => {
 
   const buttonConditionPL = startDate && endDate
 
+  // function to get char data
   const handlePL = () => {
     const { resultForCategory } = getCategoryChartData(
       accounts,
