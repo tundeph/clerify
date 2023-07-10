@@ -1,3 +1,4 @@
+// this is the sidebar component
 import React, { useState } from "react"
 import { NavLink } from "react-router-dom"
 import styled, { css } from "styled-components"
@@ -85,6 +86,7 @@ const SubTitle = styled.span`
 `
 
 export const Sidebar = ({ permission, business, onChange }) => {
+  // import the logout function from redux actions
   const [logout] = useLogoutMutation(undefined, {})
 
   const [showSubmenu] = useState(false)
