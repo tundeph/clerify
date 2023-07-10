@@ -1,3 +1,4 @@
+// this is the root file of the app
 import React, { useState } from "react"
 import { AppRoutes } from "../routes"
 
@@ -31,7 +32,7 @@ const AppWrapper = styled.div`
 
 const App = () => {
   const { data } = useProfileQuery()
-
+  // import the function to add and edit the business in firestore database
   const { updateDocument, addDocument, response } = useFirestore("business")
 
   const [addModal, setAddModal] = useState({ status: false })
@@ -74,6 +75,7 @@ const App = () => {
     }
   }
 
+  // function to format the shape of the business data to be sent to db
   const handleAddBusiness = async (e, user) => {
     e.preventDefault()
     const filteredAccts = accts.filter((acct) => acct.acctName.trim() !== "")
