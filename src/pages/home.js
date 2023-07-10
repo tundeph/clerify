@@ -1,3 +1,4 @@
+// this is the landing page of the app where users can login
 import React from "react"
 import styled from "styled-components"
 import { useNavigate } from "react-router-dom"
@@ -13,6 +14,7 @@ import {
   MidWrapper,
 } from "../layout/styles"
 
+// import image assets
 import ReconcileImg from "../assets/images/reconcile.svg"
 import DecisionsImg from "../assets/images/decisions.svg"
 import MoneyImg from "../assets/images/money.svg"
