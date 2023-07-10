@@ -1,3 +1,4 @@
+// the parent component for all financial reports components
 import React from "react"
 import { useProfileQuery } from "@services/profile-slice2"
 import { useAccountsQuery } from "@services/account-slice"
@@ -15,6 +16,7 @@ import {
 import { CustomNavLink } from "@components"
 
 export const FinancialReports = () => {
+  // get all data from redux
   const {
     data: { business, selectedBusinessId },
   } = useProfileQuery()
