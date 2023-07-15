@@ -1,4 +1,4 @@
-// this connects an email to a business so when the user logs in they can
+// this connects a new email address to a business so when the user logs in they can
 // access the business. These additional users may have lower permission level, like user-level instead of admin
 
 import React, { useState, useContext } from "react"
