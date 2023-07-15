@@ -1,3 +1,4 @@
+// this component edits the categorisation settings
 import React, { useState } from "react"
 import { useTheme } from "styled-components"
 import shortid from "shortid"
