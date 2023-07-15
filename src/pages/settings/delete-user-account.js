@@ -1,3 +1,4 @@
+// deletes users that can access a business account (by admin)
 import React, { useState, useContext } from "react"
 import { ThemeContext } from "styled-components"
 import { map, prop, applySpec, prepend, pipe, reject, propEq } from "ramda"
