@@ -1,3 +1,4 @@
+// parent component to navigate to different account settings features
 import React from "react"
 import { size } from "@layout/theme"
 import { Outlet } from "react-router-dom"
