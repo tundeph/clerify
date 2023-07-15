@@ -1,3 +1,4 @@
+// helper functions for app
 import React from "react"
 import { Button, DisabledButton, LoadingIcon } from "../layout/styles"
 import * as R from "ramda"
