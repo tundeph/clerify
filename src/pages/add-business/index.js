@@ -1,9 +1,9 @@
+// component to add business to a user's account
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import {
   useProfileQuery,
   useAddBusinessMutation,
-  useLogoutMutation,
 } from "@services/profile-slice2"
 
 import shortid from "shortid"
@@ -32,14 +32,15 @@ const CustomMidWrapper = styled(MidWrapper)`
 `
 
 export const AddBusiness = () => {
+  // get all the profile and business data from the db
   const {
     data: { user, selectedBusinessId },
   } = useProfileQuery()
   const [addBusiness, { isError, isLoading }] = useAddBusinessMutation()
-  const [logout] = useLogoutMutation()
 
   const navigate = useNavigate()
 
+  // function that sets default business category added by the user
   const defaultBusinessCategories = businessCategories.reduce((acc, item) => {
     if (item.value !== "") {
       const categoryId = shortid.generate()
@@ -82,6 +83,7 @@ export const AddBusiness = () => {
     setAccts([...accts, { id, acctName: "", syncId: "" }])
   }
 
+  // function to handle addition of a business to a user's account
   const handleSubmit = async (e) => {
     e.preventDefault()
     const filteredAccts = accts.filter((acct) => acct.acctName.trim() !== "")
@@ -106,15 +108,6 @@ export const AddBusiness = () => {
         <DivWrapper bottom={3}>
           <Logo />
         </DivWrapper>
-        <SubTitle
-          onClick={() => {
-            console.log("clicked")
-            logout()
-          }}
-        >
-          Logout
-        </SubTitle>
-        {/* <Text onClick={async () => await authService.signOut()}>Log out </Text> */}
         <DivWrapper bottom={size.xxs}>
           <Title> Create a business or organization. </Title>
           <SubTitle>
