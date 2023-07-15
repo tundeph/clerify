@@ -1,3 +1,4 @@
+// custom checkbox component used in the app
 import React from "react"
 import styled, { css } from "styled-components"
 import { CheckmarkIcon, Text } from "../layout/styles"
