@@ -1,3 +1,4 @@
+// define global styles and styled components for the app
 import styled, { css } from "styled-components"
 import { size } from "../layout/theme"
 import moreIcon from "../assets/images/expand-more.svg"
