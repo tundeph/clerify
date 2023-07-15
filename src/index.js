@@ -6,6 +6,7 @@ import App from "./layout/App"
 import { Provider } from "react-redux"
 import { store } from "./services/store"
 
+//import the error boundary component to render error
 import { ErrorBoundary } from "react-error-boundary"
 import { ErrorFallback } from "./layout/ErrorFallback"
 
