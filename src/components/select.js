@@ -1,3 +1,4 @@
+// custom dropdown select component for use in the app
 import React from "react"
 import { SelectInput, Label, DivWrapper } from "../layout/styles"
 
