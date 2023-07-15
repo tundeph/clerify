@@ -1,3 +1,4 @@
+// component that renders recent transactions on dashboard
 import React from "react"
 import styled from "styled-components"
 import { currencyFormatter } from "../helper"
