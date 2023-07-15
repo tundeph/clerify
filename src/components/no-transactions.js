@@ -1,3 +1,4 @@
+// component that renders when users dont have uncategorized transactions
 import React, { useContext } from "react"
 import styled, { ThemeContext } from "styled-components"
 import { DivWrapper, Text, CheckmarkCircleIcon } from "../layout/styles"
