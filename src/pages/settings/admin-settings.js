@@ -1,3 +1,4 @@
+// parent component for admin settings
 import React from "react"
 import { size } from "@layout/theme"
 import { Outlet } from "react-router-dom"
