@@ -1,3 +1,4 @@
+// cutom component to render the keyword look in the app
 import React from "react"
 import styled from "styled-components"
 
