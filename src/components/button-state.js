@@ -1,3 +1,4 @@
+// custom button component used in the app
 import React, { useContext } from "react"
 import { ThemeContext } from "styled-components"
 import { Button, DisabledButton, LoadingIcon } from "../layout/styles"
