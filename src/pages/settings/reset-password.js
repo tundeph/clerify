@@ -1,3 +1,4 @@
+// component for resetting password
 import React, { useState } from "react"
 import { size } from "@layout/theme"
 import { useLogin } from "../../hooks/useLogin"
