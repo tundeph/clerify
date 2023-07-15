@@ -1,3 +1,4 @@
+// component helps to edit keywords
 import React, { useState } from "react"
 import styled, { useTheme } from "styled-components"
 import { size } from "../../layout/theme"
@@ -11,6 +12,7 @@ import {
   deleteKeywordFromCategory,
 } from "@utils"
 
+// import all chld components to be used
 import {
   DivWrapper,
   SubTitle,
@@ -55,6 +57,7 @@ export const KeywordsSettings = (props) => {
 
   const categories = formatCategoryDropDown(transactionCategories)
 
+  // function that handles deleting a keyword from a category
   const handleDeleteKeyword = async (keyword) => {
     const updatedBusiness = deleteKeywordFromCategory(
       selectedBusinessId,
@@ -69,6 +72,7 @@ export const KeywordsSettings = (props) => {
     })
   }
 
+  // function to add keywords to a category
   const handleAddKeyword = async () => {
     if (keyword.trim().length) {
       const updatedCategories = formatUpdatedCategories(
