@@ -1,3 +1,4 @@
+// component that renders tables for financial reports
 import React from "react"
 import { size } from "../layout/theme"
 
