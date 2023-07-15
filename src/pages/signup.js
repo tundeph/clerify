@@ -1,3 +1,4 @@
+// handles the signup function of a new user
 import React, { useState } from "react"
 import { useSignup } from "../hooks/useSignup"
 import { handleButtonState } from "../helper"
@@ -34,9 +35,11 @@ export const Signup = () => {
   const [password, setPassword] = useState("")
   const { signup, isPending, error } = useSignup()
 
+  // condition to make the button active or otherwise
   const buttonCondition =
     name.length > 2 && email.length > 5 && password.length > 5
 
+  // function to create a new user
   const handleSubmit = async (e) => {
     e.preventDefault()
     const editedEmail = email.trim().toLowerCase()
