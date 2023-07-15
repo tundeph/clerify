@@ -1,3 +1,4 @@
+// custom component to render modals in the app
 import React from "react"
 import ReactDOM from "react-dom"
 import styled from "styled-components"
