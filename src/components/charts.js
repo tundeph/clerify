@@ -1,3 +1,4 @@
+// custom chart component used in the app
 import React, { memo } from "react"
 import {
   Chart as ChartJS,
