@@ -1,3 +1,4 @@
+// component that renders on-page submenus
 import React, { useState } from "react"
 import styled, { css } from "styled-components"
 
