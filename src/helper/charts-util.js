@@ -1,3 +1,4 @@
+// functions for charts
 import { format, addDays, differenceInDays } from "date-fns"
 import { returnColorOptions } from "./default-data"
 import * as R from "ramda"
