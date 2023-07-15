@@ -1,3 +1,4 @@
+// adds financial account to a user's account
 import React, { useState, useContext } from "react"
 import { ThemeContext } from "styled-components"
 import shortid from "shortid"
