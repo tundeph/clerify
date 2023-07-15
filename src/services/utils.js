@@ -1,28 +1,30 @@
+// helper functions for database operations
+
 export const transformLoginData = (data, user, initialState) => {
-	let business = {}
-	let selectedBusinessId
-	let hasAccts = {}
-	let permission = null
+  let business = {}
+  let selectedBusinessId
+  let hasAccts = {}
+  let permission = null
 
-	const { uid, displayName, photoURL, email } = user
+  const { uid, displayName, photoURL, email } = user
 
-	data.docs.forEach((doc) => {
-		const { accts, name, type, selected, categories, lastAcctData, users } =
-			doc.data()
-		if (selected) {
-			selectedBusinessId = doc.id
-			hasAccts = lastAcctData
-		}
-		business[doc.id] = { id: doc.id, accts, name, type, selected, categories }
-		permission = users.filter((user) => user.email === email)[0].permission
-	})
+  data.docs.forEach((doc) => {
+    const { accts, name, type, selected, categories, lastAcctData, users } =
+      doc.data()
+    if (selected) {
+      selectedBusinessId = doc.id
+      hasAccts = lastAcctData
+    }
+    business[doc.id] = { id: doc.id, accts, name, type, selected, categories }
+    permission = users.filter((user) => user.email === email)[0].permission
+  })
 
-	return {
-		...initialState,
-		user: { uid, displayName, photoURL, email, permission },
-		business,
-		selectedBusinessId,
-		lastAcctData: hasAccts,
-		authIsReady: true,
-	}
+  return {
+    ...initialState,
+    user: { uid, displayName, photoURL, email, permission },
+    business,
+    selectedBusinessId,
+    lastAcctData: hasAccts,
+    authIsReady: true,
+  }
 }
