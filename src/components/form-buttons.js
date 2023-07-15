@@ -1,3 +1,4 @@
+// custom components for buttons with icons
 import React from "react"
 import styled, { css } from "styled-components"
 import { PlusIcon, CloseIcon } from "../layout/styles"
@@ -19,7 +20,8 @@ const CustomButton = styled.button`
 const IconProps = css`
   width: calc(${(props) => props.size * 1.5}rem);
   height: calc(${(props) => props.size * 1.5}rem);
-  padding: calc(${(props) => props.size * 15}px) calc(${(props) => props.size * 15}px);
+  padding: calc(${(props) => props.size * 15}px)
+    calc(${(props) => props.size * 15}px);
   background-color: ${({ theme }) => theme.colors.gray100};
   border-radius: 50%;
   fill: ${({ theme }) => theme.colors.secondary};
